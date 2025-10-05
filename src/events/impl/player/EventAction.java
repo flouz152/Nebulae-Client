@@ -1,0 +1,14 @@
+package events.impl.player;
+
+import events.Event;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode(callSuper = true)
+@AllArgsConstructor
+public class EventAction extends Event {
+// leaked by itskekoff; discord.gg/sk3d nZVUCqWX
+    private boolean sprintState;
+}

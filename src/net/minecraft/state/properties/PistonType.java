@@ -1,0 +1,27 @@
+package net.minecraft.state.properties;
+
+import net.minecraft.util.IStringSerializable;
+
+public enum PistonType implements IStringSerializable
+{
+// leaked by itskekoff; discord.gg/sk3d bX0bgdiE
+    DEFAULT("normal"),
+    STICKY("sticky");
+
+    private final String name;
+
+    private PistonType(String name)
+    {
+        this.name = name;
+    }
+
+    public String toString()
+    {
+        return this.name;
+    }
+
+    public String getString()
+    {
+        return this.name;
+    }
+}

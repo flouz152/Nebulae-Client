@@ -1,0 +1,19 @@
+package net.optifine.util;
+
+import net.minecraft.client.gui.fonts.IGlyph;
+
+public class GlyphAdvanceFixed implements IGlyph
+{
+// leaked by itskekoff; discord.gg/sk3d fgxZclsN
+    private float advanceWidth;
+
+    public GlyphAdvanceFixed(float advanceWidth)
+    {
+        this.advanceWidth = advanceWidth;
+    }
+
+    public float getAdvance()
+    {
+        return this.advanceWidth;
+    }
+}

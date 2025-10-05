@@ -1,0 +1,28 @@
+package net.minecraft.state.properties;
+
+import net.minecraft.util.IStringSerializable;
+
+public enum BambooLeaves implements IStringSerializable
+{
+// leaked by itskekoff; discord.gg/sk3d HziMCJtb
+    NONE("none"),
+    SMALL("small"),
+    LARGE("large");
+
+    private final String name;
+
+    private BambooLeaves(String name)
+    {
+        this.name = name;
+    }
+
+    public String toString()
+    {
+        return this.name;
+    }
+
+    public String getString()
+    {
+        return this.name;
+    }
+}
