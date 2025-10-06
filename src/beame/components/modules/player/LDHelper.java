@@ -13,9 +13,6 @@ import events.impl.player.EventUpdate;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
-import net.minecraft.network.play.client.CHeldItemChangePacket;
-import net.minecraft.network.play.client.CPlayerTryUseItemPacket;
-import net.minecraft.util.Hand;
 
 public class LDHelper extends Module {
     private static final long STAL_USE_INTERVAL_MS = 150L;
@@ -83,27 +80,6 @@ public class LDHelper extends Module {
     }
 
     private boolean useItemInstant(Item item) {
-        int slot = InventoryUtility.getItemSlot(item);
-        if (slot == -1) {
-            return false;
-        }
-
-        int originalHotbarSlot = mc.player.inventory.currentItem;
-
-        if (slot < 9) {
-            if (slot != originalHotbarSlot) {
-                mc.player.connection.sendPacket(new CHeldItemChangePacket(slot));
-            }
-            mc.player.connection.sendPacket(new CPlayerTryUseItemPacket(Hand.MAIN_HAND));
-            if (slot != originalHotbarSlot) {
-                mc.player.connection.sendPacket(new CHeldItemChangePacket(originalHotbarSlot));
-            }
-            return true;
-        }
-
-        mc.playerController.pickItem(slot);
-        mc.player.connection.sendPacket(new CPlayerTryUseItemPacket(Hand.MAIN_HAND));
-        mc.playerController.pickItem(slot);
-        return true;
+        return InventoryUtility.swapAndUse(item);
     }
 }
