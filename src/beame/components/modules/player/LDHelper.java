@@ -11,8 +11,16 @@ import events.Event;
 import events.EventKey;
 import events.impl.player.EventUpdate;
 import net.minecraft.client.gui.screen.ChatScreen;
+import net.minecraft.inventory.container.ClickType;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.network.play.client.CClickWindowPacket;
+import net.minecraft.network.play.client.CCloseWindowPacket;
+import net.minecraft.network.play.client.CEntityActionPacket;
+import net.minecraft.network.play.client.CPlayerTryUseItemPacket;
+import net.minecraft.util.Hand;
 
 public class LDHelper extends Module {
     private static final long STAL_USE_INTERVAL_MS = 150L;
@@ -56,14 +64,16 @@ public class LDHelper extends Module {
                 }
             }
 
-            if (keyEvent.key == stalBind.get() && !keyEvent.isReleased()) {
-                stalActive = !stalActive;
-                if (stalActive) {
+            if (keyEvent.key == stalBind.get()) {
+                if (!keyEvent.isReleased()) {
+                    stalActive = true;
                     stalTimer.reset();
                     if (!useItemInstant(Items.MUSIC_DISC_STAL)) {
                         AbstractCommand.addMessage("Пластинка C418 — Stal не найдена!");
                         stalActive = false;
                     }
+                } else {
+                    stalActive = false;
                 }
             }
             return;
@@ -80,6 +90,51 @@ public class LDHelper extends Module {
     }
 
     private boolean useItemInstant(Item item) {
-        return InventoryUtility.swapAndUse(item);
+        return useItemPacket(item);
+    }
+
+    private boolean useItemPacket(Item item) {
+        if (mc.player == null || mc.player.connection == null || mc.player.openContainer == null) {
+            return false;
+        }
+
+        int slotId = InventoryUtility.getSlotIDFromItem(item);
+        if (slotId < 0 || slotId == -2) {
+            return false;
+        }
+
+        Container container = mc.player.openContainer;
+        int windowId = container.windowId;
+
+        int selectedSlot = mc.player.inventory.currentItem;
+        int selectedContainerSlot = 36 + selectedSlot;
+        boolean needsSwap = slotId != selectedContainerSlot;
+
+        mc.player.connection.sendPacket(new CEntityActionPacket(mc.player, CEntityActionPacket.Action.OPEN_INVENTORY));
+
+        if (needsSwap) {
+            sendSwap(container, windowId, slotId, selectedSlot);
+        }
+
+        mc.player.connection.sendPacket(new CPlayerTryUseItemPacket(Hand.MAIN_HAND));
+
+        if (needsSwap) {
+            sendSwap(container, windowId, slotId, selectedSlot);
+        }
+
+        mc.player.connection.sendPacket(new CCloseWindowPacket(windowId));
+        return true;
+    }
+
+    private void sendSwap(Container container, int windowId, int slotId, int hotbarSlot) {
+        short transaction = container.getNextTransactionID(mc.player.inventory);
+        mc.player.connection.sendPacket(new CClickWindowPacket(
+                windowId,
+                slotId,
+                hotbarSlot,
+                ClickType.SWAP,
+                ItemStack.EMPTY,
+                transaction
+        ));
     }
 }
