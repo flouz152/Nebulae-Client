@@ -51,6 +51,7 @@ public class ModuleList {
     public FTHelper ftHelper;
     public AutoSwap autoSwap;
     public AutoTotem autoTotem;
+    public AutoBug autoBug;
     public SwingAnimations swingAnimations;
     public NoInteract noInteract;
     public NoPush noPush;
@@ -164,6 +165,7 @@ public class ModuleList {
                 ftHelper = new FTHelper(),
                 autoSwap = new AutoSwap(),
                 autoTotem = new AutoTotem(),
+                autoBug = new AutoBug(),
               //  staffKill = new StaffKill(),
                 swingAnimations = new SwingAnimations(),
                 noInteract = new NoInteract(),
