@@ -19,6 +19,7 @@ import net.minecraft.item.Items;
 import net.minecraft.network.play.client.CClickWindowPacket;
 import net.minecraft.network.play.client.CCloseWindowPacket;
 import net.minecraft.network.play.client.CEntityActionPacket;
+import net.minecraft.network.play.client.CHeldItemChangePacket;
 import net.minecraft.network.play.client.CPlayerTryUseItemPacket;
 import net.minecraft.util.Hand;
 
@@ -112,18 +113,37 @@ public class LDHelper extends Module {
 
         mc.player.connection.sendPacket(new CEntityActionPacket(mc.player, CEntityActionPacket.Action.OPEN_INVENTORY));
 
-        if (needsSwap) {
-            sendSwap(container, windowId, slotId, selectedSlot);
-        }
+        if (isHotbarSlot(slotId)) {
+            int hotbarSlot = slotId - 36;
+            sendHeldItemChange(hotbarSlot);
+            mc.player.connection.sendPacket(new CPlayerTryUseItemPacket(Hand.MAIN_HAND));
+            sendHeldItemChange(selectedSlot);
+        } else {
+            if (needsSwap) {
+                sendSwap(container, windowId, slotId, selectedSlot);
+            }
 
-        mc.player.connection.sendPacket(new CPlayerTryUseItemPacket(Hand.MAIN_HAND));
+            mc.player.connection.sendPacket(new CPlayerTryUseItemPacket(Hand.MAIN_HAND));
 
-        if (needsSwap) {
-            sendSwap(container, windowId, slotId, selectedSlot);
+            if (needsSwap) {
+                sendSwap(container, windowId, slotId, selectedSlot);
+            }
         }
 
         mc.player.connection.sendPacket(new CCloseWindowPacket(windowId));
         return true;
+    }
+
+    private boolean isHotbarSlot(int slotId) {
+        return slotId >= 36 && slotId <= 44;
+    }
+
+    private void sendHeldItemChange(int hotbarSlot) {
+        if (hotbarSlot < 0 || hotbarSlot > 8) {
+            return;
+        }
+
+        mc.player.connection.sendPacket(new CHeldItemChangePacket(hotbarSlot));
     }
 
     private void sendSwap(Container container, int windowId, int slotId, int hotbarSlot) {

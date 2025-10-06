@@ -15,19 +15,19 @@ import org.joml.Vector4f;
 
 @UtilityClass
 public class AuraUtil implements IMinecraft {
-// leaked by itskekoff; discord.gg/sk3d ezoxiDsT
-
-    public Vector3d getClosestVec(Vector3d vec, AxisAlignedBB AABB) {
-        return new Vector3d(
-                MathHelper.clamp(vec.getX(), AABB.minX, AABB.maxX),
-                MathHelper.clamp(vec.getY(), AABB.minY, AABB.maxY),
-                MathHelper.clamp(vec.getZ(), AABB.minZ, AABB.maxZ)
-        );
-    }
+    private static final double TARGET_STEP = 0.1D;
 
     public static Vector3d calculateTargetVector(LivingEntity target) {
         Vector3d targetEyePosition = target.getPositionVec().add(0, target.getEyeHeight() - 0.24, 0);
         return targetEyePosition.subtract(mc.player.getEyePosition(1.0F));
+    }
+
+    public Vector3d getClosestVec(Vector3d vec, AxisAlignedBB box) {
+        return new Vector3d(
+                MathHelper.clamp(vec.getX(), box.minX, box.maxX),
+                MathHelper.clamp(vec.getY(), box.minY, box.maxY),
+                MathHelper.clamp(vec.getZ(), box.minZ, box.maxZ)
+        );
     }
 
     public Vector3d getClosestVec(Vector3d vec, Entity entity) {
@@ -35,8 +35,8 @@ public class AuraUtil implements IMinecraft {
     }
 
     public Vector3d getClosestVec(Entity entity) {
-        Vector3d eyePosVec = mc.player.getEyePosition(mc.getRenderPartialTicks());
-        return getClosestVec(eyePosVec, entity).subtract(eyePosVec);
+        Vector3d eyePos = mc.player.getEyePosition(mc.getRenderPartialTicks());
+        return getClosestVec(eyePos, entity).subtract(eyePos);
     }
 
     public double getStrictDistance(Entity entity) {
@@ -47,111 +47,84 @@ public class AuraUtil implements IMinecraft {
         return getClosestVec(entity).length();
     }
 
-    private static boolean isCalculating = false;
-
     public Vector3d getClosestTargetPoint(Entity entity) {
-        if (entity == null) return Vector3d.ZERO;
-        if (mc.player == null) return Vector3d.ZERO;
-        if (isCalculating) return entity.getPositionVec(); // или Vector3d.ZERO
-        isCalculating = true;
-        try {
-            return getClosestTargetPoint(mc.player.getEyePosition(mc.getRenderPartialTicks()), entity, Math.min(entity.getWidth(), entity.getHeight()) / 4F);
-        } finally {
-            isCalculating = false;
-        }
-    }
-
-    public Vector3d getClosestTargetPoint(Vector3d vec, Entity entity, float point) {
-        if (entity == null) {
+        if (entity == null || mc.player == null) {
             return Vector3d.ZERO;
         }
 
-        AxisAlignedBB boundingBox = entity.getBoundingBox().grow(-point);
-        Vector3d center = boundingBox.getCenter();
-        Vector3d closestPoint = Vector3d.ZERO;
-        double closestDistance = Double.MAX_VALUE;
+        Vector3d eyePos = mc.player.getEyePosition(mc.getRenderPartialTicks());
+        AxisAlignedBB shrunkenBox = entity.getBoundingBox().grow(-Math.min(entity.getWidth(), entity.getHeight()) / 4F);
+        Vector3d closest = eyePos;
+        double bestDistance = Double.MAX_VALUE;
 
-        for (double offsetX = 0; offsetX <= (boundingBox.maxX - boundingBox.minX) / 2; offsetX += 0.1) {
-            for (double offsetY = 0; offsetY <= (boundingBox.maxY - boundingBox.minY) / 2; offsetY += 0.1) {
-                for (double offsetZ = 0; offsetZ <= (boundingBox.maxZ - boundingBox.minZ) / 2; offsetZ += 0.1) {
-                    for (int signX : new int[]{-1, 1}) {
-                        for (int signY : new int[]{-1, 1}) {
-                            for (int signZ : new int[]{-1, 1}) {
-                                double x = center.x + signX * offsetX;
-                                double y = center.y + signY * offsetY;
-                                double z = center.z + signZ * offsetZ;
-                                Vector3d potentialPoint = new Vector3d(x, y, z);
-                                Vector2f rotation = RotationUtil.calculate(potentialPoint);
-                                RayTraceResult result = RayTraceUtil.calculateRayTrace(
-                                        mc.playerController.extendedReach() ? 6.0D : 3.0D,
-                                        rotation.x,
-                                        rotation.y,
-                                        mc.player,
-                                        false
-                                );
+        for (double x = shrunkenBox.minX; x <= shrunkenBox.maxX; x += TARGET_STEP) {
+            for (double y = shrunkenBox.minY; y <= shrunkenBox.maxY; y += TARGET_STEP) {
+                for (double z = shrunkenBox.minZ; z <= shrunkenBox.maxZ; z += TARGET_STEP) {
+                    Vector3d candidate = new Vector3d(x, y, z);
+                    Vector2f rotation = RotationUtil.calculate(candidate);
+                    RayTraceResult trace = RayTraceUtil.calculateRayTrace(
+                            mc.playerController.extendedReach() ? 6.0D : 3.0D,
+                            rotation.x,
+                            rotation.y,
+                            mc.player,
+                            false
+                    );
 
-                                if (result instanceof EntityRayTraceResult entityTrace && entityTrace.getEntity().equals(entity)) {
-                                    double distance = vec.distanceTo(potentialPoint);
-                                    if (distance < closestDistance) {
-                                        closestDistance = distance;
-                                        closestPoint = potentialPoint;
-                                    }
-                                }
-                            }
+                    if (trace instanceof EntityRayTraceResult entityTrace && entityTrace.getEntity().equals(entity)) {
+                        double distance = eyePos.distanceTo(candidate);
+                        if (distance < bestDistance) {
+                            bestDistance = distance;
+                            closest = candidate;
                         }
                     }
                 }
             }
         }
 
-        if (!closestPoint.equals(Vector3d.ZERO)) {
-            return closestPoint;
+        if (bestDistance == Double.MAX_VALUE) {
+            return getClosestVec(entity.getBoundingBox().getCenter(), entity.getBoundingBox());
         }
 
-        double closestX = MathHelper.clamp(vec.x, boundingBox.minX, boundingBox.maxX);
-        double closestY = MathHelper.clamp(vec.y, boundingBox.minY, boundingBox.maxY);
-        double closestZ = MathHelper.clamp(vec.z, boundingBox.minZ, boundingBox.maxZ);
+        return closest;
+    }
 
+    public Vector3d getClosestTargetPoint(Vector3d origin, Entity entity, float shrinkFactor) {
+        if (entity == null) {
+            return Vector3d.ZERO;
+        }
+
+        AxisAlignedBB shrunken = entity.getBoundingBox().grow(-shrinkFactor);
+        double closestX = MathHelper.clamp(origin.x, shrunken.minX, shrunken.maxX);
+        double closestY = MathHelper.clamp(origin.y, shrunken.minY, shrunken.maxY);
+        double closestZ = MathHelper.clamp(origin.z, shrunken.minZ, shrunken.maxZ);
         return new Vector3d(closestX, closestY, closestZ);
     }
 
-
     public Vector4f calculateRotation(Entity target) {
         Vector3d vec = getClosestTargetPoint(target).subtract(mc.player.getEyePosition(mc.getRenderPartialTicks()));
-
         float rawYaw = (float) MathHelper.wrapDegrees(Math.toDegrees(Math.atan2(vec.z, vec.x)) - 90F);
-        float rawPitch = (float) (-Math.toDegrees(Math.atan2(vec.y, Math.sqrt(Math.pow(vec.x, 2) + Math.pow(vec.z, 2)))));
+        float rawPitch = (float) (-Math.toDegrees(Math.atan2(vec.y, Math.sqrt(vec.x * vec.x + vec.z * vec.z))));
         float yawDelta = MathHelper.wrapDegrees(rawYaw - mc.player.rotationYaw);
         float pitchDelta = rawPitch - mc.player.rotationPitch;
-
         return new Vector4f(rawYaw, rawPitch, yawDelta, pitchDelta);
     }
 
     public Vector4f calculateRotationFromCamera(LivingEntity target) {
         Vector3d vec = getClosestTargetPoint(target).subtract(mc.player.getEyePosition(mc.getRenderPartialTicks()));
-
         float rawYaw = (float) MathHelper.wrapDegrees(Math.toDegrees(Math.atan2(vec.z, vec.x)) - 90F);
-        float rawPitch = (float) (-Math.toDegrees(Math.atan2(vec.y, Math.sqrt(Math.pow(vec.x, 2) + Math.pow(vec.z, 2)))));
+        float rawPitch = (float) (-Math.toDegrees(Math.atan2(vec.y, Math.sqrt(vec.x * vec.x + vec.z * vec.z))));
         float yawDelta = MathHelper.wrapDegrees(rawYaw - Rotation.cameraYaw());
         float pitchDelta = rawPitch - Rotation.cameraPitch();
-
         return new Vector4f(rawYaw, rawPitch, yawDelta, pitchDelta);
     }
 
     public double calculateFOV(LivingEntity target) {
         Vector4f rotation = calculateRotation(target);
-        float yawDelta = rotation.z;
-        float pitchDelta = rotation.w;
-
-        return Math.sqrt(yawDelta * yawDelta + pitchDelta * pitchDelta);
+        return Math.hypot(rotation.z, rotation.w);
     }
 
     public double calculateFOVFromCamera(LivingEntity target) {
         Vector4f rotation = calculateRotationFromCamera(target);
-        float yawDelta = rotation.z;
-        float pitchDelta = rotation.w;
-
-        return Math.sqrt(yawDelta * yawDelta + pitchDelta * pitchDelta);
+        return Math.hypot(rotation.z, rotation.w);
     }
-
 }

@@ -156,6 +156,7 @@ public class Aura extends Module {
     private float luckyDayzYawVelocity;
     private float luckyDayzPitchVelocity;
     private double luckyDayzLastDistance;
+    private boolean luckyDayzSprintReset;
 
     public Aura() {
         super("AttackAura", Category.Combat, true, "Автоматически бьет энтити в установленном радиусе");
@@ -930,6 +931,7 @@ public class Aura extends Module {
         luckyDayzYawVelocity = 0;
         luckyDayzPitchVelocity = 0;
         luckyDayzLastDistance = 0;
+        luckyDayzSprintReset = false;
     }
 
     private void resetSnapRotation() {
@@ -1086,6 +1088,16 @@ public class Aura extends Module {
     private void handleLuckyDayz() {
         if (target == null || mc.player == null || mc.world == null) {
             return;
+        }
+
+        if (!luckyDayzSprintReset && mc.player.connection != null) {
+            boolean wasSprinting = mc.player.serverSprintState || mc.player.isSprinting();
+            mc.player.connection.sendPacket(new CEntityActionPacket(mc.player, CEntityActionPacket.Action.STOP_SPRINTING));
+            if (wasSprinting) {
+                mc.player.connection.sendPacket(new CEntityActionPacket(mc.player, CEntityActionPacket.Action.START_SPRINTING));
+                mc.player.setSprinting(true);
+            }
+            luckyDayzSprintReset = true;
         }
 
         double smoothing = MathHelper.clamp(luckySmoothing.get(), 0.05f, 1.0f);

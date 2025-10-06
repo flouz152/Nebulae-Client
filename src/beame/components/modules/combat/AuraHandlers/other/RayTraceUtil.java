@@ -13,97 +13,90 @@ import java.util.function.Predicate;
 
 @UtilityClass
 public class RayTraceUtil implements IMinecraft {
-// leaked by itskekoff; discord.gg/sk3d 9SqHd5BY
-
     public Entity getTargetedEntity(Entity target, float targetYaw, float targetPitch, double distance) {
-        Entity viewerEntity = mc.getRenderViewEntity();
-        if (viewerEntity == null || mc.world == null) {
+        Entity viewer = mc.getRenderViewEntity();
+        if (viewer == null || mc.world == null) {
             return null;
         }
 
-        Vector3d startVector = viewerEntity.getEyePosition(mc.getRenderPartialTicks());
-        Vector3d directionVector = getVectorForRotation(targetPitch, targetYaw);
-        Vector3d endVector = startVector.add(directionVector.scale(distance));
+        Vector3d start = viewer.getEyePosition(mc.getRenderPartialTicks());
+        Vector3d direction = getVectorForRotation(targetPitch, targetYaw);
+        Vector3d end = start.add(direction.scale(distance));
 
-        AxisAlignedBB targetBoundingBox = target.getBoundingBox().grow(target.getCollisionBorderSize());
-        EntityRayTraceResult entityRayTraceResult = traceEntities(viewerEntity, startVector, endVector, targetBoundingBox,
-                (entity) -> !entity.isSpectator() && entity.canBeCollidedWith(), distance);
-
-        return entityRayTraceResult != null ? entityRayTraceResult.getEntity() : null;
+        AxisAlignedBB searchBox = target.getBoundingBox().grow(target.getCollisionBorderSize());
+        EntityRayTraceResult traced = traceEntities(viewer, start, end, searchBox,
+                entity -> !entity.isSpectator() && entity.canBeCollidedWith(),
+                distance);
+        return traced != null ? traced.getEntity() : null;
     }
 
-    public EntityRayTraceResult traceEntities(Entity shooter, Vector3d startVector, Vector3d endVector, AxisAlignedBB boundingBox, Predicate<Entity> filter, double distance) {
+    public EntityRayTraceResult traceEntities(Entity shooter, Vector3d start, Vector3d end, AxisAlignedBB bounds,
+                                              Predicate<Entity> filter, double distance) {
         World world = shooter.world;
         double closestDistance = distance;
         Entity closestEntity = null;
-        Vector3d closestHitVector = null;
+        Vector3d closestHit = null;
 
-        for (Entity entity : world.getEntitiesInAABBexcluding(shooter, boundingBox, filter)) {
-            AxisAlignedBB entityBoundingBox = entity.getBoundingBox().grow(entity.getCollisionBorderSize());
-            Optional<Vector3d> optional = entityBoundingBox.rayTrace(startVector, endVector);
+        for (Entity entity : world.getEntitiesInAABBexcluding(shooter, bounds, filter)) {
+            AxisAlignedBB entityBox = entity.getBoundingBox().grow(entity.getCollisionBorderSize());
+            Optional<Vector3d> clip = entityBox.rayTrace(start, end);
 
-            if (entityBoundingBox.contains(startVector) || optional.isPresent()) {
-                double distanceToHit = optional.map(startVector::distanceTo).orElse(0.0D);
-                if (distanceToHit < closestDistance || closestDistance == 0.0D) {
+            if (entityBox.contains(start) || clip.isPresent()) {
+                double hitDistance = clip.map(start::distanceTo).orElse(0.0D);
+                if (hitDistance < closestDistance || closestDistance == 0.0D) {
                     if (entity.getLowestRidingEntity() != shooter.getLowestRidingEntity()) {
                         closestEntity = entity;
-                        closestHitVector = optional.orElse(startVector);
-                        closestDistance = distanceToHit;
+                        closestHit = clip.orElse(start);
+                        closestDistance = hitDistance;
                     }
                 }
             }
         }
 
-        return closestEntity == null ? null : new EntityRayTraceResult(closestEntity, closestHitVector);
+        return closestEntity == null ? null : new EntityRayTraceResult(closestEntity, closestHit);
     }
 
     public RayTraceResult calculateRayTrace(double distance, float yaw, float pitch, Entity entity, boolean ignoreBlocks) {
-        Vector3d startVector = mc.player.getEyePosition(mc.getRenderPartialTicks());
-        Vector3d directionVector = getVectorForRotation(pitch, yaw);
-        Vector3d endVector = startVector.add(directionVector.scale(distance));
+        Vector3d start = mc.player.getEyePosition(mc.getRenderPartialTicks());
+        Vector3d direction = getVectorForRotation(pitch, yaw);
+        Vector3d end = start.add(direction.scale(distance));
 
-        RayTraceResult blockResult = traceBlock(startVector, endVector, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE);
-        double entityDistance = blockResult.getHitVec().squareDistanceTo(startVector);
+        RayTraceResult blockTrace = traceBlock(start, end, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE);
+        double blockDistance = blockTrace.getHitVec().squareDistanceTo(start);
 
-        AxisAlignedBB entityBoundingBox = entity.getBoundingBox().expand(directionVector.scale(distance)).grow(1.0D);
-        EntityRayTraceResult entityRayTraceResult = ProjectileHelper.rayTraceEntities(entity, startVector, endVector, entityBoundingBox,
-                (e) -> !e.isSpectator() && e.isAlive() && e.canBeCollidedWith(), distance);
+        AxisAlignedBB expanded = entity.getBoundingBox().expand(direction.scale(distance)).grow(1.0D);
+        EntityRayTraceResult entityTrace = ProjectileHelper.rayTraceEntities(entity, start, end, expanded,
+                candidate -> !candidate.isSpectator() && candidate.isAlive() && candidate.canBeCollidedWith(),
+                distance);
 
-        if (entityRayTraceResult != null && (ignoreBlocks || entityRayTraceResult.getHitVec().squareDistanceTo(startVector) < entityDistance)) {
-            return entityRayTraceResult;
+        if (entityTrace != null && (ignoreBlocks || entityTrace.getHitVec().squareDistanceTo(start) < blockDistance)) {
+            return entityTrace;
         }
 
-        return blockResult;
+        return blockTrace;
     }
 
     public boolean rayTraceEntity(float yaw, float pitch, double distance, Entity entity) {
-        Vector3d eyeVec = mc.player.getEyePosition(mc.getRenderPartialTicks());
-        Vector3d lookVec = getVectorForRotation(pitch, yaw);
-        Vector3d endVec = eyeVec.add(lookVec.scale(distance));
-
-        AxisAlignedBB entityBox = entity.getBoundingBox();
-        return entityBox.contains(eyeVec) || entityBox.rayTrace(eyeVec, endVec).isPresent();
+        Vector3d eye = mc.player.getEyePosition(mc.getRenderPartialTicks());
+        Vector3d direction = getVectorForRotation(pitch, yaw);
+        Vector3d end = eye.add(direction.scale(distance));
+        AxisAlignedBB box = entity.getBoundingBox();
+        return box.contains(eye) || box.rayTrace(eye, end).isPresent();
     }
 
     public Vector3d getVectorForRotation(float pitch, float yaw) {
-        float yawRadians = -yaw * ((float) Math.PI / 180) - (float) Math.PI;
-        float pitchRadians = -pitch * ((float) Math.PI / 180);
+        float yawRad = -yaw * ((float) Math.PI / 180F) - (float) Math.PI;
+        float pitchRad = -pitch * ((float) Math.PI / 180F);
 
-        float cosYaw = MathHelper.cos(yawRadians);
-        float sinYaw = MathHelper.sin(yawRadians);
-        float cosPitch = -MathHelper.cos(pitchRadians);
-        float sinPitch = MathHelper.sin(pitchRadians);
+        float cosYaw = MathHelper.cos(yawRad);
+        float sinYaw = MathHelper.sin(yawRad);
+        float cosPitch = -MathHelper.cos(pitchRad);
+        float sinPitch = MathHelper.sin(pitchRad);
 
         return new Vector3d(sinYaw * cosPitch, sinPitch, cosYaw * cosPitch);
     }
 
-    public RayTraceResult traceBlock(Vector3d startVec, Vector3d endVec, RayTraceContext.BlockMode blockMode, RayTraceContext.FluidMode fluidMode) {
-        return mc.world.rayTraceBlocks(new RayTraceContext(
-                startVec,
-                endVec,
-                blockMode,
-                fluidMode,
-                mc.player)
-        );
+    public RayTraceResult traceBlock(Vector3d start, Vector3d end, RayTraceContext.BlockMode blockMode, RayTraceContext.FluidMode fluidMode) {
+        return mc.world.rayTraceBlocks(new RayTraceContext(start, end, blockMode, fluidMode, mc.player));
     }
 }
