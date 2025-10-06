@@ -4,8 +4,8 @@ import beame.module.Category;
 import beame.module.Module;
 import events.Event;
 import events.impl.player.EventUpdate;
-import net.minecraft.network.play.client.CClientStatusPacket;
 import net.minecraft.network.play.client.CCloseWindowPacket;
+import net.minecraft.network.play.client.CEntityActionPacket;
 
 public class AutoBug extends Module {
     private boolean triggered;
@@ -30,10 +30,8 @@ public class AutoBug extends Module {
             if (hurt && !triggered) {
                 triggered = true;
 
-                if (mc.player.openContainer != null && mc.player.openContainer.windowId == 0) {
-                    mc.player.connection.sendPacket(new CClientStatusPacket(CClientStatusPacket.State.OPEN_INVENTORY_ACHIEVEMENT));
-                    mc.player.connection.sendPacket(new CCloseWindowPacket(mc.player.openContainer.windowId));
-                }
+                mc.player.connection.sendPacket(new CEntityActionPacket(mc.player, CEntityActionPacket.Action.OPEN_INVENTORY));
+                mc.player.connection.sendPacket(new CCloseWindowPacket(0));
             } else if (!hurt) {
                 triggered = false;
             }
