@@ -49,6 +49,7 @@ public class ModuleList {
     public ItemScroller itemScroller;
     public ElytraHelper elytraHelper;
     public FTHelper ftHelper;
+    public LDHelper ldHelper;
     public AutoSwap autoSwap;
     public AutoTotem autoTotem;
     public AutoBug autoBug;
@@ -163,6 +164,7 @@ public class ModuleList {
                 itemScroller = new ItemScroller(),
                 noFriendDamage = new NoFriendDamage(),
                 ftHelper = new FTHelper(),
+                ldHelper = new LDHelper(),
                 autoSwap = new AutoSwap(),
                 autoTotem = new AutoTotem(),
                 autoBug = new AutoBug(),

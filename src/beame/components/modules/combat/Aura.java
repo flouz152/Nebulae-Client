@@ -71,7 +71,7 @@ public class Aura extends Module {
     private long nextAttackDelay = 200L;
 
     private LivingEntity currentTarget;
-    private Vector2f currentRotations = new Vector2f();
+    private Vector2f currentRotations = new Vector2f(0.0F, 0.0F);
     private boolean rotationsInitialized;
     private Vector3d aimPoint;
     private int aimPointTicks;
