@@ -228,7 +228,13 @@ public class Aura extends Module {
 
     private void processRotationLogic() {
         if (target == null || mc.player == null || mc.world == null) return;
-        if (!LookTarget(target)) return;
+
+        boolean inCurrentView = LookTarget(target);
+        if (!inCurrentView) {
+            if (!(rotationType.get("LuckyDayz") && isWithinRotationFov(rotateVector, target))) {
+                return;
+            }
+        }
         if (AuraUtil.getStrictDistance(target) > range.get() + preRange.get()) return;
 
         float attackStrength = mc.player.getCooledAttackStrength(synctps.get() ? Essence.getHandler().getServerUtils().getAdjustTicks() : (rotationType.get("СпукиТайм") ? (MathUtil.random(0.97f,1)) : 0.5f));
@@ -945,6 +951,21 @@ public class Aura extends Module {
         return angle <= fov.get();
     }
 
+    private boolean isWithinRotationFov(Vector2f rotation, LivingEntity target) {
+        if (target == null) {
+            return false;
+        }
+
+        Vector3d lookDirection = Vector3d.fromPitchYaw(new Vector2f(rotation.y, rotation.x)).normalize();
+        Vector3d toTarget = target.getPositionVec()
+                .subtract(mc.player.getEyePosition(1.0F))
+                .normalize();
+
+        double dot = lookDirection.dotProduct(toTarget);
+        double angle = Math.toDegrees(Math.acos(MathHelper.clamp(dot, -1.0, 1.0)));
+        return angle <= fov.get();
+    }
+
     private double getEntityArmor(PlayerEntity entityPlayer2) {
         double d2 = 0.0;
         for (int i2 = 0; i2 < 4; ++i2) {
@@ -1067,10 +1088,6 @@ public class Aura extends Module {
             return;
         }
 
-        if (!LookTarget(target)) {
-            return;
-        }
-
         double smoothing = MathHelper.clamp(luckySmoothing.get(), 0.05f, 1.0f);
         Vector3d basePosition = target.getPositionVec();
         Vector3d motion = new Vector3d(
@@ -1140,6 +1157,19 @@ public class Aura extends Module {
         float yawSpeed = luckyYawSpeed.get();
         float pitchSpeed = luckyPitchSpeed.get();
 
+        float yawDeltaAbs = Math.abs(yawDelta);
+        float pitchDeltaAbs = Math.abs(pitchDelta);
+
+        if (yawDeltaAbs > yawSpeed) {
+            float catchUp = MathHelper.clamp(yawDeltaAbs / 90.0f, 1.0f, 3.5f);
+            yawSpeed *= catchUp;
+        }
+
+        if (pitchDeltaAbs > pitchSpeed) {
+            float catchUp = MathHelper.clamp(pitchDeltaAbs / 60.0f, 1.0f, 3.0f);
+            pitchSpeed *= catchUp;
+        }
+
         if (luckyAdaptiveFocus.get()) {
             double deltaDistance = Math.abs(distance - luckyDayzLastDistance);
             double distanceFactor = MathHelper.clamp(0.6 + (distance / Math.max(1.0f, range.get())) * 0.7, 0.6, 1.5);
@@ -1158,6 +1188,14 @@ public class Aura extends Module {
 
         float yawStep = MathHelper.clamp(luckyDayzYawVelocity, -yawSpeed, yawSpeed);
         float pitchStep = MathHelper.clamp(luckyDayzPitchVelocity, -pitchSpeed, pitchSpeed);
+
+        if (Math.abs(yawStep) < 0.05f && yawDeltaAbs > 1.5f) {
+            yawStep = Math.copySign(Math.min(yawDeltaAbs, yawSpeed), yawDelta);
+        }
+
+        if (Math.abs(pitchStep) < 0.05f && pitchDeltaAbs > 1.5f) {
+            pitchStep = Math.copySign(Math.min(pitchDeltaAbs, pitchSpeed), pitchDelta);
+        }
 
         float updatedYaw = rotateVector.x + yawStep;
         float updatedPitch = MathHelper.clamp(rotateVector.y + pitchStep, -90.0f, 90.0f);
