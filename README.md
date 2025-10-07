@@ -5,13 +5,15 @@
 ## Структура
 - `clickgui-mod/` — полноценный Gradle-проект Forge 1.16.5.
   - `build.gradle`, `settings.gradle`, `gradle.properties` — конфигурация сборки.
+  - `gradlew`, `gradlew.bat`, `gradle/wrapper/gradle-wrapper.properties` — скрипты Gradle Wrapper (под Gradle 7.6.1).
   - `src/main/java/com/nebulae/clickgui/...` — код клиента и GUI.
   - `src/main/resources/META-INF/mods.toml`, `pack.mcmeta` — метаданные и ресурсы мода.
 
 ## Сборка
 1. Установите JDK 17.
-2. Установите Gradle 7.x (или более свежий, совместимый с ForgeGradle 5).
-3. В корне `clickgui-mod` выполните команду `gradle runClient` для запуска среды разработки или `gradle build` для сборки JAR (в результате появится в `build/libs/`).
+2. Убедитесь, что у вас есть Gradle 7.6.1 (можно поставить локально или воспользоваться Gradle Wrapper из проекта).
+   - Для Wrapper скачайте файл `gradle-wrapper.jar` из официального дистрибутива Gradle 7.6.1 (см. таблицу ниже) и положите его в `clickgui-mod/gradle/wrapper/`.
+3. В каталоге `clickgui-mod` выполните `./gradlew runClient` для запуска среды разработки или `./gradlew build` для сборки JAR (результат появится в `build/libs/`).
 
 ## Запуск в игре
 1. Поместите собранный JAR в папку `mods` сборки Forge 1.16.5.
@@ -20,5 +22,4 @@
 ## Бинарные файлы
 путь до файла который нужен | куда положить этот файл
 --- | ---
-нет | не требуется
-
+clickgui-mod/gradle/wrapper/gradle-wrapper.jar | clickgui-mod/gradle/wrapper/gradle-wrapper.jar
