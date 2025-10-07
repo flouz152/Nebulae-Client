@@ -10,8 +10,10 @@ import beame.setting.SettingList.SliderSetting;
 import beame.util.math.TimerUtil;
 import events.Event;
 import events.impl.player.EventUpdate;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -47,6 +49,7 @@ public class ZombieFarm extends Module {
     private long spawnCommandAt;
     private long lastRandomLocAt;
     private long lastZombieSeenAt;
+    private BlockPos lootBlock;
 
     public ZombieFarm() {
         super("ZombieFarm", Category.Combat, true, "Автофарм зомби с использованием Baritone");
@@ -74,6 +77,7 @@ public class ZombieFarm extends Module {
         wanderTimer.reset();
         commandTimer.setMs(400L);
         sendRandomLoc();
+        lootBlock = null;
     }
 
     @Override
@@ -86,6 +90,7 @@ public class ZombieFarm extends Module {
         killCounter = 0;
         autoLeaveTriggered = false;
         wanderGoal = null;
+        lootBlock = null;
     }
 
     @Override
@@ -162,6 +167,7 @@ public class ZombieFarm extends Module {
                 lootClicks = 0;
                 lootTimer.reset();
                 killCounter = 0;
+                lootBlock = computeLootBlock();
             }
         }
 
@@ -193,10 +199,11 @@ public class ZombieFarm extends Module {
 
         lastZombieSeenAt = System.currentTimeMillis();
         double distance = mc.player.getDistance(currentTarget);
-        if (distance > 4.0) {
+        if (distance > 4.5) {
             pathToTarget();
         } else {
             cancelPathing();
+            maintainSpacing(distance);
             attackTarget();
         }
         mc.player.setSprinting(true);
@@ -209,7 +216,7 @@ public class ZombieFarm extends Module {
         if (!pathTimer.hasReached(250)) {
             return;
         }
-        BlockPos pos = currentTarget.getPosition();
+        BlockPos pos = findApproachPosition(currentTarget);
         boolean sameGoal = lastGoal != null && lastGoal.withinDistance(pos, 1.5);
         if (sameGoal && baritone.getCustomGoalProcess().isActive()) {
             return;
@@ -217,6 +224,69 @@ public class ZombieFarm extends Module {
         baritone.getCustomGoalProcess().setGoalAndPath(new GoalNear(pos, 2));
         lastGoal = pos;
         pathTimer.reset();
+    }
+
+    private BlockPos findApproachPosition(ZombieEntity target) {
+        if (target == null || mc.world == null) {
+            return mc.player.getPosition();
+        }
+        BlockPos base = target.getPosition();
+        BlockPos best = null;
+        double bestScore = Double.MAX_VALUE;
+        for (int radius = 3; radius <= 6; radius++) {
+            for (int i = 0; i < 12; i++) {
+                double angle = (Math.PI * 2 / 12.0) * i;
+                int x = base.getX() + MathHelper.floor(Math.cos(angle) * radius);
+                int z = base.getZ() + MathHelper.floor(Math.sin(angle) * radius);
+                int y = mc.world.getHeight(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, x, z);
+                BlockPos candidate = new BlockPos(x, y, z);
+                BlockPos min = candidate.add(-1, -1, -1);
+                BlockPos max = candidate.add(1, 1, 1);
+                if (!mc.world.isAreaLoaded(min, max)) {
+                    continue;
+                }
+                if (!isOpenSurface(candidate)) {
+                    continue;
+                }
+                double dist = candidate.distanceSq(mc.player.getPosX(), mc.player.getPosY(), mc.player.getPosZ(), true);
+                if (dist < bestScore) {
+                    bestScore = dist;
+                    best = candidate;
+                }
+            }
+            if (best != null) {
+                return best;
+            }
+        }
+        if (isOpenSurface(base)) {
+            return base;
+        }
+        return mc.player.getPosition();
+    }
+
+    private boolean isOpenSurface(BlockPos pos) {
+        if (mc.world == null) {
+            return false;
+        }
+        if (!mc.world.isAirBlock(pos) || !mc.world.isAirBlock(pos.up())) {
+            return false;
+        }
+        if (!mc.world.getFluidState(pos).isEmpty()) {
+            return false;
+        }
+        BlockPos below = pos.down();
+        BlockState belowState = mc.world.getBlockState(below);
+        if (!belowState.getMaterial().isSolid()) {
+            return false;
+        }
+        if (belowState.isIn(BlockTags.CLIMBABLE)) {
+            return false;
+        }
+        if (!mc.world.canBlockSeeSky(pos)) {
+            return false;
+        }
+        BlockState state = mc.world.getBlockState(pos);
+        return !state.isIn(BlockTags.CLIMBABLE);
     }
 
     private void attackTarget() {
@@ -230,24 +300,70 @@ public class ZombieFarm extends Module {
         }
     }
 
+    private void maintainSpacing(double distance) {
+        if (currentTarget == null) {
+            return;
+        }
+        double desired = 3.0;
+        if (distance >= desired) {
+            return;
+        }
+        Vector3d away = mc.player.getPositionVec().subtract(currentTarget.getPositionVec());
+        Vector3d planar = new Vector3d(away.x, 0.0, away.z);
+        if (planar.lengthSquared() < 1.0E-4) {
+            return;
+        }
+        Vector3d normalized = planar.normalize();
+        double speed = MathHelper.clamp(desired - distance, 0.25, 0.8);
+        Vector3d motion = mc.player.getMotion();
+        mc.player.setMotion(normalized.x * speed, motion.y, normalized.z * speed);
+    }
+
     private void performLootClicks() {
         if (!lootSequence) {
             return;
         }
-        if (!lootTimer.hasReached(60)) {
+        if (lootBlock == null || !mc.world.isAreaLoaded(lootBlock, lootBlock)) {
+            lootBlock = computeLootBlock();
+        }
+        if (!lootTimer.hasReached(35)) {
             return;
         }
-        BlockPos floor = new BlockPos(mc.player.getPosX(), mc.player.getPosY() - 1, mc.player.getPosZ());
-        if (!mc.world.isAirBlock(floor)) {
-            mc.playerController.clickBlock(floor, Direction.UP);
+        BlockPos target = lootBlock != null ? lootBlock : mc.player.getPosition().down();
+        if (mc.world.isAirBlock(target)) {
+            BlockPos below = target.down();
+            if (!mc.world.isAirBlock(below)) {
+                target = below;
+            }
+        }
+        Vector3d lookVec = new Vector3d(target.getX() + 0.5, target.getY() + 0.5, target.getZ() + 0.5);
+        lookAt(lookVec);
+        if (!mc.world.isAirBlock(target)) {
+            mc.playerController.clickBlock(target, Direction.UP);
         }
         mc.player.swingArm(Hand.MAIN_HAND);
         lootClicks++;
         lootTimer.reset();
-        if (lootClicks >= 10) {
+        if (lootClicks >= 25) {
             lootSequence = false;
             lootClicks = 0;
+            lootBlock = null;
         }
+    }
+
+    private BlockPos computeLootBlock() {
+        if (mc.player == null || mc.world == null) {
+            return null;
+        }
+        BlockPos front = mc.player.getPosition().offset(mc.player.getHorizontalFacing()).down();
+        if (mc.world.isAreaLoaded(front, front)) {
+            return front;
+        }
+        BlockPos fallback = mc.player.getPosition().down();
+        if (mc.world.isAreaLoaded(fallback, fallback)) {
+            return fallback;
+        }
+        return null;
     }
 
     private void sendRandomLoc() {
@@ -331,16 +447,12 @@ public class ZombieFarm extends Module {
             int z = origin.getZ() + MathHelper.floor(Math.sin(angle) * radius);
             int y = mc.world.getHeight(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, x, z);
             BlockPos candidate = new BlockPos(x, y, z);
-            BlockPos below = candidate.down();
             BlockPos minCheck = candidate.add(-1, -1, -1);
             BlockPos maxCheck = candidate.add(1, 1, 1);
             if (!mc.world.isAreaLoaded(minCheck, maxCheck)) {
                 continue;
             }
-            if (!mc.world.getBlockState(below).getMaterial().isSolid()) {
-                continue;
-            }
-            if (!mc.world.getFluidState(candidate).isEmpty()) {
+            if (!isOpenSurface(candidate)) {
                 continue;
             }
             wanderGoal = candidate;
