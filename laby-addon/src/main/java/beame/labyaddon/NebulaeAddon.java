@@ -1,18 +1,23 @@
 package beame.labyaddon;
 
 import beame.labyaddon.config.NebulaeAddonConfig;
-import beame.labyaddon.feature.FTHelperBridge;
-import beame.labyaddon.feature.TargetESPBridge;
+import beame.labyaddon.core.ModuleManager;
+import beame.labyaddon.module.player.FTHelperModule;
+import beame.labyaddon.module.render.TargetESPModule;
 import beame.labyaddon.ui.NebulaeAddonSettingsGui;
 import net.labymod.api.LabyAddon;
 import net.labymod.api.configuration.loader.ConfigBuilder;
 import net.labymod.api.event.Subscribe;
-import net.labymod.api.event.client.gui.screen.ScreenOpenEvent;
-import net.labymod.api.event.client.lifecycle.GameTickEvent;
 import net.labymod.api.event.client.settings.SettingsOpenEvent;
 import net.labymod.api.reference.annotation.Referenceable;
 import net.labymod.api.util.io.LabyModFile;
 import net.minecraft.client.Minecraft;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.client.event.ClientChatReceivedEvent;
 
 /**
  * LabyMod 3 add-on entry point which exposes the Essence FTHelper and TargetESP modules
@@ -21,18 +26,29 @@ import net.minecraft.client.Minecraft;
 @Referenceable
 public class NebulaeAddon extends LabyAddon<NebulaeAddonConfig> {
 
-    private final FTHelperBridge ftHelperBridge = new FTHelperBridge();
-    private final TargetESPBridge targetESPBridge = new TargetESPBridge();
+    private final ModuleManager moduleManager = new ModuleManager();
+    private final FTHelperModule ftHelperModule = new FTHelperModule();
+    private final TargetESPModule targetEspModule = new TargetESPModule();
+    private final ForgeBridge forgeBridge = new ForgeBridge();
 
     @Override
     protected void enable() {
-        this.ftHelperBridge.refresh();
-        this.targetESPBridge.refresh();
+        moduleManager.clear();
+        moduleManager.register(ftHelperModule);
+        moduleManager.register(targetEspModule);
+        MinecraftForge.EVENT_BUS.register(forgeBridge);
+
+        NebulaeAddonConfig config = configuration();
+        ftHelperModule.applyConfig(config);
+        targetEspModule.applyConfig(config);
     }
 
     @Override
     protected void disable() {
-        // Nothing to clean up, the bridges are lightweight and stateless.
+        NebulaeAddonConfig config = configuration();
+        ftHelperModule.exportConfig(config);
+        targetEspModule.exportConfig(config);
+        MinecraftForge.EVENT_BUS.unregister(forgeBridge);
     }
 
     @Override
@@ -46,32 +62,13 @@ public class NebulaeAddon extends LabyAddon<NebulaeAddonConfig> {
         settings.add(net.labymod.api.client.gui.screen.widget.widgets.settings.ButtonSettingWidget.builder()
                 .label("Открыть меню настроек")
                 .action(() -> Minecraft.getInstance().displayGuiScreen(
-                        new NebulaeAddonSettingsGui(Minecraft.getInstance().currentScreen, ftHelperBridge, targetESPBridge)))
+                        new NebulaeAddonSettingsGui(Minecraft.getInstance().currentScreen, configuration(), ftHelperModule, targetEspModule)))
                 .build());
     }
 
     @Subscribe
     public void onSettingsOpen(SettingsOpenEvent event) {
-        // Keep bridge state in sync whenever the settings are opened.
-        this.ftHelperBridge.refresh();
-        this.targetESPBridge.refresh();
-    }
-
-    @Subscribe
-    public void onScreenOpened(ScreenOpenEvent event) {
-        if (event.getScreen() instanceof NebulaeAddonSettingsGui) {
-            // Screen already uses live module references, nothing else required.
-            return;
-        }
-    }
-
-    @Subscribe
-    public void onClientTick(GameTickEvent event) {
-        // Ensure queued actions are flushed once the world becomes available.
-        if (Minecraft.getInstance().world != null && Minecraft.getInstance().player != null) {
-            this.ftHelperBridge.flushQueuedState();
-            this.targetESPBridge.flushQueuedState();
-        }
+        // nothing else required – modules live entirely inside the addon now.
     }
 
     @Override
@@ -83,5 +80,34 @@ public class NebulaeAddon extends LabyAddon<NebulaeAddonConfig> {
     protected NebulaeAddonConfig createConfig(ConfigBuilder builder) {
         NebulaeAddonConfig config = super.createConfig(builder);
         return config != null ? config : new NebulaeAddonConfig();
+    }
+
+    private class ForgeBridge {
+
+        @SubscribeEvent
+        public void onClientTick(TickEvent.ClientTickEvent event) {
+            if (event.phase == TickEvent.Phase.END) {
+                moduleManager.onTick();
+            }
+        }
+
+        @SubscribeEvent
+        public void onChat(ClientChatReceivedEvent event) {
+            if (event.getMessage() != null) {
+                moduleManager.onChatMessage(event.getMessage());
+            }
+        }
+
+        @SubscribeEvent
+        public void onRenderWorld(RenderWorldLastEvent event) {
+            moduleManager.onRender3D(event.getMatrixStack(), event.getPartialTicks());
+        }
+
+        @SubscribeEvent
+        public void onRenderOverlay(RenderGameOverlayEvent.Post event) {
+            if (event.getType() == RenderGameOverlayEvent.ElementType.ALL) {
+                moduleManager.onRender2D(event.getMatrixStack(), event.getPartialTicks());
+            }
+        }
     }
 }
