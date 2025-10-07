@@ -70,6 +70,14 @@ goto fail
 
 set CLASSPATH=%APP_HOME%\gradle\wrapper\gradle-wrapper.jar
 
+if not exist "%CLASSPATH%" (
+    echo ERROR: Gradle wrapper JAR is missing.
+    echo.
+    echo Run scripts\download-gradle-wrapper.ps1 (PowerShell) or scripts/download-gradle-wrapper.sh ^
+to download gradle-wrapper.jar into clickgui-mod\gradle\wrapper\ before invoking gradlew.bat.
+    exit /b 1
+)
+
 
 @rem Execute Gradle
 "%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GRADLE_OPTS% "-Dorg.gradle.appname=%APP_BASE_NAME%" -classpath "%CLASSPATH%" org.gradle.wrapper.GradleWrapperMain %*

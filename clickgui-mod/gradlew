@@ -116,6 +116,17 @@ esac
 
 CLASSPATH=$APP_HOME/gradle/wrapper/gradle-wrapper.jar
 
+if [ ! -f "$CLASSPATH" ]; then
+    cat <<'EOWARN'
+ERROR: Gradle wrapper JAR is missing.
+
+Run scripts/download-gradle-wrapper.sh (or the PowerShell variant on Windows)
+to download gradle-wrapper.jar into clickgui-mod/gradle/wrapper/ before
+invoking ./gradlew.
+EOWARN
+    exit 1
+fi
+
 
 # Determine the Java command to use to start the JVM.
 if [ -n "$JAVA_HOME" ] ; then
