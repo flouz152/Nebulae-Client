@@ -18,6 +18,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.NonFinal;
 import beame.module.Category;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.screen.inventory.InventoryScreen;
@@ -46,6 +47,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector2f;
 import net.minecraft.util.math.vector.Vector3d;
@@ -102,6 +105,7 @@ public class Aura extends Module {
     private final BooleanSetting breakshield = new BooleanSetting("Ломать щит", true, 0).setVisible(() -> rotationType.get("РиллиВорлд") || rotationType.get("ХвХ") || rotationType.get("СпукиТайм") || rotationType.get("LuckyDayz"));
     private final BooleanSetting otzhimshield = new BooleanSetting("Отжимать щит", true, 0).setVisible(() -> rotationType.get("РиллиВорлд") || rotationType.get("ХвХ") || rotationType.get("СпукиТайм") || rotationType.get("LuckyDayz"));
     private final BooleanSetting walls = new BooleanSetting("Бить через стены", true, 0);
+    private final BooleanSetting wallsAdvanced = new BooleanSetting("Бить через стены 2", false, 0);
     private final BooleanSetting synctps = new BooleanSetting("Синхронизация с тиками", false, 0);
     private final BooleanSetting fastrotation = new BooleanSetting("Ускорять ротацию", false, 0).setVisible(() -> rotationType.get("РиллиВорлд") || rotationType.get("ХвХ"));
     private final BooleanSetting interpol = new BooleanSetting("Интерполяция", false, 0);
@@ -161,7 +165,7 @@ public class Aura extends Module {
     public Aura() {
         super("AttackAura", Category.Combat, true, "Автоматически бьет энтити в установленном радиусе");
         addSettings(rotationType, targetSort, correctionType, interpolationType, attack36, range, preRange, fov, filter, noAttackCheck, onlycrit, smartcrit, breakshield,
-                otzhimshield, walls, synctps, fastrotation, interpol, luckyYawSpeed, luckyPitchSpeed, luckyPrediction, luckySmoothing, luckyAimCenter, luckyAdaptiveFocus);
+                otzhimshield, walls, wallsAdvanced, synctps, fastrotation, interpol, luckyYawSpeed, luckyPitchSpeed, luckyPrediction, luckySmoothing, luckyAimCenter, luckyAdaptiveFocus);
     }
 
     @Override
@@ -868,8 +872,16 @@ public class Aura extends Module {
             return false;
         }
 
-        if (!walls.get() && !mc.player.canEntityBeSeen(entity)) {
-            return false;
+        if (!mc.player.canEntityBeSeen(entity)) {
+            if (walls.get()) {
+                // allow legacy wall hits
+            } else if (wallsAdvanced.get()) {
+                if (!canHitThroughExtendedWalls(entity)) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
         }
 
         if (entity instanceof PlayerEntity player) {
@@ -934,6 +946,46 @@ public class Aura extends Module {
         luckyDayzSprintReset = false;
     }
 
+    private boolean canHitThroughExtendedWalls(LivingEntity entity) {
+        if (mc.player == null || mc.world == null) {
+            return false;
+        }
+
+        Vector3d eyePos = mc.player.getEyePosition(1.0F);
+        AxisAlignedBB targetBox = entity.getBoundingBox().grow(0.2);
+        double stepX = Math.max(0.2, (targetBox.maxX - targetBox.minX) / 2.0);
+        double stepY = Math.max(0.2, (targetBox.maxY - targetBox.minY) / 2.0);
+        double stepZ = Math.max(0.2, (targetBox.maxZ - targetBox.minZ) / 2.0);
+
+        for (double x = targetBox.minX; x <= targetBox.maxX; x += stepX) {
+            for (double y = targetBox.minY; y <= targetBox.maxY; y += stepY) {
+                for (double z = targetBox.minZ; z <= targetBox.maxZ; z += stepZ) {
+                    Vector3d end = new Vector3d(x, y, z);
+                    RayTraceContext context = new RayTraceContext(eyePos, end,
+                            RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, mc.player);
+                    RayTraceResult trace = mc.world.rayTraceBlocks(context);
+                    if (trace == null || trace.getType() == RayTraceResult.Type.MISS) {
+                        return true;
+                    }
+                    if (trace.getType() == RayTraceResult.Type.BLOCK && trace instanceof BlockRayTraceResult) {
+                        BlockRayTraceResult blockTrace = (BlockRayTraceResult) trace;
+                        double blockDist = blockTrace.getHitVec().squareDistanceTo(eyePos);
+                        double targetDist = end.squareDistanceTo(eyePos);
+                        if (targetDist - blockDist <= 4.5) {
+                            BlockPos hitPos = blockTrace.getPos();
+                            BlockState state = mc.world.getBlockState(hitPos);
+                            if (!state.isNormalCube(mc.world, hitPos) || state.getMaterial().isReplaceable()) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
     private void resetSnapRotation() {
         if (mc.player != null) {
             mc.player.rotationYawOffset = Integer.MIN_VALUE;
@@ -943,14 +995,29 @@ public class Aura extends Module {
     }
 
     private boolean LookTarget(LivingEntity target) {
-        if (target == null) return false;
-        Vector3d playerDirection = mc.player.getLook(1.0F).normalize();
-        Vector3d targetDirection = target.getPositionVec()
+        if (target == null) {
+            return false;
+        }
+
+        float allowedFov = fov.get();
+        if (rotationType.get("LuckyDayz") && allowedFov >= 360f) {
+            return true;
+        }
+
+        Vector3d referenceDirection;
+        if (rotationType.get("LuckyDayz")) {
+            referenceDirection = Vector3d.fromPitchYaw(new Vector2f(rotateVector.y, rotateVector.x)).normalize();
+        } else {
+            referenceDirection = mc.player.getLook(1.0F).normalize();
+        }
+
+        Vector3d toTarget = target.getPositionVec()
                 .subtract(mc.player.getEyePosition(1.0F))
                 .normalize();
-        double dotProduct = playerDirection.dotProduct(targetDirection);
-        double angle = Math.toDegrees(Math.acos(clamp(dotProduct, -1.0, 1.0)));
-        return angle <= fov.get();
+
+        double dotProduct = referenceDirection.dotProduct(toTarget);
+        double angle = Math.toDegrees(Math.acos(MathHelper.clamp(dotProduct, -1.0, 1.0)));
+        return angle <= allowedFov;
     }
 
     private boolean isWithinRotationFov(Vector2f rotation, LivingEntity target) {

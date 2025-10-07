@@ -51,8 +51,11 @@ public class ModuleList {
     public FTHelper ftHelper;
     public LDHelper ldHelper;
     public AutoSwap autoSwap;
+    public LDSwap ldSwap;
     public AutoTotem autoTotem;
     public AutoBug autoBug;
+    public ECFold ecFold;
+    public ZombieFarm zombieFarm;
     public SwingAnimations swingAnimations;
     public NoInteract noInteract;
     public NoPush noPush;
@@ -166,8 +169,11 @@ public class ModuleList {
                 ftHelper = new FTHelper(),
                 ldHelper = new LDHelper(),
                 autoSwap = new AutoSwap(),
+                ldSwap = new LDSwap(),
                 autoTotem = new AutoTotem(),
                 autoBug = new AutoBug(),
+                ecFold = new ECFold(),
+                zombieFarm = new ZombieFarm(),
               //  staffKill = new StaffKill(),
                 swingAnimations = new SwingAnimations(),
                 noInteract = new NoInteract(),
