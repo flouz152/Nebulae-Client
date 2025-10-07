@@ -120,8 +120,8 @@ if [ ! -f "$CLASSPATH" ]; then
     cat <<'EOWARN'
 ERROR: Gradle wrapper JAR is missing.
 
-Run scripts/download-gradle-wrapper.sh (or the PowerShell variant on Windows)
-to download gradle-wrapper.jar into clickgui-mod/gradle/wrapper/ before
+Run `gradle downloadWrapperJar` from the clickgui-mod directory using any
+installed Gradle 7.x distribution to bootstrap the wrapper files before
 invoking ./gradlew.
 EOWARN
     exit 1

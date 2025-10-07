@@ -1,3 +1,7 @@
+import java.io.FileInputStream
+import java.util.zip.ZipEntry
+import java.util.zip.ZipInputStream
+
 buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net' }
@@ -173,4 +177,62 @@ publishing {
             url "file:///${project.projectDir}/mcmodsrepo"
         }
     }
+}
+
+def wrapperVersion = '7.6.1'
+def wrapperJar = file('gradle/wrapper/gradle-wrapper.jar')
+
+tasks.register('downloadWrapperJar') {
+    group = 'build setup'
+    description = 'Downloads gradle-wrapper.jar from the official Gradle distribution when it is missing.'
+    outputs.file(wrapperJar)
+    doLast {
+        if (wrapperJar.exists()) {
+            logger.lifecycle("Gradle wrapper JAR already present: ${wrapperJar}")
+            return
+        }
+
+        wrapperJar.parentFile.mkdirs()
+        def distributionUrl = "https://services.gradle.org/distributions/gradle-${wrapperVersion}-bin.zip"
+        logger.lifecycle("Downloading Gradle ${wrapperVersion} distribution from ${distributionUrl}")
+
+        File tempZip = File.createTempFile("gradle-${wrapperVersion}", ".zip")
+        try {
+            tempZip.withOutputStream { output ->
+                new URL(distributionUrl).withInputStream { input ->
+                    output << input
+                }
+            }
+
+            ZipInputStream zipInput = new ZipInputStream(new FileInputStream(tempZip))
+            try {
+                ZipEntry entry
+                String targetPath = "gradle-${wrapperVersion}/lib/gradle-wrapper.jar"
+                boolean extracted = false
+                while ((entry = zipInput.nextEntry) != null) {
+                    if (!entry.isDirectory() && entry.name == targetPath) {
+                        wrapperJar.withOutputStream { jarOutput ->
+                            jarOutput << zipInput
+                        }
+                        extracted = true
+                        break
+                    }
+                }
+
+                if (!extracted) {
+                    throw new GradleException("Failed to locate gradle-wrapper.jar inside ${distributionUrl}")
+                }
+            } finally {
+                zipInput.close()
+            }
+        } finally {
+            if (tempZip.exists()) {
+                tempZip.delete()
+            }
+        }
+    }
+}
+
+tasks.named('wrapper') {
+    dependsOn 'downloadWrapperJar'
 }

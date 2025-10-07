@@ -12,8 +12,8 @@
 ## Сборка
 1. Установите JDK 17.
 2. Убедитесь, что у вас есть Gradle 7.6.1 (можно поставить локально или воспользоваться Gradle Wrapper из проекта).
-   - Если используете Wrapper, сначала запустите `scripts/download-gradle-wrapper.sh` (Linux/macOS) или `scripts/download-gradle-wrapper.ps1` (Windows PowerShell), чтобы автоматически скачать `gradle-wrapper.jar` из официального дистрибутива Gradle 7.6.1 в `clickgui-mod/gradle/wrapper/`.
-   - При отсутствии соответствующего скрипта можно вручную извлечь `gradle-wrapper.jar` из архива Gradle 7.6.1 (см. таблицу ниже).
+   - Если `gradle-wrapper.jar` отсутствует, выполните `gradle downloadWrapperJar` из каталога `clickgui-mod` (подойдет любая установленная версия Gradle 7.x). Скрипт в `build.gradle` скачает нужный архив и извлечёт JAR в `gradle/wrapper/`.
+   - После этого можно пользоваться `./gradlew` / `gradlew.bat` без дополнительной настройки.
 3. В каталоге `clickgui-mod` выполните `./gradlew runClient` для запуска среды разработки или `./gradlew build` для сборки JAR (результат появится в `build/libs/`).
 
 ## Запуск в игре
