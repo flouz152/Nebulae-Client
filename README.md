@@ -9,7 +9,7 @@
   - `src/main/resources/META-INF/mods.toml`, `pack.mcmeta` — метаданные и ресурсы мода.
 
 ## Сборка
-1. Установите JDK 8.
+1. Установите JDK 17.
 2. Установите Gradle 7.x (или более свежий, совместимый с ForgeGradle 5).
 3. В корне `clickgui-mod` выполните команду `gradle runClient` для запуска среды разработки или `gradle build` для сборки JAR (в результате появится в `build/libs/`).
 
