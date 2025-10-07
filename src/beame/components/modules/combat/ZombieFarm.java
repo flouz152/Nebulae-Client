@@ -18,9 +18,11 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.gen.Heightmap;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class ZombieFarm extends Module {
 
@@ -32,9 +34,11 @@ public class ZombieFarm extends Module {
     private final TimerUtil pathTimer = new TimerUtil();
     private final TimerUtil commandTimer = new TimerUtil();
     private final TimerUtil lootTimer = new TimerUtil();
+    private final TimerUtil wanderTimer = new TimerUtil();
 
     private ZombieEntity currentTarget;
     private BlockPos lastGoal;
+    private BlockPos wanderGoal;
     private IBaritone baritone;
     private int killCounter;
     private boolean lootSequence;
@@ -62,10 +66,12 @@ public class ZombieFarm extends Module {
         lootClicks = 0;
         autoLeaveTriggered = false;
         lastGoal = null;
+        wanderGoal = null;
         currentTarget = null;
         lastZombieSeenAt = System.currentTimeMillis();
         pathTimer.reset();
         lootTimer.reset();
+        wanderTimer.reset();
         commandTimer.setMs(400L);
         sendRandomLoc();
     }
@@ -79,6 +85,7 @@ public class ZombieFarm extends Module {
         lootSequence = false;
         killCounter = 0;
         autoLeaveTriggered = false;
+        wanderGoal = null;
     }
 
     @Override
@@ -100,7 +107,7 @@ public class ZombieFarm extends Module {
         if (currentTarget != null) {
             engageTarget();
         } else {
-            cancelPathing();
+            handleWander();
         }
     }
 
@@ -124,12 +131,14 @@ public class ZombieFarm extends Module {
                     autoLeaveTriggered = true;
                     spawnCommandAt = System.currentTimeMillis();
                     cancelPathing();
+                    wanderGoal = null;
                     break;
                 }
             }
         } else if (System.currentTimeMillis() - spawnCommandAt >= 10_000L) {
             sendRandomLoc();
             autoLeaveTriggered = false;
+            wanderTimer.reset();
         }
     }
 
@@ -148,6 +157,7 @@ public class ZombieFarm extends Module {
             currentTarget = null;
             lastGoal = null;
             lootSequence = killCounter >= 15;
+            wanderGoal = null;
             if (lootSequence) {
                 lootClicks = 0;
                 lootTimer.reset();
@@ -172,6 +182,8 @@ public class ZombieFarm extends Module {
         currentTarget = zombies.get(0);
         lastZombieSeenAt = System.currentTimeMillis();
         lastGoal = null;
+        wanderGoal = null;
+        wanderTimer.reset();
     }
 
     private void engageTarget() {
@@ -179,6 +191,7 @@ public class ZombieFarm extends Module {
             return;
         }
 
+        lastZombieSeenAt = System.currentTimeMillis();
         double distance = mc.player.getDistance(currentTarget);
         if (distance > 4.0) {
             pathToTarget();
@@ -242,6 +255,8 @@ public class ZombieFarm extends Module {
         lastRandomLocAt = System.currentTimeMillis();
         lastZombieSeenAt = lastRandomLocAt;
         cancelPathing();
+        wanderGoal = null;
+        wanderTimer.reset();
     }
 
     private void sendCommand(String command) {
@@ -264,6 +279,7 @@ public class ZombieFarm extends Module {
             baritone.getPathingBehavior().forceCancel();
         }
         lastGoal = null;
+        wanderGoal = null;
     }
 
     private void lookAt(Vector3d vec) {
@@ -278,5 +294,59 @@ public class ZombieFarm extends Module {
         mc.player.rotationYawHead = yaw;
         mc.player.renderYawOffset = yaw;
         mc.player.rotationPitch = pitch;
+    }
+
+    private void handleWander() {
+        if (baritone == null || autoLeaveTriggered || mc.player == null) {
+            return;
+        }
+        if (currentTarget != null) {
+            return;
+        }
+        boolean isPathing = baritone.getPathingBehavior().isPathing();
+        if (isPathing && wanderGoal != null) {
+            double distSq = mc.player.getDistanceSq(wanderGoal.getX() + 0.5, wanderGoal.getY(), wanderGoal.getZ() + 0.5);
+            if (distSq > 9.0) {
+                return;
+            }
+        }
+        if (!isPathing && !wanderTimer.hasReached(700)) {
+            return;
+        }
+        if (isPathing && !wanderTimer.hasReached(1200)) {
+            return;
+        }
+        startWander();
+    }
+
+    private void startWander() {
+        if (baritone == null || mc.player == null || mc.world == null) {
+            return;
+        }
+        BlockPos origin = mc.player.getPosition();
+        for (int attempt = 0; attempt < 6; attempt++) {
+            int radius = ThreadLocalRandom.current().nextInt(16, 41);
+            double angle = ThreadLocalRandom.current().nextDouble(Math.PI * 2);
+            int x = origin.getX() + MathHelper.floor(Math.cos(angle) * radius);
+            int z = origin.getZ() + MathHelper.floor(Math.sin(angle) * radius);
+            int y = mc.world.getHeight(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, x, z);
+            BlockPos candidate = new BlockPos(x, y, z);
+            BlockPos below = candidate.down();
+            if (!mc.world.isAreaLoaded(candidate, 1)) {
+                continue;
+            }
+            if (!mc.world.getBlockState(below).getMaterial().isSolid()) {
+                continue;
+            }
+            if (!mc.world.getFluidState(candidate).isEmpty()) {
+                continue;
+            }
+            wanderGoal = candidate;
+            baritone.getCustomGoalProcess().setGoalAndPath(new GoalNear(candidate, 2));
+            lastGoal = candidate;
+            pathTimer.reset();
+            wanderTimer.reset();
+            return;
+        }
     }
 }

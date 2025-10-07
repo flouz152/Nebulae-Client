@@ -18,6 +18,7 @@ import net.minecraft.util.Hand;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -27,12 +28,20 @@ public class LDSwap extends Module {
     private final TimerUtil swapTimer = new TimerUtil();
     private boolean queued;
     private boolean swapping;
-    private int lastInventorySlot = -1;
+
+    private static final int CHEST_CONTAINER_SLOT = 7;
 
     public LDSwap() {
         super("LDSwap", Category.Combat, true, "Меняет нагрудник с обходом");
         addSettings(swapBind);
         swapTimer.setMs(0);
+    }
+
+    @Override
+    protected void onDisable() {
+        super.onDisable();
+        queued = false;
+        swapping = false;
     }
 
     @Override
@@ -50,7 +59,7 @@ public class LDSwap extends Module {
     }
 
     private void trySwapChestplate() {
-        if (mc.player == null || mc.world == null || !swapTimer.hasReached(250)) {
+        if (mc.player == null || mc.world == null || mc.currentScreen != null || !swapTimer.hasReached(250)) {
             return;
         }
 
@@ -65,29 +74,25 @@ public class LDSwap extends Module {
         int containerSlot = toContainerSlot(replacementSlot);
         boolean hadChestplateEquipped = !current.isEmpty();
 
-        new Thread(() -> {
-            try {
-                int chestSlot = 6;
-                int delayBase = ThreadLocalRandom.current().nextInt(40, 80);
-                if (hadChestplateEquipped) {
-                    InventoryUtility.pickupItem(chestSlot, 0);
-                    Thread.sleep(delayBase);
-                }
+        long initialDelay = hadChestplateEquipped ? ThreadLocalRandom.current().nextLong(35L, 75L) : 0L;
+        long grabDelay = initialDelay + ThreadLocalRandom.current().nextLong(40L, 85L);
+        long placeDelay = grabDelay + ThreadLocalRandom.current().nextLong(35L, 70L);
+        long cleanupDelay = placeDelay + ThreadLocalRandom.current().nextLong(30L, 55L);
+
+        if (hadChestplateEquipped) {
+            scheduleInventoryAction(initialDelay, () -> InventoryUtility.pickupItem(CHEST_CONTAINER_SLOT, 0));
+        }
+
+        scheduleInventoryAction(grabDelay, () -> InventoryUtility.pickupItem(containerSlot, 0));
+        scheduleInventoryAction(placeDelay, () -> InventoryUtility.pickupItem(CHEST_CONTAINER_SLOT, 0));
+        scheduleInventoryAction(cleanupDelay, () -> {
+            if (!mc.player.inventory.getItemStack().isEmpty()) {
                 InventoryUtility.pickupItem(containerSlot, 0);
-                Thread.sleep(ThreadLocalRandom.current().nextInt(45, 90));
-                InventoryUtility.pickupItem(chestSlot, 0);
-                Thread.sleep(ThreadLocalRandom.current().nextInt(30, 60));
-                if (!mc.player.inventory.getItemStack().isEmpty()) {
-                    InventoryUtility.pickupItem(containerSlot, 0);
-                }
-                mc.player.swingArm(Hand.MAIN_HAND);
-                lastInventorySlot = replacementSlot;
-            } catch (InterruptedException ignored) {
-            } finally {
-                swapping = false;
-                swapTimer.reset();
             }
-        }, "ldswap-thread").start();
+            mc.player.swingArm(Hand.MAIN_HAND);
+            swapping = false;
+            swapTimer.reset();
+        });
     }
 
     private int findReplacementSlot(ItemStack current) {
@@ -98,9 +103,6 @@ public class LDSwap extends Module {
                 .collect(Collectors.toList());
 
         for (int slot : candidates) {
-            if (slot == lastInventorySlot) {
-                continue;
-            }
             ItemStack stack = mc.player.inventory.getStackInSlot(slot);
             if (current.isEmpty()) {
                 return slot;
@@ -113,10 +115,6 @@ public class LDSwap extends Module {
             if (stack.isDamageable() && stack.getDamage() != current.getDamage()) {
                 return slot;
             }
-        }
-
-        if (!candidates.isEmpty()) {
-            return candidates.get(0);
         }
 
         return -1;
@@ -144,5 +142,15 @@ public class LDSwap extends Module {
 
     private int toContainerSlot(int inventorySlot) {
         return inventorySlot < 9 ? inventorySlot + 36 : inventorySlot;
+    }
+
+    private void scheduleInventoryAction(long delay, Runnable task) {
+        InventoryUtility.sheduler.schedule(() -> {
+            if (mc.player == null || mc.player.inventory == null || !isState()) {
+                swapping = false;
+                return;
+            }
+            task.run();
+        }, delay, TimeUnit.MILLISECONDS);
     }
 }

@@ -12,6 +12,7 @@ import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 
+import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ECFold extends Module {
@@ -148,6 +149,10 @@ public class ECFold extends Module {
         if (!clickTimer.hasReached(nextClickDelay)) {
             return true;
         }
+        if (!mc.player.inventory.getItemStack().isEmpty()) {
+            placeCarriedStack(container);
+            return true;
+        }
         int start = container.getNumRows() * 9;
         for (int i = start; i < container.inventorySlots.size(); i++) {
             Slot slot = container.inventorySlots.get(i);
@@ -178,10 +183,37 @@ public class ECFold extends Module {
             return false;
         }
         IInventory lower = container.getLowerChestInventory();
-        return lower == mc.player.getInventoryEnderChest();
+        if (lower == mc.player.getInventoryEnderChest()) {
+            return true;
+        }
+        if (mc.currentScreen instanceof ChestScreen screen) {
+            String title = screen.getTitle().getString().toLowerCase(Locale.ROOT);
+            return title.contains("ender") || title.contains("эндер");
+        }
+        return false;
     }
 
     private long randomDelay() {
         return ThreadLocalRandom.current().nextLong(65L, 125L);
+    }
+
+    private void placeCarriedStack(ChestContainer container) {
+        int chestSlotCount = container.getNumRows() * 9;
+        for (int i = 0; i < chestSlotCount; i++) {
+            Slot chestSlot = container.inventorySlots.get(i);
+            if (chestSlot != null && !chestSlot.getHasStack()) {
+                mc.playerController.windowClick(container.windowId, chestSlot.slotNumber, 0, ClickType.PICKUP, mc.player);
+                clickTimer.reset();
+                nextClickDelay = randomDelay();
+                return;
+            }
+        }
+        int fallbackIndex = chestSlotCount;
+        if (fallbackIndex < container.inventorySlots.size()) {
+            Slot fallback = container.inventorySlots.get(fallbackIndex);
+            mc.playerController.windowClick(container.windowId, fallback.slotNumber, 0, ClickType.PICKUP, mc.player);
+        }
+        clickTimer.reset();
+        nextClickDelay = randomDelay();
     }
 }
