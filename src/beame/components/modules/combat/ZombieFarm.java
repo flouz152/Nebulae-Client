@@ -332,7 +332,9 @@ public class ZombieFarm extends Module {
             int y = mc.world.getHeight(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, x, z);
             BlockPos candidate = new BlockPos(x, y, z);
             BlockPos below = candidate.down();
-            if (!mc.world.isAreaLoaded(candidate, 1)) {
+            BlockPos minCheck = candidate.add(-1, -1, -1);
+            BlockPos maxCheck = candidate.add(1, 1, 1);
+            if (!mc.world.isAreaLoaded(minCheck, maxCheck)) {
                 continue;
             }
             if (!mc.world.getBlockState(below).getMaterial().isSolid()) {
