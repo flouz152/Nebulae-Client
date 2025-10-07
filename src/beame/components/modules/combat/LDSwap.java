@@ -2,27 +2,23 @@ package beame.components.modules.combat;
 
 import beame.module.Category;
 import beame.module.Module;
-import beame.setting.SettingList.BindSetting;
 import beame.util.math.TimerUtil;
+import beame.util.player.InventoryUtility;
 import events.Event;
 import events.EventKey;
 import events.impl.player.EventUpdate;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.inventory.container.ClickType;
-import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.util.Hand;
+import org.lwjgl.glfw.GLFW;
 
 public class LDSwap extends Module {
 
-    private final BindSetting swapBind = new BindSetting("Кнопка свапа", 0);
     private final TimerUtil swapTimer = new TimerUtil();
     private boolean queued;
 
     public LDSwap() {
         super("LDSwap", Category.Combat, true, "Меняет нагрудник с обходом");
-        addSettings(swapBind);
         swapTimer.reset();
     }
 
@@ -35,7 +31,7 @@ public class LDSwap extends Module {
     @Override
     public void event(Event event) {
         if (event instanceof EventKey keyEvent) {
-            if (!keyEvent.isReleased() && keyEvent.key == swapBind.get()) {
+            if (!keyEvent.isReleased() && keyEvent.key == GLFW.GLFW_KEY_G) {
                 queued = true;
             }
         } else if (event instanceof EventUpdate) {
@@ -60,13 +56,11 @@ public class LDSwap extends Module {
             return;
         }
 
-        if (!(mc.player.openContainer instanceof PlayerContainer container)) {
+        if (mc.player.openContainer == null) {
             return;
         }
 
-        int containerSlot = slot < 9 ? slot + 36 : slot;
-        mc.playerController.windowClick(container.windowId, containerSlot, 38, ClickType.SWAP, mc.player);
-        mc.player.swingArm(Hand.MAIN_HAND);
+        InventoryUtility.moveItem(slot, 6);
         swapTimer.reset();
     }
 
@@ -86,7 +80,7 @@ public class LDSwap extends Module {
             int damage = stack.isDamageable() ? stack.getDamage() : 0;
             if (damage < bestDamage) {
                 bestDamage = damage;
-                bestSlot = i;
+                bestSlot = (i < 9) ? i + 36 : i;
             }
         }
 

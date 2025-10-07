@@ -9,6 +9,7 @@ import net.minecraft.client.gui.screen.inventory.ChestScreen;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.ChestContainer;
 import net.minecraft.inventory.container.ClickType;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 
@@ -18,24 +19,23 @@ import java.util.concurrent.ThreadLocalRandom;
 public class ECFold extends Module {
 
     private enum Phase {
-        IDLE,
-        OPENING_MAIN,
+        WAIT_MAIN_OPEN,
         STORE_MAIN,
-        CLOSE_AFTER_MAIN,
-        REMOVE_ARMOR,
-        OPENING_ARMOR,
+        CLOSE_MAIN,
+        STRIP_ARMOR,
+        WAIT_ARMOR_OPEN,
         STORE_ARMOR,
-        FINISHED
+        COMPLETE
     }
 
-    private static final int[] ARMOR_SLOTS = {8, 7, 6, 5};
+    private static final int[] ARMOR_SLOT_INDICES = {8, 7, 6, 5};
 
+    private final TimerUtil actionTimer = new TimerUtil();
     private final TimerUtil commandTimer = new TimerUtil();
-    private final TimerUtil clickTimer = new TimerUtil();
 
-    private Phase phase = Phase.IDLE;
+    private Phase phase = Phase.WAIT_MAIN_OPEN;
+    private long nextActionDelay;
     private int armorIndex;
-    private long nextClickDelay;
 
     public ECFold() {
         super("ECFold", Category.Combat, true, "Складывает вещи в эндер-сундук");
@@ -48,18 +48,19 @@ public class ECFold extends Module {
             setState(false);
             return;
         }
+        phase = Phase.WAIT_MAIN_OPEN;
         armorIndex = 0;
-        phase = Phase.OPENING_MAIN;
+        actionTimer.reset();
         commandTimer.reset();
-        clickTimer.reset();
-        scheduleNextClick();
+        commandTimer.setMs(250L);
+        scheduleNextAction();
         sendOpenCommand();
     }
 
     @Override
     protected void onDisable() {
         super.onDisable();
-        phase = Phase.IDLE;
+        phase = Phase.WAIT_MAIN_OPEN;
         armorIndex = 0;
     }
 
@@ -70,154 +71,142 @@ public class ECFold extends Module {
         }
 
         switch (phase) {
-            case OPENING_MAIN -> handleOpeningMain();
-            case STORE_MAIN -> handleStoreMain();
-            case CLOSE_AFTER_MAIN -> handleCloseAfterMain();
-            case REMOVE_ARMOR -> handleRemoveArmor();
-            case OPENING_ARMOR -> handleOpeningArmor();
-            case STORE_ARMOR -> handleStoreArmor();
-            case FINISHED -> setState(false);
-            default -> {}
+            case WAIT_MAIN_OPEN -> waitForChest(false);
+            case STORE_MAIN -> storeInventory(false);
+            case CLOSE_MAIN -> closeChest();
+            case STRIP_ARMOR -> stripArmor();
+            case WAIT_ARMOR_OPEN -> waitForChest(true);
+            case STORE_ARMOR -> storeInventory(true);
+            case COMPLETE -> setState(false);
         }
     }
 
-    private void handleOpeningMain() {
-        if (isEnderChestOpen()) {
-            phase = Phase.STORE_MAIN;
-            scheduleNextClick();
+    private void waitForChest(boolean armorPhase) {
+        ChestContainer container = getOpenEnderChest();
+        if (container != null) {
+            phase = armorPhase ? Phase.STORE_ARMOR : Phase.STORE_MAIN;
+            actionTimer.reset();
+            scheduleNextAction();
             return;
         }
-        if (commandTimer.hasReached(600L)) {
+        if (mc.currentScreen != null && !(mc.currentScreen instanceof ChestScreen)) {
+            mc.player.closeScreen();
+        }
+        if (commandTimer.hasReached(350L)) {
             sendOpenCommand();
         }
     }
 
-    private void handleStoreMain() {
+    private void storeInventory(boolean armorPhase) {
         ChestContainer container = getOpenEnderChest();
         if (container == null) {
-            phase = Phase.OPENING_MAIN;
+            phase = armorPhase ? Phase.WAIT_ARMOR_OPEN : Phase.WAIT_MAIN_OPEN;
+            commandTimer.reset();
             return;
         }
-        if (dumpInventory(container)) {
+        if (!actionTimer.hasReached(nextActionDelay)) {
             return;
         }
-        phase = Phase.CLOSE_AFTER_MAIN;
+        if (handleCarriedStack(container)) {
+            scheduleNextAction();
+            return;
+        }
+        if (transferOneItem(container)) {
+            scheduleNextAction();
+            return;
+        }
+        if (armorPhase) {
+            phase = Phase.COMPLETE;
+        } else {
+            phase = Phase.CLOSE_MAIN;
+        }
+        actionTimer.reset();
+        scheduleNextAction();
     }
 
-    private void handleCloseAfterMain() {
+    private void closeChest() {
         if (mc.currentScreen instanceof ChestScreen) {
-            mc.player.closeScreen();
-            clickTimer.reset();
-            scheduleNextClick();
+            if (actionTimer.hasReached(nextActionDelay)) {
+                mc.player.closeScreen();
+                actionTimer.reset();
+                scheduleNextAction();
+            }
             return;
         }
-        if (mc.currentScreen == null) {
-            phase = Phase.REMOVE_ARMOR;
-            armorIndex = 0;
-            clickTimer.reset();
-            scheduleNextClick();
-        }
+        phase = Phase.STRIP_ARMOR;
+        armorIndex = 0;
+        actionTimer.reset();
+        scheduleNextAction();
     }
 
-    private void handleRemoveArmor() {
-        if (!clickTimer.hasReached(nextClickDelay)) {
+    private void stripArmor() {
+        if (mc.player == null || !actionTimer.hasReached(nextActionDelay)) {
             return;
         }
-        while (armorIndex < ARMOR_SLOTS.length) {
-            int slotId = ARMOR_SLOTS[armorIndex++];
-            ItemStack stack = mc.player.container.getSlot(slotId).getStack();
-            if (!stack.isEmpty()) {
-                mc.playerController.windowClick(mc.player.container.windowId, slotId, 0, ClickType.QUICK_MOVE, mc.player);
-                scheduleNextClick();
+        while (armorIndex < ARMOR_SLOT_INDICES.length) {
+            int slotId = ARMOR_SLOT_INDICES[armorIndex++];
+            Container container = mc.player.container;
+            if (container == null) {
+                continue;
+            }
+            Slot slot = container.getSlot(slotId);
+            if (slot != null && slot.getHasStack()) {
+                mc.playerController.windowClick(container.windowId, slot.slotNumber, 0, ClickType.QUICK_MOVE, mc.player);
+                scheduleNextAction();
                 return;
             }
         }
-        phase = Phase.OPENING_ARMOR;
+        phase = Phase.WAIT_ARMOR_OPEN;
         commandTimer.reset();
+        commandTimer.setMs(250L);
         sendOpenCommand();
+        actionTimer.reset();
+        scheduleNextAction();
     }
 
-    private void handleOpeningArmor() {
-        if (isEnderChestOpen()) {
-            phase = Phase.STORE_ARMOR;
-            scheduleNextClick();
-            return;
-        }
-        if (commandTimer.hasReached(600L)) {
-            sendOpenCommand();
-        }
-    }
-
-    private void handleStoreArmor() {
-        ChestContainer container = getOpenEnderChest();
-        if (container == null) {
-            phase = Phase.OPENING_ARMOR;
-            return;
-        }
-        if (dumpInventory(container)) {
-            return;
-        }
-        phase = Phase.FINISHED;
-    }
-
-    private boolean dumpInventory(ChestContainer container) {
-        if (!clickTimer.hasReached(nextClickDelay)) {
-            return true;
-        }
-        if (!mc.player.inventory.getItemStack().isEmpty()) {
-            placeCarriedStack(container);
-            scheduleNextClick();
-            return true;
-        }
-        int start = container.getNumRows() * 9;
-        for (int i = start; i < container.inventorySlots.size(); i++) {
+    private boolean transferOneItem(ChestContainer container) {
+        int chestSlots = container.getNumRows() * 9;
+        for (int i = chestSlots; i < container.inventorySlots.size(); i++) {
             Slot slot = container.inventorySlots.get(i);
             if (slot == null || !slot.getHasStack()) {
                 continue;
             }
             mc.playerController.windowClick(container.windowId, slot.slotNumber, 0, ClickType.QUICK_MOVE, mc.player);
-            scheduleNextClick();
             return true;
         }
         return false;
     }
 
-    private void placeCarriedStack(ChestContainer container) {
+    private boolean handleCarriedStack(ChestContainer container) {
+        ItemStack carried = mc.player.inventory.getItemStack();
+        if (carried.isEmpty()) {
+            return false;
+        }
         int chestSlots = container.getNumRows() * 9;
         for (int i = 0; i < chestSlots; i++) {
             Slot slot = container.inventorySlots.get(i);
             if (slot != null && !slot.getHasStack()) {
                 mc.playerController.windowClick(container.windowId, slot.slotNumber, 0, ClickType.PICKUP, mc.player);
-                return;
+                return true;
             }
         }
         int fallbackIndex = chestSlots;
         if (fallbackIndex < container.inventorySlots.size()) {
             Slot fallback = container.inventorySlots.get(fallbackIndex);
             mc.playerController.windowClick(container.windowId, fallback.slotNumber, 0, ClickType.PICKUP, mc.player);
+            return true;
         }
-    }
-
-    private void sendOpenCommand() {
-        if (mc.player == null) {
-            return;
-        }
-        if (!commandTimer.hasReached(180L)) {
-            return;
-        }
-        mc.player.sendChatMessage("/ec open");
-        commandTimer.reset();
+        return false;
     }
 
     private ChestContainer getOpenEnderChest() {
-        if (mc.player.openContainer instanceof ChestContainer container && isEnderChest(container)) {
-            return container;
+        if (mc.player == null) {
+            return null;
+        }
+        if (mc.player.openContainer instanceof ChestContainer chest && isEnderChest(chest)) {
+            return chest;
         }
         return null;
-    }
-
-    private boolean isEnderChestOpen() {
-        return getOpenEnderChest() != null;
     }
 
     private boolean isEnderChest(ChestContainer container) {
@@ -232,8 +221,19 @@ public class ECFold extends Module {
         return false;
     }
 
-    private void scheduleNextClick() {
-        nextClickDelay = ThreadLocalRandom.current().nextLong(55L, 110L);
-        clickTimer.reset();
+    private void sendOpenCommand() {
+        if (mc.player == null) {
+            return;
+        }
+        if (!commandTimer.hasReached(200L)) {
+            return;
+        }
+        mc.player.sendChatMessage("/ec open");
+        commandTimer.reset();
+    }
+
+    private void scheduleNextAction() {
+        nextActionDelay = ThreadLocalRandom.current().nextLong(45L, 95L);
+        actionTimer.reset();
     }
 }

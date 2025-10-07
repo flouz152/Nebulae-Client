@@ -171,25 +171,26 @@ public class ZombieFarm extends Module {
             }
         }
 
-        if (currentTarget != null) {
-            lastZombieSeenAt = System.currentTimeMillis();
-            return;
-        }
-
         AxisAlignedBB searchBox = mc.player.getBoundingBox().grow(48.0, 16.0, 48.0);
         List<ZombieEntity> zombies = mc.world.getEntitiesWithinAABB(ZombieEntity.class, searchBox,
                 entity -> entity != null && entity.isAlive() && !entity.isInvisible());
 
         if (zombies.isEmpty()) {
+            if (currentTarget != null) {
+                currentTarget = null;
+            }
             return;
         }
 
         zombies.sort(Comparator.comparingDouble(z -> z.getDistance(mc.player)));
-        currentTarget = zombies.get(0);
+        ZombieEntity nearest = zombies.get(0);
+        if (currentTarget != nearest) {
+            currentTarget = nearest;
+            lastGoal = null;
+            wanderGoal = null;
+            wanderTimer.reset();
+        }
         lastZombieSeenAt = System.currentTimeMillis();
-        lastGoal = null;
-        wanderGoal = null;
-        wanderTimer.reset();
     }
 
     private void engageTarget() {
