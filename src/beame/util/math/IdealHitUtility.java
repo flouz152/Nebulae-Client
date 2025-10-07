@@ -1,7 +1,7 @@
 /*
 package beame.util.math;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.modules.combat.Aura;
 import beame.components.modules.combat.ElytraTarget;
 import beame.util.ClientHelper;
@@ -46,7 +46,7 @@ public class IdealHitUtility implements IMinecraft {
                 || mc.world.getBlockState(mc.player.getPosition()).getMaterial() == Material.WEB
                 || mc.player.isElytraFlying()
                 || mc.player.abilities.isFlying
-                || !Essence.getHandler().getModuleList().aura.getOnlycrit().get())
+                || !Nebulae.getHandler().getModuleList().aura.getOnlycrit().get())
             //|| Server.isRW())
             return 0.944f;
 
@@ -55,7 +55,7 @@ public class IdealHitUtility implements IMinecraft {
 
         if (mc.player.getHeldItemMainhand().getItem() instanceof AxeItem || mc.player.getHeldItemMainhand().getItem() instanceof ShovelItem) return 0.99f;
 
-        ElytraTarget elytraTarget = Essence.getHandler().getModuleList().elytraTarget;
+        ElytraTarget elytraTarget = Nebulae.getHandler().getModuleList().elytraTarget;
 
         if (elytraTarget.isState())// || criticals)
             return 1;
@@ -72,20 +72,20 @@ public class IdealHitUtility implements IMinecraft {
         //	return 0.05f;
 
         if (ClientHelper.isConnectedToServer("spooky")) {
-            return Essence.getHandler().getModuleList().aura.getAttacks() % Math.round(MathUtil.random(4, 10)) == 0 ? (float)MathUtil.random(0.15, 0.23) : 0f;
+            return Nebulae.getHandler().getModuleList().aura.getAttacks() % Math.round(MathUtil.random(4, 10)) == 0 ? (float)MathUtil.random(0.15, 0.23) : 0f;
         }
 
         return 0;
     }
 
     public float getNewFallDistance(LivingEntity target) {
-        if (Essence.getHandler().getModuleList().aura.rotationType.get("СпукиТайм")) //|| Server.is("spooky") && Player.collideWith(target))
+        if (Nebulae.getHandler().getModuleList().aura.rotationType.get("СпукиТайм")) //|| Server.is("spooky") && Player.collideWith(target))
             return MathUtil.random(0, 0.3f);
 
-        Aura aura = Essence.getHandler().getModuleList().aura;
+        Aura aura = Nebulae.getHandler().getModuleList().aura;
 
         if (ClientHelper.isConnectedToServer("spooky")) {
-            int attacks = Essence.getHandler().getModuleList().aura.getAttacks();
+            int attacks = Nebulae.getHandler().getModuleList().aura.getAttacks();
 
             if (PlayerUtil.collideWith(target) && !(PlayerUtil.getBlock(0, 2, 0) != Blocks.AIR && PlayerUtil.getBlock(0, -1, 0) != Blocks.AIR && mc.gameSettings.keyBindJump.isKeyDown())) {
                 return aura.getFdCount() >= 10 ? 0.3f : 0.15f;
@@ -102,7 +102,7 @@ public class IdealHitUtility implements IMinecraft {
     }
 
     public boolean canAIFall() {
-        Aura aura = Essence.getHandler().getModuleList().aura;
+        Aura aura = Nebulae.getHandler().getModuleList().aura;
 
         if (PlayerUtil.getBlock(0, 2, 0) != Blocks.AIR && PlayerUtil.getBlock(0, -1, 0) != Blocks.AIR && ClientHelper.isConnectedToServer("spooky") && aura.getFdCount() > 8) {
             return false;

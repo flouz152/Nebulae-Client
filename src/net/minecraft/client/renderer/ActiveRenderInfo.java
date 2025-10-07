@@ -1,6 +1,6 @@
 package net.minecraft.client.renderer;
 
-import beame.Essence;
+import beame.Nebulae;
 import events.EventManager;
 import events.impl.player.RotationEvent;
 import lombok.Getter;
@@ -57,12 +57,12 @@ public class ActiveRenderInfo {
                 this.setDirection(event.getYaw() + 180.0F, -event.getPitch());
             }
 
-            this.movePosition(Essence.getHandler().getModuleList().getCameraSettings().isState()
-                    ? -Essence.getHandler().getModuleList().getCameraSettings().distance.get()
-                    : -this.calcCameraDistance(zoomDistance), Essence.getHandler().getModuleList().getCameraSettings().isState()
-                    && Essence.getHandler().getModuleList().getCameraSettings().fortniteMode.get() && !thirdPersonReverseIn
-                    ? 0.5D : 0.0D, Essence.getHandler().getModuleList().getCameraSettings().isState()
-                    && Essence.getHandler().getModuleList().getCameraSettings().fortniteMode.get() && !thirdPersonReverseIn ? 0.5D : 0.0D);
+            this.movePosition(Nebulae.getHandler().getModuleList().getCameraSettings().isState()
+                    ? -Nebulae.getHandler().getModuleList().getCameraSettings().distance.get()
+                    : -this.calcCameraDistance(zoomDistance), Nebulae.getHandler().getModuleList().getCameraSettings().isState()
+                    && Nebulae.getHandler().getModuleList().getCameraSettings().fortniteMode.get() && !thirdPersonReverseIn
+                    ? 0.5D : 0.0D, Nebulae.getHandler().getModuleList().getCameraSettings().isState()
+                    && Nebulae.getHandler().getModuleList().getCameraSettings().fortniteMode.get() && !thirdPersonReverseIn ? 0.5D : 0.0D);
 
         } else if (renderViewEntity instanceof LivingEntity && ((LivingEntity) renderViewEntity).isSleeping()) {
             Direction direction = ((LivingEntity) renderViewEntity).getBedDirection();
@@ -91,7 +91,7 @@ public class ActiveRenderInfo {
             f2 = f2 * 0.1F;
             Vector3d vector3d = this.pos.add((double) f, (double) f1, (double) f2);
             Vector3d vector3d1 = new Vector3d(this.pos.x - (double) this.look.getX() * startingDistance + (double) f + (double) f2, this.pos.y - (double) this.look.getY() * startingDistance + (double) f1, this.pos.z - (double) this.look.getZ() * startingDistance + (double) f2);
-            if (Essence.getHandler().getModuleList().cameraSettings.isState() && Essence.getHandler().getModuleList().cameraSettings.blockclip.get()) {
+            if (Nebulae.getHandler().getModuleList().cameraSettings.isState() && Nebulae.getHandler().getModuleList().cameraSettings.blockclip.get()) {
 
             } else {
                 RayTraceResult raytraceresult = this.world.rayTraceBlocks(new RayTraceContext(

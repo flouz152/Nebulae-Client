@@ -1,6 +1,6 @@
 package beame.feature.gps;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.fonts.Fonts;
 import beame.util.render.ClientHandler;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -44,7 +44,7 @@ public class GPS {
         GlStateManager.disableBlend();
         GlStateManager.translated(x2, y2, 0.0);
         GlStateManager.rotatef(angle + 90.0f, 0.0f, 0.0f, 1.0f);
-        ClientHandler.drawArrow(stack, 0.0f, 0.0f, 17.0f, Essence.getHandler().themeManager.getColor(0));
+        ClientHandler.drawArrow(stack, 0.0f, 0.0f, 17.0f, Nebulae.getHandler().themeManager.getColor(0));
         GlStateManager.enableBlend();
         GlStateManager.popMatrix();
         GlStateManager.pushMatrix();

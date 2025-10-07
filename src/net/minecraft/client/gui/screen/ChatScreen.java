@@ -1,6 +1,6 @@
 package net.minecraft.client.gui.screen;
 
-import beame.Essence;
+import beame.Nebulae;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
@@ -171,7 +171,7 @@ public class ChatScreen extends Screen
 
     @Override
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
-        Essence.getHandler().draggableManager.draggables.values().forEach(dragging -> {
+        Nebulae.getHandler().draggableManager.draggables.values().forEach(dragging -> {
             dragging.onRelease(button);
         });
         return super.mouseReleased(mouseX, mouseY, button);
@@ -202,7 +202,7 @@ public class ChatScreen extends Screen
                 }
             }
 
-            Essence.getHandler().draggableManager.draggables.values().forEach(dragging -> {
+            Nebulae.getHandler().draggableManager.draggables.values().forEach(dragging -> {
                 dragging.onClick(mouseX, mouseY, button);
             });
             return this.inputField.mouseClicked(mouseX, mouseY, button) ? true : super.mouseClicked(mouseX, mouseY, button);
@@ -267,7 +267,7 @@ public class ChatScreen extends Screen
         }
 
         MainWindow mainWindow = Minecraft.getInstance().getMainWindow();
-        Essence.getHandler().draggableManager.draggables.values().forEach(dragging -> {
+        Nebulae.getHandler().draggableManager.draggables.values().forEach(dragging -> {
             dragging.onDraw(mouseX, mouseY, mainWindow);
         });
 

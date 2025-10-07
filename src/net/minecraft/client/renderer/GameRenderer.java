@@ -1,6 +1,6 @@
 package net.minecraft.client.renderer;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.clickgui.DropDownGui;
 import beame.components.modules.render.AspectRatio;
 import beame.components.modules.render.FieldOfView;
@@ -367,7 +367,7 @@ public class GameRenderer implements IResourceManagerReloadListener, AutoCloseab
     }
 
     public double getFOVModifier(ActiveRenderInfo activeRenderInfoIn, float partialTicks, boolean useFOVSetting) {
-        ModuleList module = Essence.getHandler().getModuleList();
+        ModuleList module = Nebulae.getHandler().getModuleList();
         FieldOfView fieldOfView = module.getFieldOfView();
 
         if (this.debugView) {
@@ -439,7 +439,7 @@ public class GameRenderer implements IResourceManagerReloadListener, AutoCloseab
             f = MathHelper.sin(f * f * f * f * (float) Math.PI);
             float f2 = livingentity.attackedAtYaw;
             matrixStackIn.rotate(Vector3f.YP.rotationDegrees(-f2));
-            matrixStackIn.rotate(Vector3f.ZP.rotationDegrees(Essence.getHandler().getModuleList().mcUtils.isState() ? Essence.getHandler().getModuleList().mcUtils.noHurtCum.get() ? -f * 0.0f : -f * 14.0F : -f * 14.0F));
+            matrixStackIn.rotate(Vector3f.ZP.rotationDegrees(Nebulae.getHandler().getModuleList().mcUtils.isState() ? Nebulae.getHandler().getModuleList().mcUtils.noHurtCum.get() ? -f * 0.0f : -f * 14.0F : -f * 14.0F));
             matrixStackIn.rotate(Vector3f.YP.rotationDegrees(f2));
         }
     }
@@ -473,7 +473,7 @@ public class GameRenderer implements IResourceManagerReloadListener, AutoCloseab
                 p_renderHand_1_.push();
                 this.hurtCameraEffect(p_renderHand_1_, p_renderHand_3_);
 
-                if (!Essence.getHandler().getModuleList().aura.isState()) {
+                if (!Nebulae.getHandler().getModuleList().aura.isState()) {
                     if (this.mc.gameSettings.viewBobbing) {
                         this.applyBobbing(p_renderHand_1_, p_renderHand_3_);
                     }
@@ -513,7 +513,7 @@ public class GameRenderer implements IResourceManagerReloadListener, AutoCloseab
                 this.hurtCameraEffect(p_renderHand_1_, p_renderHand_3_);
             }
 
-            if (!Essence.getHandler().getModuleList().aura.isState()) {
+            if (!Nebulae.getHandler().getModuleList().aura.isState()) {
                 if (this.mc.gameSettings.viewBobbing) {
                     this.applyBobbing(p_renderHand_1_, p_renderHand_3_);
                 }
@@ -534,7 +534,7 @@ public class GameRenderer implements IResourceManagerReloadListener, AutoCloseab
                 p_renderHand_1_.push();
                 this.hurtCameraEffect(p_renderHand_1_, p_renderHand_3_);
 
-                if (!Essence.getHandler().getModuleList().aura.isState()) {
+                if (!Nebulae.getHandler().getModuleList().aura.isState()) {
                     if (this.mc.gameSettings.viewBobbing) {
                         this.applyBobbing(p_renderHand_1_, p_renderHand_3_);
                     }
@@ -574,7 +574,7 @@ public class GameRenderer implements IResourceManagerReloadListener, AutoCloseab
                 this.hurtCameraEffect(p_renderHand_1_, p_renderHand_3_);
             }
 
-            if (!Essence.getHandler().getModuleList().aura.isState()) {
+            if (!Nebulae.getHandler().getModuleList().aura.isState()) {
                 if (this.mc.gameSettings.viewBobbing) {
                     this.applyBobbing(p_renderHand_1_, p_renderHand_3_);
                 }
@@ -590,7 +590,7 @@ public class GameRenderer implements IResourceManagerReloadListener, AutoCloseab
     }
 
     public Matrix4f getProjectionMatrix(ActiveRenderInfo activeRenderInfoIn, float partialTicks, boolean useFovSetting) {
-        ModuleList module = Essence.getHandler().getModuleList();
+        ModuleList module = Nebulae.getHandler().getModuleList();
         AspectRatio aspectRatio = module.getAspectRatio();
         MatrixStack matrixstack = new MatrixStack();
         matrixstack.getLast().getMatrix().setIdentity();
@@ -713,7 +713,7 @@ public class GameRenderer implements IResourceManagerReloadListener, AutoCloseab
                     if (!firstGameFocused) {
                         if (!mc.gameSettings.showDebugInfo) {
                             mc.gameRenderer.setupOverlayRendering(2);
-                            boolean blurEnabled = !Essence.getHandler().getModuleList().hud.disableBlur.get();
+                            boolean blurEnabled = !Nebulae.getHandler().getModuleList().hud.disableBlur.get();
                             //AbstractCommand.addMessage("Blur enabled: " + blurEnabled);
                             IWrapper.executeQueue(blurEnabled);
                             EventManager.call(new EventRender(partialTicks, matrixstack, mc.getMainWindow(), EventRender.Type.RENDER2D, null, activeRender));
@@ -913,7 +913,7 @@ public class GameRenderer implements IResourceManagerReloadListener, AutoCloseab
 
         this.hurtCameraEffect(matrixstack, partialTicks);
 
-        if (!Essence.getHandler().getModuleList().aura.isState()) {
+        if (!Nebulae.getHandler().getModuleList().aura.isState()) {
             if (this.mc.gameSettings.viewBobbing) {
                 this.applyBobbing(matrixstack, partialTicks);
             }

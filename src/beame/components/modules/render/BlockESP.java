@@ -122,7 +122,7 @@ public class BlockESP extends Module {
         if (collectionTask != null && !collectionTask.isDone()) {
             collectionTask.cancel(true);
         }
-//        collectionTask = Essence.getHandler().getThreadingSystem().moduleTasks().submit(this::collectData);
+//        collectionTask = Nebulae.getHandler().getThreadingSystem().moduleTasks().submit(this::collectData);
     }
 
     private void collectData() {

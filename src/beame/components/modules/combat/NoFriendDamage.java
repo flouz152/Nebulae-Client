@@ -1,6 +1,6 @@
 package beame.components.modules.combat;
 
-import beame.Essence;
+import beame.Nebulae;
 import events.Event;
 import events.impl.packet.EventPacket;
 import beame.module.Category;
@@ -22,7 +22,7 @@ public class NoFriendDamage extends Module {
             if (e.getPacket() instanceof CUseEntityPacket) {
                 CUseEntityPacket cUseEntityPacket = (CUseEntityPacket) e.getPacket();
                 Entity entity = cUseEntityPacket.getEntityFromWorld(mc.world);
-                if (entity instanceof RemoteClientPlayerEntity && Essence.getHandler().friends.isFriend(entity.getScoreboardName()) && cUseEntityPacket.getAction() == CUseEntityPacket.Action.ATTACK) {
+                if (entity instanceof RemoteClientPlayerEntity && Nebulae.getHandler().friends.isFriend(entity.getScoreboardName()) && cUseEntityPacket.getAction() == CUseEntityPacket.Action.ATTACK) {
                     e.setCancel(true);
                 }
             }

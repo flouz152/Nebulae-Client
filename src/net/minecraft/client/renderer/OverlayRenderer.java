@@ -1,6 +1,6 @@
 package net.minecraft.client.renderer;
 
-import beame.Essence;
+import beame.Nebulae;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import javax.annotation.Nullable;
@@ -36,7 +36,7 @@ public class OverlayRenderer
         RenderSystem.disableAlphaTest();
         PlayerEntity playerentity = minecraftIn.player;
 
-        if((Essence.getHandler().getModuleList().mcUtils.isState() && !Essence.getHandler().getModuleList().mcUtils.removals.get(6).get())) {
+        if((Nebulae.getHandler().getModuleList().mcUtils.isState() && !Nebulae.getHandler().getModuleList().mcUtils.removals.get(6).get())) {
             if (!playerentity.noClip) {
                 if (Reflector.ForgeEventFactory_renderBlockOverlay.exists() && Reflector.ForgeBlockModelShapes_getTexture3.exists()) {
                     Pair<BlockState, BlockPos> pair = getOverlayBlock(playerentity);
@@ -61,7 +61,7 @@ public class OverlayRenderer
 
         if (!minecraftIn.player.isSpectator())
         {
-            if((Essence.getHandler().getModuleList().mcUtils.isState() && !Essence.getHandler().getModuleList().mcUtils.removals.get(7).get())) {
+            if((Nebulae.getHandler().getModuleList().mcUtils.isState() && !Nebulae.getHandler().getModuleList().mcUtils.removals.get(7).get())) {
                 if (minecraftIn.player.areEyesInFluid(FluidTags.WATER) && !Reflector.ForgeEventFactory_renderWaterOverlay.callBoolean(playerentity, matrixStackIn)) {
                     renderUnderwater(minecraftIn, matrixStackIn);
                 }

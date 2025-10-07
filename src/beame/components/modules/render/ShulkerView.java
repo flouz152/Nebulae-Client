@@ -1,6 +1,6 @@
 package beame.components.modules.render;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.math.MathUtil;
 import beame.util.render.ClientHandler;
 import beame.util.render.PlayerPositionTracker;
@@ -65,7 +65,7 @@ public class ShulkerView extends Module {
 
         int spacing = 18;
 
-        for (ItemStack itemStack : Essence.getHandler().getModuleList().getShulkerView().getShulkerBoxItems(item.getItem())) {
+        for (ItemStack itemStack : Nebulae.getHandler().getModuleList().getShulkerView().getShulkerBoxItems(item.getItem())) {
             ESP.drawItemStack( itemStack, posX, posY, true, false, 1);
             posX += spacing;
 

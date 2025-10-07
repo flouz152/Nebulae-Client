@@ -1,6 +1,6 @@
 package beame.components.modules.combat;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.command.AbstractCommand;
 import beame.util.player.InventoryUtility;
 import beame.util.math.TimerUtil;
@@ -41,8 +41,8 @@ public class AutoSwap extends Module {
     }
 
     private void swap(ItemStack stack) {
-        boolean curgui = Essence.getHandler().getModuleList().guiMove.isState();
-        boolean shouldDisableMove = Essence.getHandler().getModuleList().guiMove.funtime.get() ;
+        boolean curgui = Nebulae.getHandler().getModuleList().guiMove.isState();
+        boolean shouldDisableMove = Nebulae.getHandler().getModuleList().guiMove.funtime.get() ;
         KeyBinding[] pressedKeys = {
                 mc.gameSettings.keyBindForward,
                 mc.gameSettings.keyBindBack,
@@ -57,7 +57,7 @@ public class AutoSwap extends Module {
         }
 
         if (shouldDisableMove && mc.player.isOnGround()) {
-            Essence.getHandler().disableMove = true;
+            Nebulae.getHandler().disableMove = true;
         }
 
         final TimerUtil timer = new TimerUtil();
@@ -71,7 +71,7 @@ public class AutoSwap extends Module {
 
             boolean successful = false;
             if (mc.currentScreen != null) {
-                if (shouldDisableMove) Essence.getHandler().disableMove = false;
+                if (shouldDisableMove) Nebulae.getHandler().disableMove = false;
                 return;
             }
 
@@ -96,8 +96,8 @@ public class AutoSwap extends Module {
                 keyBinding.setPressed(press);
             }
             
-            if (curgui) Essence.getHandler().getModuleList().guiMove.setState(true);
-            if (shouldDisableMove) Essence.getHandler().disableMove = false;
+            if (curgui) Nebulae.getHandler().getModuleList().guiMove.setState(true);
+            if (shouldDisableMove) Nebulae.getHandler().disableMove = false;
         }).start();
     }
 

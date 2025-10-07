@@ -1,6 +1,6 @@
 package beame.feature.ui;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.feature.notify.NotificationManager;
 import beame.util.ClientHelper;
 import beame.util.IMinecraft;
@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
 
 public class StaffListDraw implements IMinecraft {
 // leaked by itskekoff; discord.gg/sk3d UN4SLsje
-    public Dragging drag = Essence.getHandler().createDraggable("StaffListDraw", 220, 40);
+    public Dragging drag = Nebulae.getHandler().createDraggable("StaffListDraw", 220, 40);
     private float animW = 0, animH = 0;
     private float animation = 0;
 
@@ -183,19 +183,19 @@ public class StaffListDraw implements IMinecraft {
         RenderSystem.pushMatrix();
         AnimationMath.sizeAnimation(x + (animW / 2), y + (animH / 2), animation);
 
-        ClientHandler.drawSexyRect(x, y, animW, headerH, Essence.getHandler().getModuleList().getHud().rounding.get(), true);
+        ClientHandler.drawSexyRect(x, y, animW, headerH, Nebulae.getHandler().getModuleList().getHud().rounding.get(), true);
 
         float titleY = y + padY;
         font.drawString("Staff List", x + padX, titleY, textColor);
 
         String icon = "o";
         float iconW = Fonts.ESSENCE_ICONS.get(15).getWidth(icon);
-        int iconColor = ColorUtils.setAlpha(Essence.getHandler().themeManager.getColor(0), (int)(255 * animation));
+        int iconColor = ColorUtils.setAlpha(Nebulae.getHandler().themeManager.getColor(0), (int)(255 * animation));
         Fonts.ESSENCE_ICONS.get(15).drawString(icon, x + animW - padX - iconW - 4, titleY, iconColor);
 
         if (!staffPlayers.isEmpty()) {
             float listY = y + headerH + spacing;
-            ClientHandler.drawSexyRect(x, listY, animW, animH - headerH, Essence.getHandler().getModuleList().getHud().rounding.get(), false);
+            ClientHandler.drawSexyRect(x, listY, animW, animH - headerH, Nebulae.getHandler().getModuleList().getHud().rounding.get(), false);
 
             Scissor.push();
             Scissor.setFromComponentCoordinates(x, listY, animW, animH - headerH);
@@ -260,7 +260,7 @@ public class StaffListDraw implements IMinecraft {
                     isOnline = true;
 
                     if (!previousStaffPlayers.contains(staffName) && !isFirstUpdate) {
-                        Essence.getHandler().notificationManager.pushNotify(
+                        Nebulae.getHandler().notificationManager.pushNotify(
                                 staffName + " §fзашел на сервер!",
                                 NotificationManager.Type.Staff
                         );
@@ -270,7 +270,7 @@ public class StaffListDraw implements IMinecraft {
             }
 
             if (!isOnline && previousStaffPlayers.contains(staffName)) {
-                Essence.getHandler().notificationManager.pushNotify(
+                Nebulae.getHandler().notificationManager.pushNotify(
                         staffName + " §fвышел с сервера/зашел в спек!",
                         NotificationManager.Type.Staff
                 );
@@ -291,7 +291,7 @@ public class StaffListDraw implements IMinecraft {
 
             ITextComponent prefix = ClientHelper.isFuntime() ? null : team.getPrefix();
             boolean isStaff = prefix != null && prefixMatches.matcher(prefix.getString().toLowerCase(Locale.ROOT)).matches()
-                    || Essence.getHandler().getStaffManager().isStaff(name);
+                    || Nebulae.getHandler().getStaffManager().isStaff(name);
 
             if (isStaff) {
                 Status status = vanish ? Status.VANISHED : Status.ONLINE;
@@ -304,7 +304,7 @@ public class StaffListDraw implements IMinecraft {
                 currentStaffOnline.add(name);
 
                 if (!previousStaffPlayers.contains(name) && !isFirstUpdate && !hasAdminPrefix(name)) {
-                    Essence.getHandler().notificationManager.pushNotify(
+                    Nebulae.getHandler().notificationManager.pushNotify(
                             name + " §fзашел на сервер!",
                             NotificationManager.Type.Staff
                     );
@@ -314,7 +314,7 @@ public class StaffListDraw implements IMinecraft {
 
         for (String name : previousStaffPlayers) {
             if (!currentStaffOnline.contains(name) && !isFirstUpdate && !hasAdminPrefix(name)) {
-                Essence.getHandler().notificationManager.pushNotify(
+                Nebulae.getHandler().notificationManager.pushNotify(
                         name + " §fвышел с сервера/зашел в спек!",
                         NotificationManager.Type.Staff
                 );

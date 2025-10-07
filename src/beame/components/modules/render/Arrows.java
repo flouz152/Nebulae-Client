@@ -1,6 +1,6 @@
 package beame.components.modules.render;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.color.ColorUtils;
 import beame.util.math.MathUtil;
 import beame.util.render.ClientHandler;
@@ -71,7 +71,7 @@ public class Arrows extends Module {
                 GlStateManager.disableBlend();
                 GlStateManager.translated(x2, y2, 0);
                 GlStateManager.rotatef(angle+90, 0, 0, 1f);
-                ClientHandler.drawImage(((Render2DEvent) event).getMatrix(), new ResourceLocation("night/image/arrow.png"), -8.0F, -9.0F, 16, 16, (Essence.getHandler().friends.isFriend(player.getScoreboardName()) ? ColorUtils.rgba(80, 250, 80, 255) : Essence.getHandler().themeManager.getColor((int)animatedRotation)), 0);
+                ClientHandler.drawImage(((Render2DEvent) event).getMatrix(), new ResourceLocation("night/image/arrow.png"), -8.0F, -9.0F, 16, 16, (Nebulae.getHandler().friends.isFriend(player.getScoreboardName()) ? ColorUtils.rgba(80, 250, 80, 255) : Nebulae.getHandler().themeManager.getColor((int)animatedRotation)), 0);
                 GlStateManager.enableBlend();
                 GlStateManager.popMatrix();
             }

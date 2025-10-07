@@ -1,6 +1,6 @@
 package net.minecraft.client.entity.player;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.baritone.api.BaritoneAPI;
 import beame.components.baritone.api.BaritoneUtils;
 import beame.components.baritone.api.IBaritone;
@@ -252,7 +252,7 @@ public class ClientPlayerEntity extends AbstractClientPlayerEntity {
      */
     public void tick() {
         if (this.world.isBlockLoaded(new BlockPos(this.getPosX(), 0.0D, this.getPosZ()))) {
-            Essence.isServer = true;
+            Nebulae.isServer = true;
 
             EventManager.call(new EventUpdate());
             super.tick();
@@ -408,7 +408,7 @@ public class ClientPlayerEntity extends AbstractClientPlayerEntity {
      */
     public void sendChatMessage(String message) {
         final ChatInputEvent event = new ChatInputEvent(message);
-        boolean unhooked = Essence.getHandler().unhooked;
+        boolean unhooked = Nebulae.getHandler().unhooked;
         ChatEvent eventBaritone = new ChatEvent(event.getMessage());
         IBaritone baritone = BaritoneAPI.getProvider().getBaritoneForPlayer(mc.player);
         if (baritone != null) {
@@ -416,14 +416,14 @@ public class ClientPlayerEntity extends AbstractClientPlayerEntity {
         }
         if (event.isCancelled() || eventBaritone.isCancelled()) return;
         if (!unhooked && message.startsWith(".")) {
-            Essence.getHandler().commandManager.runCmds(message);
+            Nebulae.getHandler().commandManager.runCmds(message);
             return;
         }
 
         /*if (unhooked && message.contains(Profile.getUsername())) {
-            Essence.getHandler().discord.startRPC();
-            Essence.getHandler().unhooked = false;
-            Essence.getHandler().notificationManager.pushNotify("hop on svo", NotificationManager.Type.Info);
+            Nebulae.getHandler().discord.startRPC();
+            Nebulae.getHandler().unhooked = false;
+            Nebulae.getHandler().notificationManager.pushNotify("hop on svo", NotificationManager.Type.Info);
             return;
         }*/
 
@@ -610,7 +610,7 @@ public class ClientPlayerEntity extends AbstractClientPlayerEntity {
     }
 
     private boolean shouldBlockPushPlayer(BlockPos pos) {
-        if (Essence.getHandler().getModuleList().noPush.isState() && Essence.getHandler().getModuleList().noPush.blocks.get())
+        if (Nebulae.getHandler().getModuleList().noPush.isState() && Nebulae.getHandler().getModuleList().noPush.blocks.get())
             return false;
 
         AxisAlignedBB axisalignedbb = this.getBoundingBox();
@@ -859,7 +859,7 @@ public class ClientPlayerEntity extends AbstractClientPlayerEntity {
             this.setSprinting(true);
         }
 
-        if (Essence.getHandler().getModuleList().sprint.isState() && !this.isSprinting() && (!this.isInWater() || this.canSwim()) && this.isUsingSwimmingAnimation() && flag4 && (!this.isPotionActive(Effects.BLINDNESS))) {
+        if (Nebulae.getHandler().getModuleList().sprint.isState() && !this.isSprinting() && (!this.isInWater() || this.canSwim()) && this.isUsingSwimmingAnimation() && flag4 && (!this.isPotionActive(Effects.BLINDNESS))) {
             this.setSprinting(this.movementInput.forwardKeyDown || this.moveForward > 0);
         }
 

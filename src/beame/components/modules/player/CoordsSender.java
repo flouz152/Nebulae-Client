@@ -1,6 +1,6 @@
 package beame.components.modules.player;
 
-import beame.Essence;
+import beame.Nebulae;
 import events.Event;
 import events.EventKey;
 import events.impl.player.EventUpdate;
@@ -66,7 +66,7 @@ public class CoordsSender extends Module {
                         }
                     }
 
-                    if (!playerName.isEmpty() && Essence.getHandler().friends.isFriend(playerName)) {
+                    if (!playerName.isEmpty() && Nebulae.getHandler().friends.isFriend(playerName)) {
                         String afterArrow = message.substring(arrowIndex + 1).trim();
                         Pattern pattern = Pattern.compile("(-?\\d+)\\s+(-?\\d+)\\s+(-?\\d+)");
                         Matcher matcher = pattern.matcher(afterArrow);

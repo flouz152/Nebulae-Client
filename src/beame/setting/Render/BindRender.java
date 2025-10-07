@@ -1,6 +1,6 @@
 package beame.setting.Render;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.feature.notify.NotificationManager;
 import beame.util.BindMapping;
 import beame.util.Scissor;
@@ -69,12 +69,12 @@ public class BindRender extends Component {
         super.keyPressed(key, scanCode, modifiers);
         if (activated) {
             if (key == GLFW.GLFW_KEY_DELETE) {
-                Essence.getHandler().notificationManager.pushNotify("Функциональный бинд убран.", NotificationManager.Type.Info);
+                Nebulae.getHandler().notificationManager.pushNotify("Функциональный бинд убран.", NotificationManager.Type.Info);
                 setting.set(-1);
                 activated = false;
                 return;
             }
-            Essence.getHandler().notificationManager.pushNotify(String.format("Функциональный бинд поставлен на кнопку: %s", BindMapping.getReverseKey(key)), NotificationManager.Type.Info);
+            Nebulae.getHandler().notificationManager.pushNotify(String.format("Функциональный бинд поставлен на кнопку: %s", BindMapping.getReverseKey(key)), NotificationManager.Type.Info);
             setting.set(key);
             activated = false;
         }

@@ -1,6 +1,6 @@
 package net.minecraft.entity;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.baritone.api.BaritoneAPI;
 import beame.components.baritone.api.event.events.RotationMoveEvent;
 import com.google.common.collect.Iterables;
@@ -1214,8 +1214,8 @@ public abstract class Entity implements INameable, ICommandSource {
                 return;
             }
         }
-        if (Essence.getHandler().getModuleList().aura.state && Essence.getHandler().getModuleList().aura.correctionType.get("Сфокусированный")) {
-            Vector3d vector3d = getAbsoluteMotion(relative, friction, Essence.getHandler().getModuleList().aura.rotateVector.x);
+        if (Nebulae.getHandler().getModuleList().aura.state && Nebulae.getHandler().getModuleList().aura.correctionType.get("Сфокусированный")) {
+            Vector3d vector3d = getAbsoluteMotion(relative, friction, Nebulae.getHandler().getModuleList().aura.rotateVector.x);
             this.setMotion(this.getMotion().add(vector3d));
             return;
         }
@@ -2249,7 +2249,7 @@ public abstract class Entity implements INameable, ICommandSource {
      * For EntityLivingBase subclasses, returning false when invisible will render the entity semi-transparent.
      */
     public boolean isInvisibleToPlayer(PlayerEntity player) {
-        if (Essence.getHandler().getModuleList().seeInvisible.isState() && !(this instanceof ArmorStandEntity))
+        if (Nebulae.getHandler().getModuleList().seeInvisible.isState() && !(this instanceof ArmorStandEntity))
             return false;
         if (player.isSpectator()) {
             return false;

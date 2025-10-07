@@ -1,6 +1,6 @@
 package beame.components.modules.render;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.animation.AnimationMath;
 import beame.util.color.ColorUtils;
 import beame.util.math.MathUtil;
@@ -118,7 +118,7 @@ public class Visuality extends Module {
         float f = size = isNumbus ? 0.25f : 0.5f;
         if (!isNumbus) {
             for (i = 0; i <= 360; ++i) {
-                colors = ColorUtils.rgb(Essence.getHandler().themeManager.getColor(0));
+                colors = ColorUtils.rgb(Nebulae.getHandler().themeManager.getColor(0));
                 buffer.pos(xHat, yHat + 0.25, zHat).color(colors[0], colors[1], colors[2], 0.3f).endVertex();
                 buffer.pos(xHat + Math.cos(Math.toRadians(i)) * (double) size, yHat, zHat + Math.sin(Math.toRadians(i)) * (double) size).color(colors[0], colors[1], colors[2], 0.3f).endVertex();
             }
@@ -128,7 +128,7 @@ public class Visuality extends Module {
         RenderSystem.color4f(-1.0f, -1.0f, -1.0f, -1.0f);
         buffer.begin(2, DefaultVertexFormats.POSITION_COLOR);
         for (i = 0; i <= 360; ++i) {
-            colors = ColorUtils.rgb(Essence.getHandler().themeManager.getColor(0));
+            colors = ColorUtils.rgb(Nebulae.getHandler().themeManager.getColor(0));
             buffer.pos(xHat + Math.cos(Math.toRadians(i)) * (double) size, yHat, zHat + Math.sin(Math.toRadians(i)) * (double) size).color(colors[0], colors[1], colors[2], 1.0f).endVertex();
         }
         buffer.finishDrawing();
@@ -154,7 +154,7 @@ public class Visuality extends Module {
         buffer.begin(8, DefaultVertexFormats.POSITION_COLOR);
         int index = 0;
         for (Point p : this.points) {
-            int c = Essence.getHandler().themeManager.getColor(0);
+            int c = Nebulae.getHandler().themeManager.getColor(0);
             float red = (float) (c >> 16 & 0xFF) / 255.0f;
             float green = (float) (c >> 8 & 0xFF) / 255.0f;
             float blue = (float) (c & 0xFF) / 255.0f;
@@ -177,7 +177,7 @@ public class Visuality extends Module {
         Vector3d projectedView = mc.getRenderManager().info.getProjectedView();
         int index = 0;
         for (Point p : points) {
-            int c = Essence.getHandler().themeManager.getColor(0);
+            int c = Nebulae.getHandler().themeManager.getColor(0);
             float red = (float) (c >> 16 & 0xFF) / 255.0f;
             float green = (float) (c >> 8 & 0xFF) / 255.0f;
             float blue = (float) (c & 0xFF) / 255.0f;
@@ -264,7 +264,7 @@ public class Visuality extends Module {
         buffer.begin(8, DefaultVertexFormats.POSITION_COLOR_TEX);
         int i = 0;
         while ((float) i <= 360.0f) {
-            float[] colors = ColorUtils.rgb(Essence.getHandler().themeManager.getColor(0));
+            float[] colors = ColorUtils.rgb(Nebulae.getHandler().themeManager.getColor(0));
             double sin2 = MathHelper.sin((float) Math.toRadians((float) i + 0.1f)) * radius;
             double cos2 = MathHelper.cos((float) Math.toRadians((float) i + 0.1f)) * radius;
             buffer.pos(0.0, 0.0, 0.0).color(colors[0], colors[1], colors[2], MathHelper.clamp(circle2.alpha, 0.0f, 1.0f)).tex(0.5f, 0.5f).endVertex();

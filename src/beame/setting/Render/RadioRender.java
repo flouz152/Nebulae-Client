@@ -1,6 +1,6 @@
 package beame.setting.Render;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.Scissor;
 import beame.util.animation.AnimationMath;
 import beame.util.color.ColorUtils;
@@ -51,13 +51,13 @@ public class RadioRender extends Component {
             Scissor.push();
             Scissor.setFromComponentCoordinates(getX(), getY(), getWidth() - 10, 10);
             Fonts.SUISSEINTL.get(14).drawString(stack, setting.getName(), getX() + 1f + titleScroll, getY() + 2, 
-                ColorUtils.rgb(Essence.getHandler().styler.clr120, Essence.getHandler().styler.clr120, Essence.getHandler().styler.clr120));
+                ColorUtils.rgb(Nebulae.getHandler().styler.clr120, Nebulae.getHandler().styler.clr120, Nebulae.getHandler().styler.clr120));
             Scissor.unset();
             Scissor.pop();
         } else {
             // Обычная отрисовка заголовка без прокрутки
             Fonts.SUISSEINTL.get(14).drawString(setting.getName(), getX() + 1f, getY() + 2, 
-                ColorUtils.rgb(Essence.getHandler().styler.clr120, Essence.getHandler().styler.clr120, Essence.getHandler().styler.clr120));
+                ColorUtils.rgb(Nebulae.getHandler().styler.clr120, Nebulae.getHandler().styler.clr120, Nebulae.getHandler().styler.clr120));
         }
         
         setWidth(90);
@@ -67,7 +67,7 @@ public class RadioRender extends Component {
             float off = 10;
             boolean isSelected = text.equals(setting.get());
 
-            drawRound(getX() + 1.5f, (getY() + 9 + offset), 8, 8, 4, isSelected ? Essence.getHandler().getThemeManager().getColor(0) : new Color(60, 60, 60, 50).getRGB());
+            drawRound(getX() + 1.5f, (getY() + 9 + offset), 8, 8, 4, isSelected ? Nebulae.getHandler().getThemeManager().getColor(0) : new Color(60, 60, 60, 50).getRGB());
             drawRound(getX() + 4.2f, (getY() + 11.5f + offset), 3f, 3f, 1f, isSelected ? new Color(0, 0, 0, 255).getRGB() : 0);
 
             boolean hovered = MathUtil.isHovered(mouseX, mouseY, getX() + 10.5f, getY() + 11.2f + offset, getWidth() - 12, 12);

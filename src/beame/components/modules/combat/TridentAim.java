@@ -1,6 +1,6 @@
 package beame.components.modules.combat;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.modules.combat.AuraHandlers.component.core.combat.RotationComponent;
 import events.Event;
 import events.impl.render.Render2DEvent;
@@ -93,7 +93,7 @@ public class TridentAim extends Module {
         if (mc.player.getDistance(entity) > attackRange.get()) return false;
         if (wallCheck.get() && !canSeeEntity(entity)) return false;
         if (ignoreFriends.get() && entity instanceof PlayerEntity) {
-            if (Essence.getHandler().friends.isFriend(((PlayerEntity) entity).getGameProfile().getName())) {
+            if (Nebulae.getHandler().friends.isFriend(((PlayerEntity) entity).getGameProfile().getName())) {
                 return false;
             }
         }

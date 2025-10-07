@@ -1,7 +1,7 @@
 /*
 package beame.util.other;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.modules.combat.Aura;
 import beame.components.modules.combat.AuraHandlers.other.AuraUtil;
 import beame.components.modules.combat.ElytraTarget;
@@ -32,8 +32,8 @@ public class BoostUtility implements IMinecraft {
         boolean passive = true;
         float realBoostable = passive ? 1.5f : 1.67f;
         float countableSpeed = realBoostable;
-       // ElytraTarget elytratarget = Essence.getHandler().getModuleList().elytraTarget;
-        Aura aura = Essence.getHandler().getModuleList().aura;
+       // ElytraTarget elytratarget = Nebulae.getHandler().getModuleList().elytraTarget;
+        Aura aura = Nebulae.getHandler().getModuleList().aura;
         LivingEntity target = aura.getTarget();
 
       */

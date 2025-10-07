@@ -1,6 +1,6 @@
 package beame.components.command.impl.software;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.command.AbstractCommand;
 
 import java.util.List;
@@ -12,7 +12,7 @@ public class HelpCommand extends AbstractCommand {
     @Override
     public void run(String[] args) {
         out("[Список команд:]");
-        Essence.getHandler().commandManager.commands.stream()
+        Nebulae.getHandler().commandManager.commands.stream()
                 .filter(cmd -> !cmd.command.equalsIgnoreCase("help"))
                 .forEach(cmd -> out("." + cmd.command + " - " + cmd.description));
     }

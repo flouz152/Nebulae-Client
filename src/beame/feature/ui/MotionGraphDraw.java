@@ -1,6 +1,6 @@
 package beame.feature.ui;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.animation.AnimationMath;
 import beame.util.drag.Dragging;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -11,7 +11,7 @@ import static beame.util.IMinecraft.mc;
 
 public class MotionGraphDraw {
 // leaked by itskekoff; discord.gg/sk3d SJtsy3bx
-    public Dragging motionGraph = Essence.getHandler().createDraggable("mgraph", 240, 80);
+    public Dragging motionGraph = Nebulae.getHandler().createDraggable("mgraph", 240, 80);
 
     ArrayList<Float> motiongraph = new ArrayList<>();
     float motionBps = 0;

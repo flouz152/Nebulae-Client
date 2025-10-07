@@ -1,6 +1,6 @@
 package beame.feature.notify;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.animation.AnimationMath;
 import beame.util.color.ColorUtils;
 import beame.util.fonts.CustomFont;
@@ -29,7 +29,7 @@ public class NotificationManager {
     public void pushNotify(String notify, Type type) {
         if(type == Type.Saved) {
             notifications.add(new Notification(notify, type));
-            if (Essence.getHandler().getModuleList().getClientSounds().isState() && Essence.getHandler().getModuleList().getClientSounds().soundActive.get(3).get()) {
+            if (Nebulae.getHandler().getModuleList().getClientSounds().isState() && Nebulae.getHandler().getModuleList().getClientSounds().soundActive.get(3).get()) {
                 try {
                     SoundUtil.playSound("saved.wav", 65, false);
                 } catch (Exception e) {
@@ -38,7 +38,7 @@ public class NotificationManager {
             }
         } else if(type == Type.Loaded) {
             notifications.add(new Notification(notify, type));
-            if (Essence.getHandler().getModuleList().getClientSounds().isState() && Essence.getHandler().getModuleList().getClientSounds().soundActive.get(4).get()) {
+            if (Nebulae.getHandler().getModuleList().getClientSounds().isState() && Nebulae.getHandler().getModuleList().getClientSounds().soundActive.get(4).get()) {
                 try {
                     SoundUtil.playSound("loaded.wav", 65, false);
                 } catch (Exception e) {
@@ -47,9 +47,9 @@ public class NotificationManager {
             }
         } else if(type == Type.Staff) {
             notifications.add(new Notification(notify, type));
-            if (Essence.getHandler().getModuleList().getClientSounds().isState() && Essence.getHandler().getModuleList().getClientSounds().soundActive.get(5).get()) {
+            if (Nebulae.getHandler().getModuleList().getClientSounds().isState() && Nebulae.getHandler().getModuleList().getClientSounds().soundActive.get(5).get()) {
                 try {
-                    SoundUtil.playSound("detect.wav", Essence.getHandler().getModuleList().getClientSounds().volume.get(), false);
+                    SoundUtil.playSound("detect.wav", Nebulae.getHandler().getModuleList().getClientSounds().volume.get(), false);
                 } catch (Exception e) {
                     System.out.println("Ошибка воспроизведения звука detect.wav: " + e.getMessage());
                 }
@@ -57,9 +57,9 @@ public class NotificationManager {
         } else {
             notifications.add(new Notification(notify));
             if(type == Type.Info) {
-                if (Essence.getHandler().getModuleList().getClientSounds().isState() && Essence.getHandler().getModuleList().getClientSounds().soundActive.get(7).get()) {
+                if (Nebulae.getHandler().getModuleList().getClientSounds().isState() && Nebulae.getHandler().getModuleList().getClientSounds().soundActive.get(7).get()) {
                     try {
-                        SoundUtil.playSound("notification.wav", Essence.getHandler().getModuleList().getClientSounds().volume.get(), false);
+                        SoundUtil.playSound("notification.wav", Nebulae.getHandler().getModuleList().getClientSounds().volume.get(), false);
                     } catch (Exception e) {
                         System.out.println("Ошибка воспроизведения звука notification.wav: " + e.getMessage());
                     }
@@ -145,9 +145,9 @@ public class NotificationManager {
 
             int alpha = (int) (255 * anim);
 
-            int color = ColorUtils.setAlpha(Essence.getHandler().themeManager.getColor(0), alpha);
+            int color = ColorUtils.setAlpha(Nebulae.getHandler().themeManager.getColor(0), alpha);
             if (type == Type.Staff || type == Type.Saved || type == Type.Loaded) {
-                color = ColorUtils.setAlpha(Essence.getHandler().themeManager.getColor(0), alpha);
+                color = ColorUtils.setAlpha(Nebulae.getHandler().themeManager.getColor(0), alpha);
             } else if (type == Type.Off) {
                 color = ColorUtils.rgba(160, 160, 160, (int) (150 * anim));
             }
@@ -158,7 +158,7 @@ public class NotificationManager {
 
             ClientHandler.drawSexyRect(x, y, width, 20, 5, (type == Type.On || type == Type.Info || type == Type.Staff || type == Type.Saved || type == Type.Loaded));
             Fonts.ESSENCE_ICONS.get(18).drawString(this.icon, x + 6, y + 8.5f, color);
-            font.drawString(text, x + 19, y + 9, ColorUtils.rgba(Essence.getHandler().styler.clr_main, Essence.getHandler().styler.clr_main, Essence.getHandler().styler.clr_main, alpha));
+            font.drawString(text, x + 19, y + 9, ColorUtils.rgba(Nebulae.getHandler().styler.clr_main, Nebulae.getHandler().styler.clr_main, Nebulae.getHandler().styler.clr_main, alpha));
 
             RenderSystem.popMatrix();
         }

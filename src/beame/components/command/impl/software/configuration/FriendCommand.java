@@ -1,6 +1,6 @@
 package beame.components.command.impl.software.configuration;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.command.AbstractCommand;
 import beame.util.other.SoundUtil;
 
@@ -37,15 +37,15 @@ public class FriendCommand extends AbstractCommand {
     }
 
     private void addFriend(String name) {
-        Essence.getHandler().friends.addFriend(name);
-        var clientSounds = Essence.getHandler().getModuleList().getClientSounds();
+        Nebulae.getHandler().friends.addFriend(name);
+        var clientSounds = Nebulae.getHandler().getModuleList().getClientSounds();
         if (clientSounds.isState() && clientSounds.soundActive.get(6).get()) {
             SoundUtil.playSound("friend.wav", clientSounds.volume.get(), false);
         }
     }
 
     private void removeFriend(String name) {
-        Essence.getHandler().friends.remFriend(name);
+        Nebulae.getHandler().friends.remFriend(name);
     }
 
     @Override

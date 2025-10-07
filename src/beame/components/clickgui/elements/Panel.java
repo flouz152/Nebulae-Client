@@ -1,6 +1,6 @@
 package beame.components.clickgui.elements;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.Scissor;
 import beame.util.animation.AnimationMath;
 import beame.util.color.ColorUtils;
@@ -43,7 +43,7 @@ public class Panel implements IRenderable {
         this.width = width;
         this.height = height;
 
-        for (Module module : Essence.getHandler().getModuleList().getModules()) {
+        for (Module module : Nebulae.getHandler().getModuleList().getModules()) {
             if(module.getCategory() != category) continue;
             if(!module.isVisible()) continue;
             moduleComponents.add(new ModuleComponent(module));
@@ -86,17 +86,17 @@ public class Panel implements IRenderable {
 
 
     public void drawBackground(MatrixStack stack, float mouseX, float mouseY) {
-        String username = Essence.getHandler().getUserName();
+        String username = Nebulae.getHandler().getUserName();
         ClientHandler.drawSexyRectFromPanel(x, y, width, 20, 6, false);
         ClientHandler.drawSexyRectFromPanel(x, y + 20 + 5, width, height - 15f, 6, false);
 
         float size0 = Fonts.SUISSEINTL.get(14).getStringWidth(category.name());
 
-        Fonts.ESSENCE_ICONS.get(19).drawString(category.icon().toLowerCase(), x + (width / 2) - (size0 / 2) - 15, y + 19f / 2 - 1f, Essence.getHandler().themeManager.getColor(0));
+        Fonts.ESSENCE_ICONS.get(19).drawString(category.icon().toLowerCase(), x + (width / 2) - (size0 / 2) - 15, y + 19f / 2 - 1f, Nebulae.getHandler().themeManager.getColor(0));
         Fonts.SUISSEINTL.get(16).drawString(category.name(), x + (width / 2) - (size0 / 2) - 1, y + 20f / 2 - 1.5f, -1);
         if(index == 0) {
 
-            String uid = Essence.getHandler().getUserID() + "";
+            String uid = Nebulae.getHandler().getUserID() + "";
             float uidSize = Fonts.SUISSEINTL.get(14).getWidth(uid) + 1.5f;
 
             float width2 = width;
@@ -107,9 +107,9 @@ public class Panel implements IRenderable {
 
             ClientHandler.drawSexyRectFromPanel(x, y2, width2, 20, 6, false);
 
-            int bg_0 = interpolateColor(interpolateColor(Essence.getHandler().themeManager.getColor(0), 3, 0.7f), ColorUtils.rgba(45, 45, 45, 80), 50);
+            int bg_0 = interpolateColor(interpolateColor(Nebulae.getHandler().themeManager.getColor(0), 3, 0.7f), ColorUtils.rgba(45, 45, 45, 80), 50);
             int bg01 = ColorUtils.rgba(45, 45, 45, 80);
-            int bg_1 = interpolateColor(interpolateColor(Essence.getHandler().themeManager.getColor(180), 3, 0.5f), bg01, 50);
+            int bg_1 = interpolateColor(interpolateColor(Nebulae.getHandler().themeManager.getColor(180), 3, 0.5f), bg01, 50);
 
 
             float roundWidth = uidSize + 5;
@@ -118,10 +118,10 @@ public class Panel implements IRenderable {
 
             float roundX = x + width2 - roundWidth - marginRight;
 
-            ClientHandler.drawRound(roundX, y2 + 5.0f, roundWidth, 10, 2, Essence.getHandler().getThemeManager().getColor(0));
+            ClientHandler.drawRound(roundX, y2 + 5.0f, roundWidth, 10, 2, Nebulae.getHandler().getThemeManager().getColor(0));
             Fonts.SUISSEINTL.get(14).drawString(uid, roundX + 2.5f, y2 + 8.5f, ColorUtils.rgba(0, 0, 0, 255));
 
-            Fonts.ESSENCE_ICONS.get(17).drawString("b", x2 - 80f, y2 + 8.5f, Essence.getHandler().themeManager.getColor(0));
+            Fonts.ESSENCE_ICONS.get(17).drawString("b", x2 - 80f, y2 + 8.5f, Nebulae.getHandler().themeManager.getColor(0));
             Fonts.SUISSEINTL.get(14).drawString(username.length() > 12 ? username.substring(0, 12) : username, x2 - 67.5f, y2 + 8.5f, -1);
 
         } else if (index == 3) {
@@ -137,7 +137,7 @@ public class Panel implements IRenderable {
                 Fonts.ESSENCE_ICONS.get(17).drawString("g", x2 + 82.5f, y2 + 9f, new Color(60, 60, 60, 255).getRGB());
                 Fonts.SUISSEINTL.get(14).drawString(stack, "Поиск модулей...", x2 + 5f, y2 + 8.5f, new Color(60, 60, 60, 255).getRGB());
             } else {
-                Fonts.SUISSEINTL.get(14).drawString(stack, searchText + (searching ? (System.currentTimeMillis() % 1000 > 500 ? "_" : "") : ""), x2 + 5f, y2 + 8.5f, Essence.getHandler().getThemeManager().getColor(0));
+                Fonts.SUISSEINTL.get(14).drawString(stack, searchText + (searching ? (System.currentTimeMillis() % 1000 > 500 ? "_" : "") : ""), x2 + 5f, y2 + 8.5f, Nebulae.getHandler().getThemeManager().getColor(0));
             }
             Scissor.unset();
             Scissor.pop();

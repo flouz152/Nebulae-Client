@@ -1,6 +1,6 @@
 package beame.components.command.impl.software.keybinds;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.command.AbstractCommand;
 import beame.util.other.KeyStorage;
 import net.minecraft.util.text.TextFormatting;
@@ -23,7 +23,7 @@ public class MacroCommand extends AbstractCommand {
         }
 
         String action = args[1].toLowerCase();
-        var macroManager = Essence.getHandler().getMacroManager();
+        var macroManager = Nebulae.getHandler().getMacroManager();
 
         Map<String, Runnable> actions = Map.of(
                 "list", this::printMacrosList,
@@ -55,27 +55,27 @@ public class MacroCommand extends AbstractCommand {
             return;
         }
 
-        if (Essence.getHandler().getMacroManager().hasMacro(macroKey)) {
+        if (Nebulae.getHandler().getMacroManager().hasMacro(macroKey)) {
             addMessage("Макрос с клавишей " + macroKey + " уже существует!");
             return;
         }
 
-        Essence.getHandler().getMacroManager().addMacro(macroKey, macroMessage, key);
+        Nebulae.getHandler().getMacroManager().addMacro(macroKey, macroMessage, key);
         addMessage("Добавлен макрос: " + TextFormatting.BLUE + macroKey + TextFormatting.WHITE + " -> " + TextFormatting.BLUE + macroMessage);
     }
 
     private void removeMacro(String macroKey) {
-        if (!Essence.getHandler().getMacroManager().hasMacro(macroKey)) {
+        if (!Nebulae.getHandler().getMacroManager().hasMacro(macroKey)) {
             addMessage("Макрос с клавишей " + macroKey + " не найден!");
             return;
         }
 
-        Essence.getHandler().getMacroManager().deleteMacro(macroKey);
+        Nebulae.getHandler().getMacroManager().deleteMacro(macroKey);
         addMessage("Макрос с клавишей " + TextFormatting.BLUE + macroKey + TextFormatting.WHITE + " успешно удален!");
     }
 
     private void printMacrosList() {
-        var macroManager = Essence.getHandler().getMacroManager();
+        var macroManager = Nebulae.getHandler().getMacroManager();
         if (macroManager.isEmpty()) {
             addMessage(TextFormatting.RED + "Список макросов пуст.");
             return;

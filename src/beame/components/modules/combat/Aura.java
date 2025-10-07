@@ -1,6 +1,6 @@
 package beame.components.modules.combat;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.modules.combat.AuraHandlers.FuntimeNewRotation;
 import beame.components.modules.combat.AuraHandlers.component.core.combat.Rotation;
 import beame.components.modules.combat.AuraHandlers.component.core.combat.RotationComponent;
@@ -69,7 +69,7 @@ import static net.minecraft.util.math.MathHelper.*;
 public class Aura extends Module {
 // leaked by itskekoff; discord.gg/sk3d JBoAZy3m
 
-    public final RadioSetting rotationType = new RadioSetting("Тип наведения", "ФанТайм", "РиллиВорлд", "ФанТайм", "СпукиТайм", "ХвХ", "Тест");
+    public final RadioSetting rotationType = new RadioSetting("Тип наведения", "ФанТайм", "РиллиВорлд", "ФанТайм", "СпукиТайм", "ХвХ", "LuckyDayz", "Тест");
 
     public final RadioSetting targetSort = new RadioSetting("Приоритет по",
             "По всему", "Здоровью",
@@ -99,12 +99,25 @@ public class Aura extends Module {
 
     private final BooleanSetting onlycrit = new BooleanSetting("Только криты", true, 0);
     private final BooleanSetting smartcrit = new BooleanSetting("Умные криты", true, 0).setVisible(() -> onlycrit.get());
-    private final BooleanSetting breakshield = new BooleanSetting("Ломать щит", true, 0).setVisible(() -> rotationType.get("РиллиВорлд") || rotationType.get("ХвХ") || rotationType.get("СпукиТайм"));
-    private final BooleanSetting otzhimshield = new BooleanSetting("Отжимать щит", true, 0).setVisible(() -> rotationType.get("РиллиВорлд") || rotationType.get("ХвХ") || rotationType.get("СпукиТайм"));
+    private final BooleanSetting breakshield = new BooleanSetting("Ломать щит", true, 0).setVisible(() -> rotationType.get("РиллиВорлд") || rotationType.get("ХвХ") || rotationType.get("СпукиТайм") || rotationType.get("LuckyDayz"));
+    private final BooleanSetting otzhimshield = new BooleanSetting("Отжимать щит", true, 0).setVisible(() -> rotationType.get("РиллиВорлд") || rotationType.get("ХвХ") || rotationType.get("СпукиТайм") || rotationType.get("LuckyDayz"));
     private final BooleanSetting walls = new BooleanSetting("Бить через стены", true, 0);
     private final BooleanSetting synctps = new BooleanSetting("Синхронизация с тиками", false, 0);
     private final BooleanSetting fastrotation = new BooleanSetting("Ускорять ротацию", false, 0).setVisible(() -> rotationType.get("РиллиВорлд") || rotationType.get("ХвХ"));
     private final BooleanSetting interpol = new BooleanSetting("Интерполяция", false, 0);
+
+    private final SliderSetting luckyYawSpeed = new SliderSetting("LuckyDayz скорость yaw", 80f, 20f, 200f, 1f)
+            .setVisible(() -> rotationType.get("LuckyDayz"));
+    private final SliderSetting luckyPitchSpeed = new SliderSetting("LuckyDayz скорость pitch", 70f, 15f, 180f, 1f)
+            .setVisible(() -> rotationType.get("LuckyDayz"));
+    private final SliderSetting luckyPrediction = new SliderSetting("LuckyDayz предикт", 3.5f, 0f, 8f, 0.1f)
+            .setVisible(() -> rotationType.get("LuckyDayz"));
+    private final SliderSetting luckySmoothing = new SliderSetting("LuckyDayz сглаживание", 0.45f, 0.05f, 1f, 0.05f)
+            .setVisible(() -> rotationType.get("LuckyDayz"));
+    private final BooleanSetting luckyAimCenter = new BooleanSetting("LuckyDayz центр хитбокса", false, 0)
+            .setVisible(() -> rotationType.get("LuckyDayz"));
+    private final BooleanSetting luckyAdaptiveFocus = new BooleanSetting("LuckyDayz адаптив", true, 0)
+            .setVisible(() -> rotationType.get("LuckyDayz"));
 
     private final TimerUtil timerUtil = new TimerUtil();
     public Vector2f rotateVector = new Vector2f(0, 0);
@@ -139,10 +152,16 @@ public class Aura extends Module {
     private double interpolationFactor = 1.0;
     private final SecureRandom neuralRandom = new SecureRandom();
 
+    private Vector3d luckyDayzSmoothedAim;
+    private float luckyDayzYawVelocity;
+    private float luckyDayzPitchVelocity;
+    private double luckyDayzLastDistance;
+    private boolean luckyDayzSprintReset;
+
     public Aura() {
         super("AttackAura", Category.Combat, true, "Автоматически бьет энтити в установленном радиусе");
         addSettings(rotationType, targetSort, correctionType, interpolationType, attack36, range, preRange, fov, filter, noAttackCheck, onlycrit, smartcrit, breakshield,
-                otzhimshield, walls, synctps, fastrotation, interpol);
+                otzhimshield, walls, synctps, fastrotation, interpol, luckyYawSpeed, luckyPitchSpeed, luckyPrediction, luckySmoothing, luckyAimCenter, luckyAdaptiveFocus);
     }
 
     @Override
@@ -174,6 +193,8 @@ public class Aura extends Module {
                         HolyWorldSpeed();
                     } else if (rotationType.get("ХвХ")) {
                         HvHSpeed();
+                    } else if (rotationType.get("LuckyDayz")) {
+                        LuckyDayzSpeed();
                     } else if (rotationType.get("Тест")) {
                         handleTest();
                     }
@@ -200,16 +221,24 @@ public class Aura extends Module {
             ReallyWorldSpeed();
 /*        } else if (rotationType.get("")) {
             ();*/
+        } else if (rotationType.get("LuckyDayz")) {
+            LuckyDayzSpeed();
         }
     }
 
 
     private void processRotationLogic() {
         if (target == null || mc.player == null || mc.world == null) return;
-        if (!LookTarget(target)) return;
+
+        boolean inCurrentView = LookTarget(target);
+        if (!inCurrentView) {
+            if (!(rotationType.get("LuckyDayz") && isWithinRotationFov(rotateVector, target))) {
+                return;
+            }
+        }
         if (AuraUtil.getStrictDistance(target) > range.get() + preRange.get()) return;
 
-        float attackStrength = mc.player.getCooledAttackStrength(synctps.get() ? Essence.getHandler().getServerUtils().getAdjustTicks() : (rotationType.get("СпукиТайм") ? (MathUtil.random(0.97f,1)) : 0.5f));
+        float attackStrength = mc.player.getCooledAttackStrength(synctps.get() ? Nebulae.getHandler().getServerUtils().getAdjustTicks() : (rotationType.get("СпукиТайм") ? (MathUtil.random(0.97f,1)) : 0.5f));
         boolean isReady = attackStrength > (rotationType.get("СпукиТайм") ? MathUtil.random(.87f, .91f) : .87F);
 
         if (!isReady || !timerUtil.hasTimeElapsed()) return;
@@ -289,8 +318,19 @@ public class Aura extends Module {
 
         if (!targets.isEmpty()) {
             sortTargets(targets);
-            target = targets.get(0);
+            LivingEntity selected = targets.get(0);
+            if (selected != target) {
+                prevTarget = target;
+                target = selected;
+                resetLuckyDayzTracking();
+            } else {
+                target = selected;
+            }
         } else {
+            if (target != null) {
+                prevTarget = target;
+                resetLuckyDayzTracking();
+            }
             target = null;
         }
     }
@@ -468,7 +508,7 @@ public class Aura extends Module {
         float randomturn = MathUtil.random(140, 240);
         float randomtime = MathUtil.random(2, 4f);
 
-        Essence.getHandler().auraHelper.rotationHandler.update(new Rotates(
+        Nebulae.getHandler().auraHelper.rotationHandler.update(new Rotates(
                         mc.player.rotationYaw + clampedYaw,
                         mc.player.rotationPitch + (mc.objectMouseOver.getType() == RayTraceResult.Type.ENTITY ? 0 : clampedPitch)),
                 randomturn,  360F, (int) randomtime, 1);
@@ -779,7 +819,7 @@ public class Aura extends Module {
     private int noCritTicks = 0;
 
     public boolean shouldFalling() {
-        float attackStrength = mc.player.getCooledAttackStrength(synctps.get() ? Essence.getHandler().getServerUtils().getAdjustTicks() : (rotationType.get("СпукиТайм") ? (MathUtil.random(0.97f,1)) : 0.5f));
+        float attackStrength = mc.player.getCooledAttackStrength(synctps.get() ? Nebulae.getHandler().getServerUtils().getAdjustTicks() : (rotationType.get("СпукиТайм") ? (MathUtil.random(0.97f,1)) : 0.5f));
         boolean isReady = attackStrength > (rotationType.get("СпукиТайм") ? MathUtil.random(.87f, .91f) : .87F);
 
         float mb = MathUtil.random(0.001f, 0.008f);
@@ -837,7 +877,7 @@ public class Aura extends Module {
                 return false;
             }
 
-            if (!filter.get("Друзей").get() && Essence.getHandler().friends.isFriend(player.getGameProfile().getName())) {
+            if (!filter.get("Друзей").get() && Nebulae.getHandler().friends.isFriend(player.getGameProfile().getName())) {
                 return false;
             }
 
@@ -886,11 +926,20 @@ public class Aura extends Module {
         return false;
     }
 
+    private void resetLuckyDayzTracking() {
+        luckyDayzSmoothedAim = null;
+        luckyDayzYawVelocity = 0;
+        luckyDayzPitchVelocity = 0;
+        luckyDayzLastDistance = 0;
+        luckyDayzSprintReset = false;
+    }
+
     private void resetSnapRotation() {
         if (mc.player != null) {
             mc.player.rotationYawOffset = Integer.MIN_VALUE;
         }
         rotateVector = new Vector2f(mc.player != null ? mc.player.rotationYaw : 0, mc.player != null ? mc.player.rotationPitch : 0);
+        resetLuckyDayzTracking();
     }
 
     private boolean LookTarget(LivingEntity target) {
@@ -901,6 +950,21 @@ public class Aura extends Module {
                 .normalize();
         double dotProduct = playerDirection.dotProduct(targetDirection);
         double angle = Math.toDegrees(Math.acos(clamp(dotProduct, -1.0, 1.0)));
+        return angle <= fov.get();
+    }
+
+    private boolean isWithinRotationFov(Vector2f rotation, LivingEntity target) {
+        if (target == null) {
+            return false;
+        }
+
+        Vector3d lookDirection = Vector3d.fromPitchYaw(new Vector2f(rotation.y, rotation.x)).normalize();
+        Vector3d toTarget = target.getPositionVec()
+                .subtract(mc.player.getEyePosition(1.0F))
+                .normalize();
+
+        double dot = lookDirection.dotProduct(toTarget);
+        double angle = Math.toDegrees(Math.acos(MathHelper.clamp(dot, -1.0, 1.0)));
         return angle <= fov.get();
     }
 
@@ -944,6 +1008,7 @@ public class Aura extends Module {
         if (mc.player != null) {
             resetSnapRotation();
             target = null;
+            prevTarget = null;
         }
     }
 
@@ -953,6 +1018,7 @@ public class Aura extends Module {
         resetSnapRotation();
         timerUtil.setMs(0);
         target = null;
+        prevTarget = null;
         rotateVector.y = mc.player.rotationPitch;
     }
 
@@ -961,6 +1027,10 @@ public class Aura extends Module {
             return attack36.get() && MoveUtil.isMoving() ? 3.6f : range.get();
         }
         return range.get();
+    }
+
+    public LivingEntity getTarget() {
+        return target;
     }
 
     private void ReallyWorldSpeed() {
@@ -990,6 +1060,15 @@ public class Aura extends Module {
         }
     }
 
+    private void LuckyDayzSpeed() {
+        if (ticks > 0) {
+            handleLuckyDayz();
+            ticks--;
+        } else {
+            resetSnapRotation();
+        }
+    }
+
     /* private void SpookyTimeSpeed() {
          handleSpookyTime();
      }*/
@@ -1006,8 +1085,149 @@ public class Aura extends Module {
         updateRotation(yawSpeed, pitchSpeed);
     }
 
+    private void handleLuckyDayz() {
+        if (target == null || mc.player == null || mc.world == null) {
+            return;
+        }
+
+        if (!luckyDayzSprintReset && mc.player.connection != null) {
+            boolean wasSprinting = mc.player.serverSprintState || mc.player.isSprinting();
+            mc.player.connection.sendPacket(new CEntityActionPacket(mc.player, CEntityActionPacket.Action.STOP_SPRINTING));
+            if (wasSprinting) {
+                mc.player.connection.sendPacket(new CEntityActionPacket(mc.player, CEntityActionPacket.Action.START_SPRINTING));
+                mc.player.setSprinting(true);
+            }
+            luckyDayzSprintReset = true;
+        }
+
+        double smoothing = MathHelper.clamp(luckySmoothing.get(), 0.05f, 1.0f);
+        Vector3d basePosition = target.getPositionVec();
+        Vector3d motion = new Vector3d(
+                target.getPosX() - target.lastTickPosX,
+                target.getPosY() - target.lastTickPosY,
+                target.getPosZ() - target.lastTickPosZ
+        );
+
+        double predictTicks = luckyPrediction.get();
+        double distance = mc.player.getDistance(target);
+
+        if (luckyAdaptiveFocus.get()) {
+            double distanceFactor = MathHelper.clamp(distance / Math.max(0.1f, range.get()), 0.35, 1.35);
+            predictTicks *= distanceFactor;
+
+            if (target.hurtTime > 3) {
+                predictTicks *= 0.6;
+            }
+        }
+
+        Vector3d predicted = basePosition.add(motion.scale(predictTicks));
+        AxisAlignedBB box = target.getBoundingBox();
+        double yAnchor = luckyAimCenter.get() ? (box.minY + box.maxY) * 0.5 : target.getPosY() + target.getEyeHeight() - 0.15f;
+
+        Vector3d aimPoint = new Vector3d(
+                MathHelper.clamp(predicted.x, box.minX, box.maxX),
+                MathHelper.clamp(yAnchor, box.minY, box.maxY),
+                MathHelper.clamp(predicted.z, box.minZ, box.maxZ)
+        );
+
+        double jitterScale = Math.max(0.0025, 0.02 * (1.0 - smoothing));
+        aimPoint = aimPoint.add(
+                MathUtil.random(-jitterScale, jitterScale),
+                MathUtil.random(-jitterScale * 0.75, jitterScale * 0.75),
+                MathUtil.random(-jitterScale, jitterScale)
+        );
+
+        if (luckyAdaptiveFocus.get()) {
+            double verticalBoost = MathHelper.clamp(distance / 6.0, 0.2, 0.8);
+            aimPoint = aimPoint.add(0, verticalBoost * (luckyAimCenter.get() ? 0.3 : 0.1), 0);
+        }
+
+        if (luckyDayzSmoothedAim == null) {
+            luckyDayzSmoothedAim = aimPoint;
+        } else {
+            luckyDayzSmoothedAim = new Vector3d(
+                    MathHelper.lerp(smoothing, luckyDayzSmoothedAim.x, aimPoint.x),
+                    MathHelper.lerp(smoothing, luckyDayzSmoothedAim.y, aimPoint.y),
+                    MathHelper.lerp(smoothing, luckyDayzSmoothedAim.z, aimPoint.z)
+            );
+        }
+
+        Vector3d eyePosition = mc.player.getEyePosition(mc.getRenderPartialTicks());
+        Vector3d aimVector = luckyDayzSmoothedAim.subtract(eyePosition);
+        double horizontal = Math.sqrt(aimVector.x * aimVector.x + aimVector.z * aimVector.z);
+
+        if (horizontal < 1.0E-4) {
+            return;
+        }
+
+        float desiredYaw = (float) Math.toDegrees(Math.atan2(aimVector.z, aimVector.x)) - 90.0f;
+        float desiredPitch = (float) -Math.toDegrees(Math.atan2(aimVector.y, horizontal));
+
+        float yawDelta = MathHelper.wrapDegrees(desiredYaw - rotateVector.x);
+        float pitchDelta = MathHelper.wrapDegrees(desiredPitch - rotateVector.y);
+
+        float yawSpeed = luckyYawSpeed.get();
+        float pitchSpeed = luckyPitchSpeed.get();
+
+        float yawDeltaAbs = Math.abs(yawDelta);
+        float pitchDeltaAbs = Math.abs(pitchDelta);
+
+        if (yawDeltaAbs > yawSpeed) {
+            float catchUp = MathHelper.clamp(yawDeltaAbs / 90.0f, 1.0f, 3.5f);
+            yawSpeed *= catchUp;
+        }
+
+        if (pitchDeltaAbs > pitchSpeed) {
+            float catchUp = MathHelper.clamp(pitchDeltaAbs / 60.0f, 1.0f, 3.0f);
+            pitchSpeed *= catchUp;
+        }
+
+        if (luckyAdaptiveFocus.get()) {
+            double deltaDistance = Math.abs(distance - luckyDayzLastDistance);
+            double distanceFactor = MathHelper.clamp(0.6 + (distance / Math.max(1.0f, range.get())) * 0.7, 0.6, 1.5);
+            yawSpeed *= distanceFactor;
+            pitchSpeed *= distanceFactor;
+
+            if (deltaDistance > 0.35) {
+                double boost = Math.min(1.35, 1.0 + deltaDistance * 0.45);
+                yawSpeed *= boost;
+                pitchSpeed *= boost;
+            }
+        }
+
+        luckyDayzYawVelocity = MathHelper.lerp((float) smoothing, luckyDayzYawVelocity, yawDelta);
+        luckyDayzPitchVelocity = MathHelper.lerp((float) smoothing, luckyDayzPitchVelocity, pitchDelta);
+
+        float yawStep = MathHelper.clamp(luckyDayzYawVelocity, -yawSpeed, yawSpeed);
+        float pitchStep = MathHelper.clamp(luckyDayzPitchVelocity, -pitchSpeed, pitchSpeed);
+
+        if (Math.abs(yawStep) < 0.05f && yawDeltaAbs > 1.5f) {
+            yawStep = Math.copySign(Math.min(yawDeltaAbs, yawSpeed), yawDelta);
+        }
+
+        if (Math.abs(pitchStep) < 0.05f && pitchDeltaAbs > 1.5f) {
+            pitchStep = Math.copySign(Math.min(pitchDeltaAbs, pitchSpeed), pitchDelta);
+        }
+
+        float updatedYaw = rotateVector.x + yawStep;
+        float updatedPitch = MathHelper.clamp(rotateVector.y + pitchStep, -90.0f, 90.0f);
+
+        float gcd = SensUtil.getGCDValue();
+        updatedYaw -= (updatedYaw - rotateVector.x) % gcd;
+        updatedPitch -= (updatedPitch - rotateVector.y) % gcd;
+
+        rotateVector = new Vector2f(updatedYaw, updatedPitch);
+        mc.player.rotationYawOffset = rotateVector.x;
+
+        luckyDayzLastDistance = distance;
+    }
+
     public void setTarget(LivingEntity entity) {
-        this.target = entity;
+        if (this.target != entity) {
+            this.prevTarget = this.target;
+            this.target = entity;
+            resetLuckyDayzTracking();
+        }
     }
 
     public void focus(PlayerEntity player) {

@@ -1,6 +1,6 @@
 package beame.components.baritone.api.utils;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.baritone.api.BaritoneAPI;
 import beame.components.command.AbstractCommand;
 import net.minecraft.client.Minecraft;
@@ -33,11 +33,11 @@ public interface Helper {
 
     static ITextComponent getPrefix() {
         IFormattableTextComponent component = new StringTextComponent("");
-        if (Essence.getHandler().getThemeManager() != null) {
+        if (Nebulae.getHandler().getThemeManager() != null) {
             component.appendString("§7[")
                     .append(AbstractCommand.genGradientText("Baritone",
-                            new Color(Essence.getHandler().getThemeManager().getThemeColor(0)),
-                            new Color(Essence.getHandler().getThemeManager().getThemeColor(1))))
+                            new Color(Nebulae.getHandler().getThemeManager().getThemeColor(0)),
+                            new Color(Nebulae.getHandler().getThemeManager().getThemeColor(1))))
                     .appendString("§7]");
         }
         return component;

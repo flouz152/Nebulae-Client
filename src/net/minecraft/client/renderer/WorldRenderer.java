@@ -1,6 +1,6 @@
 package net.minecraft.client.renderer;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.baritone.api.BaritoneAPI;
 import beame.components.baritone.api.IBaritone;
 import beame.components.baritone.api.event.events.RenderEvent;
@@ -1952,7 +1952,7 @@ public class WorldRenderer implements IResourceManagerReloadListener, AutoClosea
                             SmartAnimations.spritesRendered(bitset);
                         }
                     }
-                    chunk.animation = Essence.getHandler().getModuleList().chunkAnimator.isState() ? MathUtil.fast(chunk.animation, 0, 3) : 0;
+                    chunk.animation = Nebulae.getHandler().getModuleList().chunkAnimator.isState() ? MathUtil.fast(chunk.animation, 0, 3) : 0;
 
                 }
             }

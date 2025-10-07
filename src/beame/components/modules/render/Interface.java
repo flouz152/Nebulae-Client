@@ -1,6 +1,6 @@
 package beame.components.modules.render;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.feature.ui.*;
 import beame.util.animation.AnimationMath;
 import events.Event;
@@ -55,24 +55,24 @@ public class Interface extends Module {
     @Override
     public void event(Event event) {
         if (event instanceof EventUpdate eventUpdate) {
-            Essence.getHandler().themeManager.selectTheme(theme.getIndex());
+            Nebulae.getHandler().themeManager.selectTheme(theme.getIndex());
             if(widgets.get(2).get()) {
                 stafflist.update(eventUpdate);
             }
             enabledAnimation = AnimationMath.fast(enabledAnimation, isState() ? 1 : 0, 12);
         }
-        if (Essence.getHandler().getModuleList().hud.old.get()) {
-            Essence.getHandler().getModuleList().hud.ghost.setVisible(() -> false);
-            Essence.getHandler().getModuleList().hud.ghost.set(false);
+        if (Nebulae.getHandler().getModuleList().hud.old.get()) {
+            Nebulae.getHandler().getModuleList().hud.ghost.setVisible(() -> false);
+            Nebulae.getHandler().getModuleList().hud.ghost.set(false);
         } else {
-            Essence.getHandler().getModuleList().hud.ghost.setVisible(() -> true);
+            Nebulae.getHandler().getModuleList().hud.ghost.setVisible(() -> true);
         }
 
         if (event instanceof Render2DEvent render2DEvent) {
-           if (Essence.getHandler().getModuleList().hud.old.get()){
+           if (Nebulae.getHandler().getModuleList().hud.old.get()){
                watermarkOLD.render(ghost.get());
            }
-           else if (!Essence.getHandler().getModuleList().hud.old.get()){
+           else if (!Nebulae.getHandler().getModuleList().hud.old.get()){
                watermark.render(ghost.get());
            }
 

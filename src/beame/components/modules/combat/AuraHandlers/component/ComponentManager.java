@@ -1,6 +1,6 @@
 package beame.components.modules.combat.AuraHandlers.component;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.modules.combat.AuraHandlers.component.core.combat.RotationComponent;
 import beame.components.modules.combat.AuraHandlers.component.core.combat.SmoothRotationComponent;
 
@@ -15,7 +15,7 @@ public final class ComponentManager extends HashMap<Class<? extends Component>, 
                 new SmoothRotationComponent()
         );
 
-        this.values().forEach(component -> Essence.getHandler().getEventBus().register(component));
+        this.values().forEach(component -> Nebulae.getHandler().getEventBus().register(component));
     }
 
     public void add(Component... components) {

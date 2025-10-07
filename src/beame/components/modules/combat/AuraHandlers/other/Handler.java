@@ -2,12 +2,14 @@ package beame.components.modules.combat.AuraHandlers.other;
 
 import beame.util.IMinecraft;
 import events.Event;
-import lombok.Getter;
 
-@Getter
+/**
+ * Base class for the aura helper handlers.  Implementations only need to
+ * override {@link #event(Event)}; all shared Minecraft access lives here.
+ */
 public abstract class Handler implements IMinecraft {
-// leaked by itskekoff; discord.gg/sk3d 1llxyFrk
-    public Handler() { }
+    protected Handler() {
+    }
 
-    public abstract void event(final Event event);
+    public abstract void event(Event event);
 }

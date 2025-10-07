@@ -1,6 +1,6 @@
 package net.minecraft.client.gui;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.animation.AnimationMath;
 import beame.util.color.ColorUtils;
 import beame.util.fonts.Fonts;
@@ -90,7 +90,7 @@ public class ResourceLoadProgressGui extends LoadingGui
             }
 
             int l = MathHelper.ceil((1.0F - MathHelper.clamp(f - 1.0F, 0.0F, 1.0F)) * 255.0F);
-            fill(matrixStack, 0, 0, i, j, Essence.getHandler().unhooked ? ColorHelper.PackedColor.packColor(255, 239, 50, 61) & 16777215  : ColorUtils.rgb(17, 17, 17));
+            fill(matrixStack, 0, 0, i, j, Nebulae.getHandler().unhooked ? ColorHelper.PackedColor.packColor(255, 239, 50, 61) & 16777215  : ColorUtils.rgb(17, 17, 17));
             f2 = 1.0F - MathHelper.clamp(f - 1.0F, 0.0F, 1.0F);
         }
         else if (this.reloading)
@@ -101,12 +101,12 @@ public class ResourceLoadProgressGui extends LoadingGui
             }
 
             int i2 = MathHelper.ceil(MathHelper.clamp((double)f1, 0.15D, 1.0D) * 255.0D);
-            fill(matrixStack, 0, 0, i, j, Essence.getHandler().unhooked ? ColorHelper.PackedColor.packColor(255, 239, 50, 61) & 16777215  : ColorUtils.rgb(17, 17, 17));
+            fill(matrixStack, 0, 0, i, j, Nebulae.getHandler().unhooked ? ColorHelper.PackedColor.packColor(255, 239, 50, 61) & 16777215  : ColorUtils.rgb(17, 17, 17));
             f2 = MathHelper.clamp(f1, 0.0F, 1.0F);
         }
         else
         {
-            fill(matrixStack, 0, 0, i, j, Essence.getHandler().unhooked ? ColorHelper.PackedColor.packColor(255, 239, 50, 61) & 16777215  : ColorUtils.rgb(17, 17, 17));
+            fill(matrixStack, 0, 0, i, j, Nebulae.getHandler().unhooked ? ColorHelper.PackedColor.packColor(255, 239, 50, 61) & 16777215  : ColorUtils.rgb(17, 17, 17));
             f2 = 1.0F;
         }
 
@@ -116,7 +116,7 @@ public class ResourceLoadProgressGui extends LoadingGui
         int j1 = (int)(d0 * 0.5D);
         double d1 = d0 * 4.0D;
         int k1 = (int)(d1 * 0.5D);
-        if(Essence.getHandler().unhooked)
+        if(Nebulae.getHandler().unhooked)
             this.mc.getTextureManager().bindTexture(MOJANG_LOGO_TEXTURE);
         RenderSystem.enableBlend();
         RenderSystem.blendEquation(32774);
@@ -137,13 +137,13 @@ public class ResourceLoadProgressGui extends LoadingGui
 
         if (flag)
         {
-            if(Essence.getHandler().unhooked) {
+            if(Nebulae.getHandler().unhooked) {
                 blit(matrixStack, j2 - k1, i1 - j1, k1, (int)d0, -0.0625F, 0.0F, 120, 60, 120, 120);
                 blit(matrixStack, j2, i1 - j1, k1, (int)d0, 0.0625F, 60.0F, 120, 60, 120, 120);
             }
         }
 
-        if(!Essence.getHandler().unhooked) {
+        if(!Nebulae.getHandler().unhooked) {
             size = AnimationMath.fast(size, 65, 8);
             if(size == 65) size = 40;
 
@@ -160,7 +160,7 @@ public class ResourceLoadProgressGui extends LoadingGui
 
         if (f < 1.0F)
         {
-            if(Essence.getHandler().unhooked){
+            if(Nebulae.getHandler().unhooked){
                 this.func_238629_a_(matrixStack, i / 2 - k1, l1 - 5, i / 2 + k1, l1 + 5, 1.0F - MathHelper.clamp(f, 0.0F, 1.0F));
             } else {
                 ClientHandler.drawRound(0, mc.getMainWindow().getScaledHeight()-4, mc.getMainWindow().getScaledWidth()*progress, 4, 0, -1);
@@ -229,8 +229,8 @@ public class ResourceLoadProgressGui extends LoadingGui
 
     public void update()
     {
-        this.colorBackground = Essence.getHandler().unhooked ? field_238628_c_  : ColorUtils.rgb(17, 17, 17);
-        this.colorBar = Essence.getHandler().unhooked ? field_238628_c_  : ColorUtils.rgb(17, 17, 17);
+        this.colorBackground = Nebulae.getHandler().unhooked ? field_238628_c_  : ColorUtils.rgb(17, 17, 17);
+        this.colorBar = Nebulae.getHandler().unhooked ? field_238628_c_  : ColorUtils.rgb(17, 17, 17);
         this.colorOutline = 16777215;
         this.colorProgress = 16777215;
 

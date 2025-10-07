@@ -1,6 +1,6 @@
 package beame.module;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.IMinecraft;
 import beame.util.other.SoundUtil;
 import events.Event;
@@ -77,13 +77,13 @@ public abstract class Module implements IMinecraft {
         }
 
         if (!hideNotification) {
-            Essence.getHandler().notificationManager.pushNotify(this, state);
+            Nebulae.getHandler().notificationManager.pushNotify(this, state);
 
-            if (Essence.getHandler().getModuleList().getClientSounds().isState() && Essence.getHandler().getModuleList().getClientSounds().soundActive.get(0).get()) {
-                SoundUtil.playSound(state ? "enable.wav" : "disable.wav", Essence.getHandler().getModuleList().getClientSounds().volume.get(), false);
+            if (Nebulae.getHandler().getModuleList().getClientSounds().isState() && Nebulae.getHandler().getModuleList().getClientSounds().soundActive.get(0).get()) {
+                SoundUtil.playSound(state ? "enable.wav" : "disable.wav", Nebulae.getHandler().getModuleList().getClientSounds().volume.get(), false);
             }
         }
-        Essence.cfgManager.saveAutoConfig();
+        Nebulae.cfgManager.saveAutoConfig();
 
     }
 
@@ -109,13 +109,13 @@ public abstract class Module implements IMinecraft {
         }
 
         if (!hideNotification) {
-            Essence.getHandler().notificationManager.pushNotify(this, state);
+            Nebulae.getHandler().notificationManager.pushNotify(this, state);
 
-            if (Essence.getHandler().getModuleList().getClientSounds().isState() && Essence.getHandler().getModuleList().getClientSounds().soundActive.get(0).get()) {
-                SoundUtil.playSound(state ? "enable.wav" : "disable.wav", Essence.getHandler().getModuleList().getClientSounds().volume.get(), false);
+            if (Nebulae.getHandler().getModuleList().getClientSounds().isState() && Nebulae.getHandler().getModuleList().getClientSounds().soundActive.get(0).get()) {
+                SoundUtil.playSound(state ? "enable.wav" : "disable.wav", Nebulae.getHandler().getModuleList().getClientSounds().volume.get(), false);
             }
         }
-        Essence.cfgManager.saveAutoConfig();
+        Nebulae.cfgManager.saveAutoConfig();
     }
 
     protected void onDisable() {

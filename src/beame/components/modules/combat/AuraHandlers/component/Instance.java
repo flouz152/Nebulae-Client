@@ -1,6 +1,6 @@
 package beame.components.modules.combat.AuraHandlers.component;
 
-import beame.Essence;
+import beame.Nebulae;
 import lombok.experimental.UtilityClass;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -15,6 +15,6 @@ public class Instance {
 
 
     public <T extends Component> T getComponent(Class<T> clazz) {
-        return clazz.cast(componentInstances.computeIfAbsent(clazz, instance -> Essence.getHandler().getComponentManager().get(instance)));
+        return clazz.cast(componentInstances.computeIfAbsent(clazz, instance -> Nebulae.getHandler().getComponentManager().get(instance)));
     }
 }

@@ -1,6 +1,6 @@
 package beame.components.modules.movement;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.command.AbstractCommand;
 import beame.feature.notify.NotificationManager;
 import beame.util.math.TimerUtil;
@@ -305,7 +305,7 @@ public class AutoDodge extends Module {
             if (invSlot == -1 && hbSlot == -1) {
                 plastThrow = false;
             AbstractCommand.addMessage("§cПласт не найден!");
-                Essence.getHandler().notificationManager.pushNotify("Нет предмета для использования!", NotificationManager.Type.Info);
+                Nebulae.getHandler().notificationManager.pushNotify("Нет предмета для использования!", NotificationManager.Type.Info);
                 return;
             }
 

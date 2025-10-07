@@ -1,6 +1,6 @@
 package net.minecraft.client.gui.screen;
 
-import beame.screens.EssenceMainMenu;
+import beame.screens.NebulaeMainMenu;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import javax.annotation.Nullable;
@@ -91,7 +91,7 @@ public class DeathScreen extends Screen
         }
 
         this.minecraft.unloadWorld(new DirtMessageScreen(new TranslationTextComponent("menu.savingLevel")));
-        this.minecraft.displayGuiScreen(new EssenceMainMenu());
+        this.minecraft.displayGuiScreen(new NebulaeMainMenu());
     }
 
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks)

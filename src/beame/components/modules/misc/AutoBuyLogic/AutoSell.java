@@ -1,6 +1,6 @@
 package beame.components.modules.misc.AutoBuyLogic;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.modules.misc.AutoBuyLogic.Items.BuyedItem;
 import beame.util.player.InventoryUtility;
 import net.minecraft.inventory.container.ClickType;
@@ -18,7 +18,7 @@ public class AutoSell {
     private long lastStorageCheck = 0;
 
     public void onUpdate() {
-        if (!Essence.getHandler().getModuleList().autoBuy.autoSell.get()) return;
+        if (!Nebulae.getHandler().getModuleList().autoBuy.autoSell.get()) return;
         if (waitingForStorage) {
             if (System.currentTimeMillis() > lastSellAction && beame.components.modules.misc.AutoBuyLogic.AutoBuyUtil.isAuctionOpened()) {
                 InventoryUtility.clickSlotId(46, 0, ClickType.PICKUP, false);
@@ -36,8 +36,8 @@ public class AutoSell {
         }
         if (autoSellBusy) return;
         BuyedItem toSell = null;
-        synchronized (Essence.getHandler().autoBuy.rlyBuyedItems) {
-            for (BuyedItem item : Essence.getHandler().autoBuy.rlyBuyedItems) {
+        synchronized (Nebulae.getHandler().autoBuy.rlyBuyedItems) {
+            for (BuyedItem item : Nebulae.getHandler().autoBuy.rlyBuyedItems) {
                 if (item.buyed && !item.sold) {
                     toSell = item;
                     break;
@@ -52,7 +52,7 @@ public class AutoSell {
             mc.player.connection.sendPacket(new CHeldItemChangePacket(slot));
             return;
         }
-        int price = (int) (toSell.price * (1 + Essence.getHandler().getModuleList().autoBuy.autoSellPercent.get() / 100.0));
+        int price = (int) (toSell.price * (1 + Nebulae.getHandler().getModuleList().autoBuy.autoSellPercent.get() / 100.0));
         mc.player.sendChatMessage("/ah sell " + price);
         autoSellBusy = true;
         currentSellItem = toSell;
@@ -60,7 +60,7 @@ public class AutoSell {
     }
 
     public void onChatMessage(String text) {
-        if (!Essence.getHandler().getModuleList().autoBuy.autoSell.get()) return;
+        if (!Nebulae.getHandler().getModuleList().autoBuy.autoSell.get()) return;
         if (text.contains("Освободите хранилище или уберите предметы с продажи")) {
             waitingForStorage = true;
             lastStorageCheck = System.currentTimeMillis();

@@ -1,6 +1,6 @@
 package beame.components.modules.render;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.color.ColorUtils;
 import beame.util.render.CustomFramebuffer;
 import beame.util.render.KawaseBlur;
@@ -31,8 +31,8 @@ public class GlassHand extends Module {
                 if (ccType.is("Бесцветный")) {
                     ColorUtils.setColor(ColorUtils.rgba(128, 128, 128, 255));
                 } else {
-                    Essence.getHandler().getThemeManager().getThemeColor(0);
-                    Essence.getHandler().getThemeManager().getThemeColor(1);
+                    Nebulae.getHandler().getThemeManager().getThemeColor(0);
+                    Nebulae.getHandler().getThemeManager().getThemeColor(1);
                 }
                 KawaseBlur.applyBlur(() -> customFramebuffer.draw(), 3, 3);
                 RenderSystem.color4f(1, 1, 1, 1);

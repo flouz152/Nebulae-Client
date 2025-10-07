@@ -1,6 +1,6 @@
 package net.minecraft.entity;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.baritone.api.BaritoneAPI;
 import beame.components.baritone.api.IBaritone;
 import beame.components.baritone.api.event.events.RotationMoveEvent;
@@ -2965,7 +2965,7 @@ public abstract class LivingEntity extends Entity {
      * Returns true if this entity should push and be pushed by other entities when colliding.
      */
     public boolean canBePushed() {
-        if (Essence.getHandler().getModuleList().noPush.isState() && Essence.getHandler().getModuleList().noPush.players.get())
+        if (Nebulae.getHandler().getModuleList().noPush.isState() && Nebulae.getHandler().getModuleList().noPush.players.get())
             return false;
         return this.isAlive() && !this.isSpectator() && !this.isOnLadder();
     }

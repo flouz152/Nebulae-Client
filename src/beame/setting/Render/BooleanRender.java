@@ -1,6 +1,6 @@
 package beame.setting.Render;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.Scissor;
 import beame.util.animation.Animation;
 import beame.util.animation.AnimationMath;
@@ -45,7 +45,7 @@ public class BooleanRender extends Component {
         this.hAnimation = AnimationMath.fast(hAnimation, (Fonts.SUISSEINTL.get(14).getStringWidth(setting.getName())>90-24) ? (hovered ? -((float) Fonts.SUISSEINTL.get(14).getStringWidth(setting.getName()) /2 - 15) : 0) : 0, 8);
         Scissor.push();
         Scissor.setFromComponentCoordinates((getX()+11), (getY()), 90-20, 10);
-        Fonts.SUISSEINTL.get(14).drawString(setting.getName(), getX() + 11 + hAnimation, getY() + 2.5f, ColorUtils.rgb(Essence.getHandler().styler.clr120, Essence.getHandler().styler.clr120, Essence.getHandler().styler.clr120));
+        Fonts.SUISSEINTL.get(14).drawString(setting.getName(), getX() + 11 + hAnimation, getY() + 2.5f, ColorUtils.rgb(Nebulae.getHandler().styler.clr120, Nebulae.getHandler().styler.clr120, Nebulae.getHandler().styler.clr120));
         Scissor.unset();
         Scissor.pop();
 
@@ -53,7 +53,7 @@ public class BooleanRender extends Component {
         setHeight(3);
         this.enabledAnimation = AnimationMath.fast(enabledAnimation, setting.get() ? 1 : 0, 8);
 
-        int blendedColor = interpolateColor(Essence.getHandler().themeManager.getColor(0), ColorUtils.rgba(Essence.getHandler().styler.clr30, Essence.getHandler().styler.clr30, Essence.getHandler().styler.clr30, 255), enabledAnimation);
+        int blendedColor = interpolateColor(Nebulae.getHandler().themeManager.getColor(0), ColorUtils.rgba(Nebulae.getHandler().styler.clr30, Nebulae.getHandler().styler.clr30, Nebulae.getHandler().styler.clr30, 255), enabledAnimation);
         int blendedColor2 = interpolateColor(ColorUtils.rgba(0, 0, 0, 255), ColorUtils.setAlpha(ColorUtils.rgba(0, 0, 0, 255), 0), enabledAnimation);
 
         ClientHandler.drawRound(getX() + 1f, getY() + 0.5f - 1, 9, 9, 2, blendedColor);

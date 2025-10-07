@@ -1,6 +1,6 @@
 package beame.components.modules.render;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.color.ColorUtils;
 import beame.util.fonts.Fonts;
 import beame.util.render.ClientHandler;
@@ -108,7 +108,7 @@ public class Predictions extends Module {
     }
 
     private void renderEntityTrajectory(Entity entity) {
-        int color = Essence.getHandler().themeManager.getColor(0);
+        int color = Nebulae.getHandler().themeManager.getColor(0);
         float red = (float) (color >> 16 & 255) / 255.0F;
         float green = (float) (color >> 8 & 255) / 255.0F;
         float blue = (float) (color & 255) / 255.0F;

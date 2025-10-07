@@ -2,27 +2,21 @@ package beame.components.modules.combat.AuraHandlers.other;
 
 import beame.components.modules.combat.AuraHandlers.component.core.combat.FreeLookHandler;
 import events.Event;
-import java.util.ArrayList;
+
 import java.util.List;
 
-public class AuraHelper {
-// leaked by itskekoff; discord.gg/sk3d B1QWAHtv
-    public FreeLookHandler freeLookHandler = new FreeLookHandler();
-    public RotationHandler rotationHandler = new RotationHandler();
+/**
+ * Lightweight facade that wires together the helper handlers used by the aura
+ * module.  The helper simply loops through the registered handlers and forwards
+ * events from the global bus.
+ */
+public final class AuraHelper {
+    public final FreeLookHandler freeLookHandler = new FreeLookHandler();
+    public final RotationHandler rotationHandler = new RotationHandler();
 
-    private void initialize() {
-        handlerList.add(freeLookHandler);
-        handlerList.add(rotationHandler);
-    }
+    private final List<Handler> handlers = List.of(freeLookHandler, rotationHandler);
 
-    public AuraHelper() {
-        initialize();
-    }
-
-    public List<Handler> handlerList = new ArrayList<>();
-    public void callAll(final Event event) {
-        for(Handler handle : handlerList) {
-            handle.event(event);
-        }
+    public void callAll(Event event) {
+        handlers.forEach(handler -> handler.event(event));
     }
 }

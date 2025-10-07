@@ -1,6 +1,6 @@
 package beame.components.modules.player;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.modules.combat.Aura;
 import beame.components.modules.combat.AuraHandlers.component.core.combat.Rotation;
 import beame.components.modules.combat.AuraHandlers.component.core.combat.RotationComponent;
@@ -121,7 +121,7 @@ public class TargetPearl extends Module {
             return null;
         }
 
-        Aura aura = (Aura) Essence.getHandler().getModuleList().aura;
+        Aura aura = (Aura) Nebulae.getHandler().getModuleList().aura;
         Entity currentTarget = null;
         
         if (aura != null) {

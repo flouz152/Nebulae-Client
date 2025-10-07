@@ -1,6 +1,6 @@
 package beame.components.modules.player;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.command.AbstractCommand;
 import beame.util.math.TimerUtil;
 import beame.util.player.InventoryUtility;
@@ -80,7 +80,7 @@ public class ElytraHelper extends Module {
             }
             return;
         }
-        boolean shouldDisableMove = Essence.getHandler().getModuleList().guiMove.funtime.get();
+        boolean shouldDisableMove = Nebulae.getHandler().getModuleList().guiMove.funtime.get();
 
         KeyBinding[] pressedKeys = {
                 mc.gameSettings.keyBindForward,
@@ -96,7 +96,7 @@ public class ElytraHelper extends Module {
         }
 
         if (shouldDisableMove) {
-            Essence.getHandler().disableMove = true;
+            Nebulae.getHandler().disableMove = true;
         }
 
         new Thread(() -> {
@@ -111,7 +111,7 @@ public class ElytraHelper extends Module {
             int armorSlot;
             if (mc.currentScreen != null) {
                 if (shouldDisableMove) {
-                    Essence.getHandler().disableMove = false;
+                    Nebulae.getHandler().disableMove = false;
                 }
                 return;
             }
@@ -138,7 +138,7 @@ public class ElytraHelper extends Module {
                 keyBinding.setPressed(press);
             }
             if (shouldDisableMove) {
-                Essence.getHandler().disableMove = false;
+                Nebulae.getHandler().disableMove = false;
             }
             sss = false;
         }).start();

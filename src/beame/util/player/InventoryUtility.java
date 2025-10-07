@@ -1,6 +1,6 @@
 package beame.util.player;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.feature.notify.NotificationManager;
 import beame.util.IMinecraft;
 import beame.util.math.TimerUtil;
@@ -315,8 +315,8 @@ public class InventoryUtility
     }
 
     static void inventorySwapClick(Item item, int slsl, boolean rotation) {
-        boolean curgui = Essence.getHandler().getModuleList().guiMove.isState();
-        boolean shouldDisableMove = Essence.getHandler().getModuleList().guiMove.funtime.get();
+        boolean curgui = Nebulae.getHandler().getModuleList().guiMove.isState();
+        boolean shouldDisableMove = Nebulae.getHandler().getModuleList().guiMove.funtime.get();
 
         KeyBinding[] pressedKeys = {
                 mc.gameSettings.keyBindForward,
@@ -333,7 +333,7 @@ public class InventoryUtility
         }
 
         if (shouldDisableMove) {
-            Essence.getHandler().disableMove = true;
+            Nebulae.getHandler().disableMove = true;
         }
 
         boolean wasSneaking = mc.player.isSneaking();
@@ -365,9 +365,9 @@ public class InventoryUtility
                             boolean press = InputMappings.isKeyDown(mc.getMainWindow().getHandle(), keyBinding.getDefault().getKeyCode());
                             keyBinding.setPressed(press);
                         }
-                        if(curgui) Essence.getHandler().getModuleList().guiMove.setState(true);
+                        if(curgui) Nebulae.getHandler().getModuleList().guiMove.setState(true);
                         if (shouldDisableMove) {
-                            Essence.getHandler().disableMove = false;
+                            Nebulae.getHandler().disableMove = false;
                         }
                         return;
                     }
@@ -417,9 +417,9 @@ public class InventoryUtility
                 boolean press = InputMappings.isKeyDown(mc.getMainWindow().getHandle(), keyBinding.getDefault().getKeyCode());
                 keyBinding.setPressed(press);
             }
-            if(curgui) Essence.getHandler().getModuleList().guiMove.setState(true);
+            if(curgui) Nebulae.getHandler().getModuleList().guiMove.setState(true);
             if (shouldDisableMove) {
-                Essence.getHandler().disableMove = false;
+                Nebulae.getHandler().disableMove = false;
             }
 
             if (wasSneaking && !mc.gameSettings.keyBindSneak.isPressed()) {
@@ -434,8 +434,8 @@ public class InventoryUtility
             return false;
         }
 
-        boolean curgui = Essence.getHandler().getModuleList().guiMove.isState();
-        boolean shouldDisableMove = Essence.getHandler().getModuleList().guiMove.funtime.get();
+        boolean curgui = Nebulae.getHandler().getModuleList().guiMove.isState();
+        boolean shouldDisableMove = Nebulae.getHandler().getModuleList().guiMove.funtime.get();
 
         KeyBinding[] pressedKeys = {
                 mc.gameSettings.keyBindForward,
@@ -448,7 +448,7 @@ public class InventoryUtility
         };
 
         if (shouldDisableMove) {
-            Essence.getHandler().disableMove = true;
+            Nebulae.getHandler().disableMove = true;
             for (KeyBinding keyBinding : pressedKeys) {
                 keyBinding.setPressed(false);
             }
@@ -539,9 +539,9 @@ public class InventoryUtility
             if (wasSneaking && !mc.gameSettings.keyBindSneak.isPressed()) {
             }
 
-            if(curgui) Essence.getHandler().getModuleList().guiMove.setState(true);
+            if(curgui) Nebulae.getHandler().getModuleList().guiMove.setState(true);
             if (shouldDisableMove) {
-                Essence.getHandler().disableMove = false;
+                Nebulae.getHandler().disableMove = false;
             }
         }).start();
 
@@ -637,7 +637,7 @@ public class InventoryUtility
         }
 
         if(!found) {
-            Essence.getHandler().notificationManager.pushNotify("Нет предмета для использования!", NotificationManager.Type.Info);
+            Nebulae.getHandler().notificationManager.pushNotify("Нет предмета для использования!", NotificationManager.Type.Info);
             return false;
         }
 

@@ -2,7 +2,7 @@
 
 package beame.components.modules.misc.AutoBuyLogic.Items;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.modules.misc.AutoBuyLogic.AutoBuyUtil;
 import beame.feature.notify.NotificationManager.Type;
 import beame.util.ClientHelper;
@@ -258,7 +258,7 @@ public class AutoBuyItems {
             }
 
             if (targetIndex == -1) {
-                Essence.getHandler().notificationManager.pushNotify("Неверный айди предмета", Type.Info);
+                Nebulae.getHandler().notificationManager.pushNotify("Неверный айди предмета", Type.Info);
             } else {
                 AutoBuyItemClass targetItem = (AutoBuyItemClass)this.list.get(targetIndex);
 
@@ -266,19 +266,19 @@ public class AutoBuyItems {
                     boolean reset = price.isEmpty();
                     int price2 = Integer.parseInt(price);
                     if (!reset && price2 <= 0) {
-                        Essence.getHandler().notificationManager.pushNotify("Цена должна быть больше 0.", Type.Info);
+                        Nebulae.getHandler().notificationManager.pushNotify("Цена должна быть больше 0.", Type.Info);
                         return;
                     }
 
                     targetItem.buyPrice = reset ? 0 : price2;
                     this.list.set(targetIndex, targetItem);
                 } catch (NumberFormatException var7) {
-                    Essence.getHandler().notificationManager.pushNotify("Неверная стоимость для покупки предмета!", Type.Info);
+                    Nebulae.getHandler().notificationManager.pushNotify("Неверная стоимость для покупки предмета!", Type.Info);
                     return;
                 }
 
-                Essence.getHandler().autoBuy.savePrices();
-                Essence.getHandler().notificationManager.pushNotify("Значение установлено", Type.Info);
+                Nebulae.getHandler().autoBuy.savePrices();
+                Nebulae.getHandler().notificationManager.pushNotify("Значение установлено", Type.Info);
             }
         }
     }

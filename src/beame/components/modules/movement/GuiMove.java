@@ -1,6 +1,6 @@
 package beame.components.modules.movement;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.math.TimerUtil;
 import events.Event;
 import events.impl.packet.EventPacket;
@@ -47,7 +47,7 @@ public class GuiMove extends Module {
 
     @Override
     public void event(Event event) {
-        if(Essence.getHandler().disableMove && funtime.get() && mc.player.isOnGround() ) return;
+        if(Nebulae.getHandler().disableMove && funtime.get() && mc.player.isOnGround() ) return;
         if(event instanceof EventPacket) {
             EventPacket e = (EventPacket)event;
             if (e.getPacket() instanceof CClickWindowPacket p && isMoving()) {

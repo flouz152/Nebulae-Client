@@ -1,7 +1,7 @@
 /*
 package beame.feature.features.Movement;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.command.api.CMD;
 import beame.util.math.MathUtil;
 import events.Event;
@@ -122,7 +122,7 @@ public class Timer extends Module {
     }
 
     private void handleBoostMode() {
-        boolean isInCombat = Essence.getHandler().auraHelper != null && Essence.getHandler().getModuleList().aura.isState() && Essence.getHandler().getModuleList().aura.player != null;
+        boolean isInCombat = Nebulae.getHandler().auraHelper != null && Nebulae.getHandler().getModuleList().aura.isState() && Nebulae.getHandler().getModuleList().aura.player != null;
         boolean isMoving = mc.player.moveForward != 0 || mc.player.moveStrafing != 0;
         
         if (normalizeDuringCombat.get() && isInCombat) {

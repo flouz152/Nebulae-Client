@@ -701,13 +701,13 @@ of.options.WEATHER.tooltip.4=The weather controls rain, snow and thunderstorms.
 of.options.WEATHER.tooltip.5=Weather control is only possible for local worlds.
 
 of.options.time.dayOnly=Day Only
-of.options.time.EssenceOnly=Essence Only
+of.options.time.EssenceOnly=Nebulae Only
 
 of.options.TIME=Time
 of.options.TIME.tooltip.1=Time
-of.options.TIME.tooltip.2= Default - normal day/Essence cycles
+of.options.TIME.tooltip.2= Default - normal day/Nebulae cycles
 of.options.TIME.tooltip.3= Day Only - day only
-of.options.TIME.tooltip.4= Essence Only - Essence only
+of.options.TIME.tooltip.4= Nebulae Only - Nebulae only
 of.options.TIME.tooltip.5=The time beame.setting is only effective in CREATIVE mode
 of.options.TIME.tooltip.6=and for local worlds.
 

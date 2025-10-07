@@ -1,6 +1,6 @@
 package beame.components.modules.render;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.color.ColorUtils;
 import beame.util.render.CustomFramebuffer2;
 import beame.util.render.ProjectionUtil;
@@ -80,8 +80,8 @@ public class ShaderESP extends Module {
 
         float posX = minX, posY = minY, width = maxX - minX, height = maxY - minY;
 
-        boolean isFriend = Essence.getHandler().friends.isFriend(entity.getGameProfile().getName());
-        int baseColor = isFriend ? ColorUtils.green : Essence.getHandler().getThemeManager().getColor(1);
+        boolean isFriend = Nebulae.getHandler().friends.isFriend(entity.getGameProfile().getName());
+        int baseColor = isFriend ? ColorUtils.green : Nebulae.getHandler().getThemeManager().getColor(1);
         float hurtPC = (float) Math.sin(entity.hurtTime * (18F * Math.PI / 180F));
 
         int color = baseColor;

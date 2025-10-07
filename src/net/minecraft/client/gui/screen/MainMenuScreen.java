@@ -1,6 +1,6 @@
 package net.minecraft.client.gui.screen;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.render.ClientHandler;
 import com.google.common.util.concurrent.Runnables;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -102,7 +102,7 @@ public class MainMenuScreen extends Screen
             this.realmsNotification.tick();
         }
 
-        if(!Essence.getHandler().unhooked)
+        if(!Nebulae.getHandler().unhooked)
             usernameField.tick();
     }
 
@@ -217,7 +217,7 @@ public class MainMenuScreen extends Screen
             this.minecraft.displayGuiScreen(screen);
         }, button$itooltip))).active = flag;
 
-        if(Essence.getHandler().unhooked){
+        if(Nebulae.getHandler().unhooked){
             (this.addButton(new Button(this.width / 2 - 100, yIn + rowHeightIn * 2, 200, 20, new TranslationTextComponent("menu.online"), (p_lambda$addSingleplayerMultiplayerButtons$7_1_) -> {
                 this.switchToRealms();
             }, button$itooltip))).active = flag;
@@ -314,7 +314,7 @@ public class MainMenuScreen extends Screen
         int k = 30;
         float f1 = this.showFadeInAnimation ? MathHelper.clamp(f - 1.0F, 0.0F, 1.0F) : 1.0F;
         int l = MathHelper.ceil(f1 * 255.0F) << 24;
-        if(Essence.getHandler().unhooked) {
+        if(Nebulae.getHandler().unhooked) {
             this.minecraft.getTextureManager().bindTexture(PANORAMA_OVERLAY_TEXTURES);
             RenderSystem.enableBlend();
             RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);

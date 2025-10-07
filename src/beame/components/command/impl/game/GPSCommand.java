@@ -1,6 +1,6 @@
 package beame.components.command.impl.game;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.command.AbstractCommand;
 
 import java.util.List;
@@ -16,7 +16,7 @@ public class GPSCommand extends AbstractCommand {
         }
 
         if (args[1].equalsIgnoreCase("off")) {
-            Essence.getHandler().gps.disable();
+            Nebulae.getHandler().gps.disable();
             addMessage("GPS отключен.");
             return;
         }
@@ -35,7 +35,7 @@ public class GPSCommand extends AbstractCommand {
                 return;
             }
 
-            Essence.getHandler().gps.init(x, z);
+            Nebulae.getHandler().gps.init(x, z);
             addMessage("GPS установлен на координаты: " + x + " " + z);
         } catch (NumberFormatException e) {
             error();

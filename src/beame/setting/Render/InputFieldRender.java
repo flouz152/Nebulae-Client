@@ -1,6 +1,6 @@
 package beame.setting.Render;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.feature.notify.NotificationManager;
 import beame.util.Scissor;
 import beame.util.animation.AnimationMath;
@@ -43,7 +43,7 @@ public class InputFieldRender extends Component {
         super.render(stack, mouseX, mouseY);
         fieldText = setting.get();
         ClientHandler.drawRound(getX() + 1, getY() + 9f, getWidth() - 8f, 13f, 2, new Color(26, 26, 26, 100).getRGB());
-        Fonts.SUISSEINTL.get(14).drawString(setting.getName(), getX(), getY() + 2f, ColorUtils.rgb(Essence.getHandler().styler.clr120, Essence.getHandler().styler.clr120, Essence.getHandler().styler.clr120));
+        Fonts.SUISSEINTL.get(14).drawString(setting.getName(), getX(), getY() + 2f, ColorUtils.rgb(Nebulae.getHandler().styler.clr120, Nebulae.getHandler().styler.clr120, Nebulae.getHandler().styler.clr120));
 
         isInRegionModule = ClientHandler.isInRegion((int) mouseX, (int) mouseY, (int) (getX() + 71.5f), (int) (getY() + 12f), 7, 6);
 
@@ -51,9 +51,9 @@ public class InputFieldRender extends Component {
 
         copyAnimation = AnimationMath.lerp(copyAnimation, isInRegionModule ? 1.0f : 0.0f, isInRegionModule ? 12 : 6);
 
-        int startColor = Essence.getHandler().getThemeManager().getThemeColor(0);
+        int startColor = Nebulae.getHandler().getThemeManager().getThemeColor(0);
 
-        int themeColor = Essence.getHandler().getThemeManager().getThemeColor(0);
+        int themeColor = Nebulae.getHandler().getThemeManager().getThemeColor(0);
 
         int r = (themeColor >> 16) & 0xFF;
         int g = (themeColor >> 8) & 0xFF;
@@ -78,9 +78,9 @@ public class InputFieldRender extends Component {
         Scissor.push();
         Scissor.setFromComponentCoordinates(getX() - 15, getY() + 7f, getWidth() - 5.5f, 12f);
         if (!fieldTyping && fieldText.isEmpty()) {
-            Fonts.SUISSEINTL.get(14f).drawString(stack, "Введите текст...", getX() + 2.5f, getY() + 14f, ColorUtils.rgba(Essence.getHandler().styler.clr120, Essence.getHandler().styler.clr120, Essence.getHandler().styler.clr120, 50));
+            Fonts.SUISSEINTL.get(14f).drawString(stack, "Введите текст...", getX() + 2.5f, getY() + 14f, ColorUtils.rgba(Nebulae.getHandler().styler.clr120, Nebulae.getHandler().styler.clr120, Nebulae.getHandler().styler.clr120, 50));
         } else {
-            Fonts.SUISSEINTL.get(14).drawString(stack, fieldText + (fieldTyping ? (System.currentTimeMillis() % 1000 > 500 ? "_" : "") : ""), getX() + 2.5f, getY() + 14f, ColorUtils.rgba(Essence.getHandler().styler.clr120, Essence.getHandler().styler.clr120, Essence.getHandler().styler.clr120, 255));
+            Fonts.SUISSEINTL.get(14).drawString(stack, fieldText + (fieldTyping ? (System.currentTimeMillis() % 1000 > 500 ? "_" : "") : ""), getX() + 2.5f, getY() + 14f, ColorUtils.rgba(Nebulae.getHandler().styler.clr120, Nebulae.getHandler().styler.clr120, Nebulae.getHandler().styler.clr120, 255));
         }
 
         Scissor.unset();
@@ -119,8 +119,8 @@ public class InputFieldRender extends Component {
                 pasteFromClipboard();
             }
 
-            if (Essence.getHandler().getModuleList().getClientSounds().isState() && Essence.getHandler().getModuleList().getClientSounds().soundActive.get(1).get()) {
-                SoundUtil.playSound("writing.wav", Essence.getHandler().getModuleList().getClientSounds().volume.get(), false);
+            if (Nebulae.getHandler().getModuleList().getClientSounds().isState() && Nebulae.getHandler().getModuleList().getClientSounds().soundActive.get(1).get()) {
+                SoundUtil.playSound("writing.wav", Nebulae.getHandler().getModuleList().getClientSounds().volume.get(), false);
             }
 
             if (key == GLFW.GLFW_KEY_BACKSPACE) {
@@ -146,7 +146,7 @@ public class InputFieldRender extends Component {
         try {
             fieldText += GLFW.glfwGetClipboardString(Minecraft.getInstance().getMainWindow().getHandle());
             setting.set(fieldText);
-            Essence.getHandler().notificationManager.pushNotify("Текст успешно вставлен в поле!", NotificationManager.Type.Info);
+            Nebulae.getHandler().notificationManager.pushNotify("Текст успешно вставлен в поле!", NotificationManager.Type.Info);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -156,9 +156,9 @@ public class InputFieldRender extends Component {
         try {
             if (!fieldText.isEmpty()) {
                 GLFW.glfwSetClipboardString(Minecraft.getInstance().getMainWindow().getHandle(), fieldText);
-                Essence.getHandler().notificationManager.pushNotify("Текст поля успешно скопирован: " + fieldText + "!", NotificationManager.Type.Info);
+                Nebulae.getHandler().notificationManager.pushNotify("Текст поля успешно скопирован: " + fieldText + "!", NotificationManager.Type.Info);
             } else {
-                Essence.getHandler().notificationManager.pushNotify("Текст поля не может быть пустым для копирования!" , NotificationManager.Type.Info);
+                Nebulae.getHandler().notificationManager.pushNotify("Текст поля не может быть пустым для копирования!" , NotificationManager.Type.Info);
             }
             System.err.println(fieldText);
         } catch (Exception e) {

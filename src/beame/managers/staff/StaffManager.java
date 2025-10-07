@@ -1,6 +1,6 @@
 package beame.managers.staff;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.IMinecraft;
 import lombok.Getter;
 
@@ -15,7 +15,7 @@ public class StaffManager implements IMinecraft {
 
     @Getter
     private final Set<String> staffs = new HashSet<>();
-    public static final File file = new File(Essence.getHandler().getClientDir() + "\\staff.json");
+    public static final File file = new File(Nebulae.getHandler().getClientDir() + "\\staff.json");
 
     public void init() throws IOException {
         if (file.exists()) {

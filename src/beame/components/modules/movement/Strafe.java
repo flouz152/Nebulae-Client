@@ -1,6 +1,6 @@
 package beame.components.modules.movement;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.modules.combat.Aura;
 import beame.util.math.TimerUtil;
 import beame.util.other.MoveUtil;
@@ -50,7 +50,7 @@ public class Strafe extends Module {
 
     @Override
     public void event(Event event) {
-        if (Essence.getHandler().getModuleList().freeCamera.isState()) return;
+        if (Nebulae.getHandler().getModuleList().freeCamera.isState()) return;
         if (event instanceof EventAction) {
             handleEventAction((EventAction) event);
         } else if (event instanceof EventMove) {

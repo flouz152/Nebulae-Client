@@ -4,7 +4,7 @@ import beame.util.player.InventoryUtility;
 
 import events.impl.render.Render2DEvent;
 import net.minecraft.client.MainWindow;
-import beame.Essence;
+import beame.Nebulae;
 import com.mojang.blaze3d.platform.GlStateManager;
 import events.Event;
 import events.impl.player.EventUpdate;
@@ -118,8 +118,8 @@ public class AutoTotem extends Module {
     }
 
     private void handleSwap(int slotNumber, boolean isToTotem) {
-        boolean curgui = Essence.getHandler().getModuleList().guiMove.isState();
-        boolean shouldDisableMove = Essence.getHandler().getModuleList().guiMove.funtime.get();
+        boolean curgui = Nebulae.getHandler().getModuleList().guiMove.isState();
+        boolean shouldDisableMove = Nebulae.getHandler().getModuleList().guiMove.funtime.get();
         KeyBinding[] pressedKeys = {
             mc.gameSettings.keyBindForward,
             mc.gameSettings.keyBindBack,
@@ -134,7 +134,7 @@ public class AutoTotem extends Module {
         }
 
         if (shouldDisableMove) {
-            Essence.getHandler().disableMove = true;
+            Nebulae.getHandler().disableMove = true;
         }
 
         new Thread(() -> {
@@ -166,8 +166,8 @@ public class AutoTotem extends Module {
                 }
             }
             
-            if (curgui) Essence.getHandler().getModuleList().guiMove.setState(true);
-            if (shouldDisableMove) Essence.getHandler().disableMove = false;
+            if (curgui) Nebulae.getHandler().getModuleList().guiMove.setState(true);
+            if (shouldDisableMove) Nebulae.getHandler().disableMove = false;
         }).start();
     }
 

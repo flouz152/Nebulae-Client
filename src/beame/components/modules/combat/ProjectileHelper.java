@@ -1,6 +1,6 @@
 package beame.components.modules.combat;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.modules.combat.AuraHandlers.component.core.combat.Rotation;
 import beame.components.modules.combat.AuraHandlers.component.core.combat.RotationComponent;
 import beame.util.math.MathUtil;
@@ -84,7 +84,7 @@ public class ProjectileHelper extends Module {
     private boolean isFriend(Entity entity) {
         if (entity instanceof PlayerEntity && ignoreFriends.get()) {
             String playerName = ((PlayerEntity) entity).getGameProfile().getName();
-            return beame.Essence.getHandler().friends.isFriend(playerName);
+            return beame.Nebulae.getHandler().friends.isFriend(playerName);
         }
         return false;
     }
@@ -204,7 +204,7 @@ public class ProjectileHelper extends Module {
     }
 
     private void updateTargetFromAura() {
-        Aura aura = (Aura) Essence.getHandler().getModuleList().aura;
+        Aura aura = (Aura) Nebulae.getHandler().getModuleList().aura;
         LivingEntity currentTarget = null;
         if (aura != null && aura.isState()) {
             currentTarget = aura.getTarget();
@@ -247,7 +247,7 @@ public class ProjectileHelper extends Module {
         if (mc.player.getDistance(entity) > attackRange) return false;
         if (wallCheck.get() && !canSeeEntity(entity)) return false;
         if (ignoreFriends.get() && entity instanceof PlayerEntity) {
-            if (Essence.getHandler().friends.isFriend(((PlayerEntity) entity).getGameProfile().getName())) {
+            if (Nebulae.getHandler().friends.isFriend(((PlayerEntity) entity).getGameProfile().getName())) {
                 return false;
             }
         }
@@ -415,7 +415,7 @@ public class ProjectileHelper extends Module {
         if (mc.player.getDistance(entity) > attackRange) return false;
         if (wallCheck.get() && !canSeeEntity(entity)) return false;
         if (ignoreFriends.get() && entity instanceof PlayerEntity) {
-            if (Essence.getHandler().friends.isFriend(((PlayerEntity) entity).getGameProfile().getName())) {
+            if (Nebulae.getHandler().friends.isFriend(((PlayerEntity) entity).getGameProfile().getName())) {
                 return false;
             }
         }

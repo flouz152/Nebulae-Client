@@ -1,6 +1,6 @@
 package beame.managers.configs;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.feature.notify.NotificationManager;
 import net.minecraft.client.Minecraft;
 import org.apache.commons.logging.Log;
@@ -21,7 +21,7 @@ public class ConfigManager {
     private final File configDir;
 
     public ConfigManager() {
-        this.configDir = new File(String.valueOf(Essence.getHandler().getFilesDir()));
+        this.configDir = new File(String.valueOf(Nebulae.getHandler().getFilesDir()));
         if (!configDir.exists()) {
             configDir.mkdirs();
         }
@@ -34,7 +34,7 @@ public class ConfigManager {
 
     public void saveAutoConfig() {
         saveConfig(DEFAULT_CONFIG);
-        //Essence.getHandler().notificationManager.pushNotify("Автоматическое сохранение конфигурации выполнено.", NotificationManager.Type.Info);
+        //Nebulae.getHandler().notificationManager.pushNotify("Автоматическое сохранение конфигурации выполнено.", NotificationManager.Type.Info);
     }
 
     public void loadAutoConfig() {
@@ -68,7 +68,7 @@ public class ConfigManager {
         try (FileWriter writer = new FileWriter(configFile)) {
             writer.write(content);
             if (!configName.equals(DEFAULT_CONFIG)) {
-                Essence.getHandler().notificationManager.pushNotify("Конфигурация '" + configName + "' сохранена.", NotificationManager.Type.Info);
+                Nebulae.getHandler().notificationManager.pushNotify("Конфигурация '" + configName + "' сохранена.", NotificationManager.Type.Info);
             }
         } catch (IOException e) {
             log.error("Ошибка при сохранении конфигурации: " + configName, e);
@@ -84,8 +84,8 @@ public class ConfigManager {
         try (BufferedReader reader = new BufferedReader(new FileReader(configFile))) {
             String content = reader.readLine();
             new Config(configName).load(content);
-            if (Essence.getHandler().notificationManager != null)
-                Essence.getHandler().notificationManager.pushNotify("Конфигурация '" + configName + "' загружена.", NotificationManager.Type.Info);
+            if (Nebulae.getHandler().notificationManager != null)
+                Nebulae.getHandler().notificationManager.pushNotify("Конфигурация '" + configName + "' загружена.", NotificationManager.Type.Info);
         } catch (IOException e) {
             log.error("Ошибка при загрузке конфигурации: " + configName, e);
         }
@@ -94,7 +94,7 @@ public class ConfigManager {
     public void deleteConfig(String configName) {
         File configFile = new File(configDir, configName + ".json");
         if (configFile.exists() && configFile.delete()) {
-            Essence.getHandler().notificationManager.pushNotify("Конфигурация '" + configName + "' удалена.", NotificationManager.Type.Info);
+            Nebulae.getHandler().notificationManager.pushNotify("Конфигурация '" + configName + "' удалена.", NotificationManager.Type.Info);
         } else {
             log.error("Ошибка при удалении конфигурации: " + configName);
         }
@@ -105,13 +105,13 @@ public class ConfigManager {
         try {
             File[] files = configDir.listFiles();
             if (files == null || files.length == 0) {
-                Essence.getHandler().notificationManager.pushNotify("Папка конфигураций пуста.", NotificationManager.Type.Info);
+                Nebulae.getHandler().notificationManager.pushNotify("Папка конфигураций пуста.", NotificationManager.Type.Info);
                 return;
             }
             for (File file : files) {
                 file.delete();
             }
-            Essence.getHandler().notificationManager.pushNotify("Все конфигурации очищены.", NotificationManager.Type.Info);
+            Nebulae.getHandler().notificationManager.pushNotify("Все конфигурации очищены.", NotificationManager.Type.Info);
             refreshList();
         } catch (Exception e) {
             log.error("Ошибка при очистке конфигураций", e);

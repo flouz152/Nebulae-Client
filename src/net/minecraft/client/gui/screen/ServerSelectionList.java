@@ -1,6 +1,6 @@
 package net.minecraft.client.gui.screen;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.render.ClientHandler;
 import com.google.common.collect.Lists;
 import com.google.common.hash.Hashing;
@@ -600,7 +600,7 @@ public class ServerSelectionList extends ExtendedList<ServerSelectionList.Entry>
                 });
             }
 
-            ClientHandler.drawGradientRound((float) (p_230432_4_ - 3), (float) (p_230432_3_ - 3), p_230432_5_ + 6, p_230432_6_ + 6, 3, Essence.getHandler().themeManager.getColor(0), Essence.getHandler().themeManager.getColor(180), Essence.getHandler().themeManager.getColor(180), Essence.getHandler().themeManager.getColor(0));
+            ClientHandler.drawGradientRound((float) (p_230432_4_ - 3), (float) (p_230432_3_ - 3), p_230432_5_ + 6, p_230432_6_ + 6, 3, Nebulae.getHandler().themeManager.getColor(0), Nebulae.getHandler().themeManager.getColor(180), Nebulae.getHandler().themeManager.getColor(180), Nebulae.getHandler().themeManager.getColor(0));
 
             boolean flag = this.server.version != SharedConstants.getVersion().getProtocolVersion();
             this.mc.fontRenderer.drawString(p_230432_1_, this.server.serverName, (float)(p_230432_4_ + 32 + 3), (float)(p_230432_3_ + 1), 16777215);

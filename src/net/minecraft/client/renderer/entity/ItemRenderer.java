@@ -1,6 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
-import beame.Essence;
+import beame.Nebulae;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import java.util.Random;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -70,7 +70,7 @@ public class ItemRenderer extends EntityRenderer<ItemEntity>
         }
 
 
-        boolean real = Essence.getHandler().getModuleList().itemPhysic.isState();
+        boolean real = Nebulae.getHandler().getModuleList().itemPhysic.isState();
 
         float f2 = ibakedmodel.getItemCameraTransforms().getTransform(ItemCameraTransforms.TransformType.GROUND).scale.getY();
         if (!real) matrixStackIn.translate(0.0D, f1 + 0.25F * f2, 0.0D);

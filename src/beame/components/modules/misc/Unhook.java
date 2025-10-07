@@ -1,7 +1,7 @@
 /*
 package beame.feature.features.Misc;
 
-import beame.Essence;
+import beame.Nebulae;
 import events.Event;
 import beame.module.Category;
 import beame.module.Module;
@@ -13,8 +13,8 @@ public class Unhook extends Module {
 
     @Override
     public void event(Event event) {
-        Essence.getHandler().unhooked = true;
-        Essence.getHandler().discord.stopRPC();
+        Nebulae.getHandler().unhooked = true;
+        Nebulae.getHandler().discord.stopRPC();
         this.setState(false);
     }
 }

@@ -1,6 +1,6 @@
 package beame.module;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.modules.combat.*;
 import beame.components.modules.misc.*;
 import beame.components.modules.movement.*;
@@ -49,8 +49,10 @@ public class ModuleList {
     public ItemScroller itemScroller;
     public ElytraHelper elytraHelper;
     public FTHelper ftHelper;
+    public LDHelper ldHelper;
     public AutoSwap autoSwap;
     public AutoTotem autoTotem;
+    public AutoBug autoBug;
     public SwingAnimations swingAnimations;
     public NoInteract noInteract;
     public NoPush noPush;
@@ -162,8 +164,10 @@ public class ModuleList {
                 itemScroller = new ItemScroller(),
                 noFriendDamage = new NoFriendDamage(),
                 ftHelper = new FTHelper(),
+                ldHelper = new LDHelper(),
                 autoSwap = new AutoSwap(),
                 autoTotem = new AutoTotem(),
+                autoBug = new AutoBug(),
               //  staffKill = new StaffKill(),
                 swingAnimations = new SwingAnimations(),
                 noInteract = new NoInteract(),
@@ -229,7 +233,7 @@ public class ModuleList {
 
         );
 
-        Essence.getHandler().getEventBus().register(this);
+        Nebulae.getHandler().getEventBus().register(this);
     }
 
     private void registerAll(Module... modules) {

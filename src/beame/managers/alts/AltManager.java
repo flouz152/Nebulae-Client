@@ -1,6 +1,6 @@
 package beame.managers.alts;
 
-import beame.Essence;
+import beame.Nebulae;
 import net.minecraft.util.Session;
 
 import java.io.*;
@@ -70,7 +70,7 @@ public class AltManager {
     }
 
     public void saveFile() {
-        File configFile = new File(Essence.getHandler().getClientDir() + "/alts.json");
+        File configFile = new File(Nebulae.getHandler().getClientDir() + "/alts.json");
         JsonObject obj = new JsonObject();
         obj.add("accounts", GSON.toJsonTree(accounts.stream().map(a -> a.nickname).toArray(String[]::new)));
         if (selectedNickname != null) {
@@ -82,7 +82,7 @@ public class AltManager {
     }
 
     public void loadFile() {
-        String filePath = Essence.getHandler().getClientDir() + "/alts.json";
+        String filePath = Nebulae.getHandler().getClientDir() + "/alts.json";
         File file = new File(filePath);
         if(file.exists()) {
             try (FileReader reader = new FileReader(filePath)) {

@@ -1,6 +1,6 @@
 package net.minecraft.client;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.baritone.api.BaritoneAPI;
 import beame.components.baritone.api.BaritoneUtils;
 import beame.components.baritone.api.IBaritone;
@@ -9,7 +9,7 @@ import beame.components.baritone.api.event.events.TickEventBaritone;
 import beame.components.baritone.api.event.events.WorldEvent;
 import beame.components.baritone.api.event.events.type.EventState;
 import beame.components.modules.misc.RenderHook;
-import beame.screens.EssenceMainMenu;
+import beame.screens.NebulaeMainMenu;
 import beame.util.other.WindowStyle;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Queues;
@@ -528,7 +528,7 @@ public class Minecraft extends RecursiveEventLoop<Runnable> implements ISnooperI
         this.ingameGUI = new IngameGui(this);
         this.debugRenderer = new DebugRenderer(this);
         RenderSystem.setErrorCallback(this::disableVSyncAfterGlError);
-        new Essence();
+        new Nebulae();
 
         if (this.gameSettings.fullscreen && !this.mainWindow.isFullscreen()) {
             this.mainWindow.toggleFullscreen();
@@ -541,9 +541,9 @@ public class Minecraft extends RecursiveEventLoop<Runnable> implements ISnooperI
         this.updateWindowSize();
 
         if (s != null) {
-            this.displayGuiScreen(new ConnectingScreen(new EssenceMainMenu(), this, s, i));
+            this.displayGuiScreen(new ConnectingScreen(new NebulaeMainMenu(), this, s, i));
         } else {
-            this.displayGuiScreen(new EssenceMainMenu(true));
+            this.displayGuiScreen(new NebulaeMainMenu(true));
         }
 
         ResourceLoadProgressGui.loadLogoTexture(this);
@@ -573,7 +573,7 @@ public class Minecraft extends RecursiveEventLoop<Runnable> implements ISnooperI
     }
 
     private String getWindowTitle() {
-        StringBuilder stringbuilder = new StringBuilder("Essence");
+        StringBuilder stringbuilder = new StringBuilder("Nebulae");
 
 //        if (this.isModdedClient())
 //        {
@@ -921,7 +921,7 @@ public class Minecraft extends RecursiveEventLoop<Runnable> implements ISnooperI
         }
 
         if (guiScreenIn == null && this.world == null) {
-            guiScreenIn = new EssenceMainMenu();
+            guiScreenIn = new NebulaeMainMenu();
         } else if (guiScreenIn == null && this.player.getShouldBeDead()) {
             if (this.player.isShowDeathScreen()) {
                 guiScreenIn = new DeathScreen((ITextComponent) null, this.world.getWorldInfo().isHardcore());

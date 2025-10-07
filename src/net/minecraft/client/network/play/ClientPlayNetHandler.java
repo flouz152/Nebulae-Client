@@ -1,6 +1,6 @@
 package net.minecraft.client.network.play;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.baritone.Baritone;
 import beame.components.baritone.api.BaritoneAPI;
 import beame.components.baritone.api.IBaritone;
@@ -8,7 +8,7 @@ import beame.components.baritone.api.event.events.ChunkEvent;
 import beame.components.baritone.api.event.events.type.EventState;
 import beame.components.baritone.cache.CachedChunk;
 import beame.components.modules.render.Particles;
-import beame.screens.EssenceMainMenu;
+import beame.screens.NebulaeMainMenu;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
@@ -1099,7 +1099,7 @@ public class ClientPlayNetHandler implements IClientPlayNetHandler
         }
         else
         {
-            this.client.displayGuiScreen(new DisconnectedScreen(new MultiplayerScreen(new EssenceMainMenu()), field_243491_b, reason));
+            this.client.displayGuiScreen(new DisconnectedScreen(new MultiplayerScreen(new NebulaeMainMenu()), field_243491_b, reason));
         }
     }
 
@@ -1267,7 +1267,7 @@ public class ClientPlayNetHandler implements IClientPlayNetHandler
     {
         PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, this.client);
         this.client.world.func_239134_a_(packetIn.getTotalWorldTime());
-        if(!Essence.getHandler().getModuleList().ambience.isState()) {
+        if(!Nebulae.getHandler().getModuleList().ambience.isState()) {
             this.client.world.setDayTime(packetIn.getWorldTime());
         }
     }

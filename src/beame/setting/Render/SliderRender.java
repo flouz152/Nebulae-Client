@@ -1,6 +1,6 @@
 package beame.setting.Render;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.Scissor;
 import beame.util.animation.Animation;
 import beame.util.animation.AnimationMath;
@@ -55,7 +55,7 @@ public class SliderRender extends Component {
         Scissor.push();
         Scissor.setFromComponentCoordinates(getX(), getY(), 90-10, 10);
         Fonts.SUISSEINTL.get(14).drawString(setting.getName(), getX() + hAnimation, getY() + 2,
-                ColorUtils.rgb(Essence.getHandler().styler.clr120, Essence.getHandler().styler.clr120, Essence.getHandler().styler.clr120));
+                ColorUtils.rgb(Nebulae.getHandler().styler.clr120, Nebulae.getHandler().styler.clr120, Nebulae.getHandler().styler.clr120));
         Scissor.unset();
         Scissor.pop();
 
@@ -74,11 +74,11 @@ public class SliderRender extends Component {
             setting.set((float) MathHelper.clamp(MathUtil.round(newValue, setting.increment), setting.min, setting.max));
         }
 
-        drawRound(getX(), getY() + 10, getWidth() + 4, 7, 1.5f, new Color(Essence.getHandler().styler.clr24, Essence.getHandler().styler.clr24, Essence.getHandler().styler.clr24, 255).getRGB());
-        int clr1 = Essence.getHandler().themeManager.getColor(0);
-        int clr2 = ColorUtils.interpolateColor(Essence.getHandler().themeManager.getColor(180), 3, 0.5f);
+        drawRound(getX(), getY() + 10, getWidth() + 4, 7, 1.5f, new Color(Nebulae.getHandler().styler.clr24, Nebulae.getHandler().styler.clr24, Nebulae.getHandler().styler.clr24, 255).getRGB());
+        int clr1 = Nebulae.getHandler().themeManager.getColor(0);
+        int clr2 = ColorUtils.interpolateColor(Nebulae.getHandler().themeManager.getColor(180), 3, 0.5f);
         drawRound(getX() + getWidth() - 2, getY() + 11.5f, 4, 4, 2f, new Color(60, 60, 60, 50).getRGB());
-        drawRound(getX(), getY() + 10, sliderWidth + 4, 7,1.5f, Essence.getHandler().getThemeManager().getColor(0));
+        drawRound(getX(), getY() + 10, sliderWidth + 4, 7,1.5f, Nebulae.getHandler().getThemeManager().getColor(0));
 
         String text = String.valueOf(setting.get().floatValue()).replace(".0", "");
         Fonts.SUISSEINTL.get(11).drawString(text, Math.max(getX() + 5, getX() - Fonts.SUISSEINTL.get(11).getWidth(text) + sliderWidth), getY() + 13f, new Color(0, 0, 0, 255).getRGB());

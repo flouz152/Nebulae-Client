@@ -1,9 +1,7 @@
 package beame.components.modules.combat.AuraHandlers.other;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.modules.combat.AuraHandlers.component.core.combat.FreeLookHandler;
-import beame.util.IMinecraft;
-import beame.util.math.TimerUtil;
 import events.Event;
 import events.impl.player.EventInput;
 import events.impl.player.EventUpdate;
@@ -14,91 +12,136 @@ import static beame.util.math.SensUtil.getSensitivity;
 import static net.minecraft.util.math.MathHelper.clamp;
 import static net.minecraft.util.math.MathHelper.wrapDegrees;
 
-public class RotationHandler extends Handler implements IMinecraft {
-// leaked by itskekoff; discord.gg/sk3d F24fJfZe
-    public RotationHandler() { }
-
-    private static RotatesTask currentTask = RotatesTask.IDLE;
-
+public class RotationHandler extends Handler {
+    private static Task currentTask = Task.IDLE;
+    private static Rotates targetRotates = new Rotates();
     private static float currentTurnSpeed;
     public static float currentReturnSpeed;
     private static int currentPriority;
     private static int currentTimeout;
-
     private static int idleTicks;
-
-    private static TimerUtil returnTimer = new TimerUtil();
-    private static int returnSide = 0;
 
     @Override
     public void event(Event event) {
-        if(event instanceof EventUpdate) {
-            if(currentTask != RotatesTask.RESET) {
-                if (returnTimer.hasTimeElapsed(500)) {
-                    returnSide = (returnSide == 0 ? 1 : 0);
-                    returnTimer.reset();
-                }
-            }
-
-            idleTicks++;
-
-            if (currentTask == RotatesTask.AIM && idleTicks > currentTimeout) {
-                currentTask = RotatesTask.RESET;
-            }
-
-            if (currentTask == RotatesTask.RESET) {
-                Rotates rotation = new Rotates(mc.gameRenderer.getActiveRenderInfo().getYaw(), mc.gameRenderer.getActiveRenderInfo().getPitch());
-
-                if (updateRotates(rotation, currentReturnSpeed)) {
-                    currentTask = RotatesTask.IDLE;
-                    currentPriority = 0;
-                    Essence.getHandler().auraHelper.freeLookHandler.setActive(false);
-                }
-            }
+        if (mc.player == null) {
+            return;
         }
-        if(event instanceof EventInput) {
-            if(Essence.getHandler().getModuleList().aura.correctionType.is("Свободный")){
-                return;
-            }
 
-            EventInput movementInputEvent = (EventInput) event;
+        if (event instanceof EventUpdate) {
+            tickRotation();
+            return;
+        }
 
-            final float forward = movementInputEvent.getForward();
-            final float strafe = movementInputEvent.getStrafe();
-
-            final double angle = MathHelper.wrapDegrees(Math.toDegrees(direction(mc.player.isElytraFlying() ? mc.player.rotationYaw : FreeLookHandler.getFreeYaw(), forward, strafe)));
-
-            if (forward == 0
-                    && strafe == 0)
-                return;
-
-            float closestForward = 0, closestStrafe = 0, closestDifference = Float.MAX_VALUE;
-
-            for (float predictedForward = -1F; predictedForward <= 1F; predictedForward += 1F) {
-                for (float predictedStrafe = -1F; predictedStrafe <= 1F; predictedStrafe += 1F) {
-                    if (predictedStrafe == 0 && predictedForward == 0)
-                        continue;
-
-                    final double predictedAngle = MathHelper.wrapDegrees(Math.toDegrees(direction(mc.player.rotationYaw, predictedForward, predictedStrafe)));
-                    final double difference = Math.abs(angle - predictedAngle);
-
-                    if (difference < closestDifference) {
-                        closestDifference = (float) difference;
-                        closestForward = predictedForward;
-                        closestStrafe = predictedStrafe;
-                    }
-                }
-            }
-
-            movementInputEvent.setForward(closestForward);
-            movementInputEvent.setStrafe(closestStrafe);
+        if (event instanceof EventInput movementEvent) {
+            handleMovementCorrection(movementEvent);
         }
     }
 
-    public double direction(float rotationYaw, final double moveForward, final double moveStrafing) {
-        float forward = moveForward < 0F ? -.5F : moveForward > 0F ? .5F : 1F;
-        rotationYaw += ((90F * forward) * (moveStrafing > 0F ? -1 : moveStrafing < 0F ? 1 : 0)) + (moveForward < 0F ? 180F : 0);
+    private void tickRotation() {
+        if (currentTask == Task.IDLE) {
+            return;
+        }
 
+        if (currentTask == Task.AIM) {
+            if (++idleTicks > currentTimeout) {
+                beginReset();
+                return;
+            }
+
+            if (applyRotation(targetRotates, currentTurnSpeed)) {
+                beginReset();
+            }
+            return;
+        }
+
+        if (currentTask == Task.RESET) {
+            Rotates resetTarget = new Rotates(mc.gameRenderer.getActiveRenderInfo().getYaw(),
+                    mc.gameRenderer.getActiveRenderInfo().getPitch());
+            if (applyRotation(resetTarget, currentReturnSpeed)) {
+                finishReset();
+            }
+        }
+    }
+
+    private void handleMovementCorrection(EventInput movementEvent) {
+        if (Nebulae.getHandler().getModuleList().aura.correctionType.is("Свободный")) {
+            return;
+        }
+
+        float forward = movementEvent.getForward();
+        float strafe = movementEvent.getStrafe();
+        if (forward == 0 && strafe == 0) {
+            return;
+        }
+
+        double targetAngle = MathHelper.wrapDegrees(Math.toDegrees(direction(
+                mc.player.isElytraFlying() ? mc.player.rotationYaw : FreeLookHandler.getFreeYaw(),
+                forward,
+                strafe)));
+
+        float bestForward = 0;
+        float bestStrafe = 0;
+        float smallestDifference = Float.MAX_VALUE;
+
+        for (float predictedForward = -1F; predictedForward <= 1F; predictedForward += 1F) {
+            for (float predictedStrafe = -1F; predictedStrafe <= 1F; predictedStrafe += 1F) {
+                if (predictedForward == 0 && predictedStrafe == 0) {
+                    continue;
+                }
+
+                double predictedAngle = MathHelper.wrapDegrees(Math.toDegrees(direction(
+                        mc.player.rotationYaw,
+                        predictedForward,
+                        predictedStrafe)));
+                float difference = (float) Math.abs(targetAngle - predictedAngle);
+                if (difference < smallestDifference) {
+                    smallestDifference = difference;
+                    bestForward = predictedForward;
+                    bestStrafe = predictedStrafe;
+                }
+            }
+        }
+
+        movementEvent.setForward(bestForward);
+        movementEvent.setStrafe(bestStrafe);
+    }
+
+    private void beginReset() {
+        currentTask = Task.RESET;
+        idleTicks = 0;
+    }
+
+    private void finishReset() {
+        currentTask = Task.IDLE;
+        currentPriority = 0;
+        FreeLookHandler.setActive(false);
+    }
+
+    private static boolean applyRotation(Rotates desired, float turnSpeed) {
+        Rotates currentRotation = new Rotates(mc.player);
+        float yawDelta = wrapDegrees(desired.getYaw() - currentRotation.getYaw());
+        float pitchDelta = desired.getPitch() - currentRotation.getPitch();
+        float totalDelta = Math.abs(yawDelta) + Math.abs(pitchDelta);
+
+        float yawSpeed = totalDelta == 0 ? 0 : Math.abs(yawDelta / totalDelta) * turnSpeed;
+        float pitchSpeed = totalDelta == 0 ? 0 : Math.abs(pitchDelta / totalDelta) * turnSpeed;
+
+        mc.player.rotationYaw += getSensitivity(clamp(yawDelta, -yawSpeed, yawSpeed));
+        mc.player.rotationPitch = clamp(
+                mc.player.rotationPitch + getSensitivity(clamp(pitchDelta, -pitchSpeed, pitchSpeed)),
+                -90,
+                90);
+
+        idleTicks = 0;
+        return new Rotates(mc.player).getDelta(desired) < (currentTask == Task.RESET ? currentReturnSpeed : currentTurnSpeed);
+    }
+
+    public double direction(float rotationYaw, double moveForward, double moveStrafing) {
+        float forward = moveForward < 0F ? -0.5F : moveForward > 0F ? 0.5F : 1F;
+        rotationYaw += (90F * forward) * (moveStrafing > 0F ? -1 : moveStrafing < 0F ? 1 : 0);
+        if (moveForward < 0F) {
+            rotationYaw += 180F;
+        }
         return Math.toRadians(rotationYaw);
     }
 
@@ -107,63 +150,29 @@ public class RotationHandler extends Handler implements IMinecraft {
             return;
         }
 
-        if (currentTask == RotatesTask.IDLE) {
-            FreeLookHandler.setActive(true);
-        }
-
         currentTurnSpeed = turnSpeed;
         currentReturnSpeed = returnSpeed;
         currentTimeout = timeout;
         currentPriority = priority;
+        targetRotates = rotation;
+        idleTicks = 0;
+        currentTask = Task.AIM;
 
-        currentTask = RotatesTask.AIM;
-
-        updateRotates(rotation, turnSpeed);
+        if (FreeLookHandler.isActive()) {
+            applyRotation(rotation, turnSpeed);
+        } else {
+            FreeLookHandler.setActive(true);
+            applyRotation(rotation, turnSpeed);
+        }
     }
 
     public static void updateRots(Rotates rotation, float turnSpeed, int timeout, int priority) {
-        if (currentPriority > priority) {
-            return;
-        }
-
-        if (currentTask == RotatesTask.IDLE) {
-            FreeLookHandler.setActive(true);
-        }
-
-        currentTurnSpeed = turnSpeed;
-        currentTimeout = timeout;
-        currentPriority = priority;
-
-        currentTask = RotatesTask.AIM;
-
-        updateRotation(rotation, turnSpeed);
-    }
-
-    private static void updateRotation(Rotates rotation, float turnSpeed) {
-        assert mc.player != null;
-        Rotates currentRotation = new Rotates(mc.player);
-
-        float yawDelta = wrapDegrees(rotation.getYaw() - currentRotation.getYaw());
-        float pitchDelta = rotation.getPitch() - currentRotation.getPitch();
-
-        float totalDelta = Math.abs(yawDelta) + Math.abs(pitchDelta);
-
-        float yawSpeed = (totalDelta == 0) ? 0 : Math.abs(yawDelta / totalDelta) * turnSpeed;
-        float pitchSpeed = (totalDelta == 0) ? 0 : Math.abs(pitchDelta / totalDelta) * turnSpeed;
-
-        mc.player.rotationYaw += getSensitivity(clamp(yawDelta, -yawSpeed, yawSpeed));
-        mc.player.rotationPitch = clamp(mc.player.rotationPitch + getSensitivity(clamp(pitchDelta, -pitchSpeed, pitchSpeed)), -90, 90);
-
-        Rotates finalRotation = new Rotates(mc.player);
-
-        idleTicks = 0;
-
-        finalRotation.getDelta(rotation);
+        update(rotation, turnSpeed, turnSpeed, timeout, priority);
     }
 
     public static Vector2f applySensitivityPatch(Vector2f rotation, Vector2f previousRotates) {
         double sens = mc.gameSettings.mouseSensitivity;
-        double gcd = Math.pow(sens * (double) 0.6F + (double) 0.2F, 3.0D) * 8.0D;
+        double gcd = Math.pow(sens * 0.6D + 0.2D, 3.0D) * 8.0D;
 
         double prevYaw = previousRotates.x;
         double prevPitch = previousRotates.y;
@@ -177,42 +186,7 @@ public class RotationHandler extends Handler implements IMinecraft {
         return new Vector2f((float) (prevYaw + yaw), (float) (prevPitch + pitch));
     }
 
-    private static boolean updateRotates(Rotates rotation, float turnSpeed) {
-        Rotates currentRotation = new Rotates(mc.player);
-
-        float yawDelta = wrapDegrees(rotation.getYaw() - currentRotation.getYaw());
-        float pitchDelta = rotation.getPitch() - currentRotation.getPitch();
-
-        float totalDelta = Math.abs(yawDelta) + Math.abs(pitchDelta);
-
-        float yawSpeed = (totalDelta == 0) ? 0 : Math.abs(yawDelta / totalDelta) * turnSpeed;
-        float pitchSpeed = (totalDelta == 0) ? 0 : Math.abs(pitchDelta / totalDelta) * turnSpeed;
-
-        Vector2f rot = applySensitivityPatch(
-                new Vector2f(
-                        mc.player.rotationYaw + clamp(yawDelta, -yawSpeed, yawSpeed),
-                        MathHelper.clamp(mc.player.rotationPitch + clamp(pitchDelta, -pitchSpeed, pitchSpeed), -90, 90)
-                ),
-                new Vector2f(
-                        mc.player.rotationYaw,
-                        mc.player.rotationPitch
-                )
-        );
-
-        mc.player.rotationYaw = rot.x;
-        mc.player.rotationPitch = rot.y;
-
-//        mc.player.rotationYaw += GCDUtil.getSensitivity(clamp(yawDelta, -yawSpeed, yawSpeed));
-//        mc.player.rotationPitch = MathHelper.clamp(mc.player.rotationPitch + GCDUtil.getSensitivity(clamp(pitchDelta, -pitchSpeed, pitchSpeed)), -90, 90);
-
-        Rotates finalRotation = new Rotates(mc.player);
-
-        idleTicks = 0;
-
-        return finalRotation.getDelta(rotation) < (currentTask.equals(RotatesTask.RESET) ? currentReturnSpeed : currentTurnSpeed);
-    }
-
-    public enum RotatesTask {
+    private enum Task {
         AIM,
         RESET,
         IDLE

@@ -38,7 +38,7 @@ import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.LeapAtTargetGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.entity.ai.goal.MoveThroughVillageAtEssenceGoal;
+import net.minecraft.entity.ai.goal.MoveThroughVillageAtNebulaeGoal;
 import net.minecraft.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
@@ -1671,7 +1671,7 @@ public class FoxEntity extends AnimalEntity
         }
     }
 
-    class StrollGoal extends MoveThroughVillageAtEssenceGoal
+    class StrollGoal extends MoveThroughVillageAtNebulaeGoal
     {
         public StrollGoal(int p_i50726_2_, int p_i50726_3_)
         {

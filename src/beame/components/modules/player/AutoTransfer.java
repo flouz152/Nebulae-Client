@@ -1,6 +1,6 @@
 package beame.components.modules.player;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.feature.notify.NotificationManager;
 import beame.util.math.TimerUtil;
 import events.Event;
@@ -50,7 +50,7 @@ public class AutoTransfer extends Module {
         }
         if(event instanceof EventRender) {
             if(anarchy == -1){
-                Essence.getHandler().notificationManager.pushNotify("Setup anarchy! .transfer <anarchy>", NotificationManager.Type.Info);
+                Nebulae.getHandler().notificationManager.pushNotify("Setup anarchy! .transfer <anarchy>", NotificationManager.Type.Info);
                 toggle();
                 return;
             }
