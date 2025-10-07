@@ -1,6 +1,6 @@
 package beame.components.command;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.command.impl.game.GPSCommand;
 import beame.components.command.impl.game.RCTCommand;
 import beame.components.command.impl.game.StaffCommand;
@@ -35,12 +35,12 @@ public class CommandManager {
 
     private static void addMessage(Object message) {
         try {
-            mc.ingameGUI.getChatGUI().printChatMessage(new StringTextComponent(TextFormatting.BLUE + "essence" + TextFormatting.GRAY + " > " + TextFormatting.RESET + message));
+            mc.ingameGUI.getChatGUI().printChatMessage(new StringTextComponent(TextFormatting.BLUE + "nebulae" + TextFormatting.GRAY + " > " + TextFormatting.RESET + message));
         } catch (Exception exc) { }
     }
 
     public void runCmds(String message) {
-        if (Essence.getHandler().unhooked) {
+        if (Nebulae.getHandler().unhooked) {
             return;
         }
 

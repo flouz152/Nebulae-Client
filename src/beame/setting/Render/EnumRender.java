@@ -1,6 +1,6 @@
 package beame.setting.Render;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.Scissor;
 import beame.util.animation.AnimationMath;
 import beame.util.color.ColorUtils;
@@ -56,13 +56,13 @@ public class EnumRender extends Component {
             Scissor.push();
             Scissor.setFromComponentCoordinates(getX(), getY(), getWidth() - 10, 10);
             Fonts.SUISSEINTL.get(14).drawString(stack, setting.getName(), getX() + titleScroll, getY() + 2, 
-                ColorUtils.rgb(Essence.getHandler().styler.clr120, Essence.getHandler().styler.clr120, Essence.getHandler().styler.clr120));
+                ColorUtils.rgb(Nebulae.getHandler().styler.clr120, Nebulae.getHandler().styler.clr120, Nebulae.getHandler().styler.clr120));
             Scissor.unset();
             Scissor.pop();
         } else {
             // Обычная отрисовка заголовка без прокрутки
             Fonts.SUISSEINTL.get(14).drawString(stack, setting.getName(), getX(), getY() + 2, 
-                ColorUtils.rgb(Essence.getHandler().styler.clr120, Essence.getHandler().styler.clr120, Essence.getHandler().styler.clr120));
+                ColorUtils.rgb(Nebulae.getHandler().styler.clr120, Nebulae.getHandler().styler.clr120, Nebulae.getHandler().styler.clr120));
         }
         
         setWidth(85);
@@ -81,7 +81,7 @@ public class EnumRender extends Component {
             }
 
             boolean isEnum = text.get();
-            int color = isEnum ? Essence.getHandler().getThemeManager().getColor(0) : new Color(60, 60, 60, 50).getRGB();
+            int color = isEnum ? Nebulae.getHandler().getThemeManager().getColor(0) : new Color(60, 60, 60, 50).getRGB();
             text.alpha = AnimationMath.fast(text.alpha, isEnum ? 1 : 0, 8);
 
             if (isEnum) {

@@ -1,7 +1,7 @@
 /*
 package beame.components.modules.combat.AuraHandlers.other;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.IMinecraft;
 import beame.util.math.MathUtil;
 import beame.util.math.SensUtil;
@@ -33,7 +33,7 @@ public class FuntimeRotations implements IMinecraft {
         float pitch = wrapLerp(speedValue * 0.8f, current.y, targetPitch);
 
 
-        if (Essence.getHandler().getModuleList().aura.getHitTick() == 0) {
+        if (Nebulae.getHandler().getModuleList().aura.getHitTick() == 0) {
             float snapFactor = 0.6f + (float)Math.random() * 1;
             yaw = current.x + (targetYaw - current.x) * snapFactor;
             pitch = current.y + (targetPitch - current.y) * snapFactor;

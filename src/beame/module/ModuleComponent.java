@@ -1,6 +1,6 @@
 package beame.module;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.clickgui.DropDownGui;
 import beame.feature.notify.NotificationManager;
 import beame.util.BindMapping;
@@ -72,12 +72,12 @@ public class ModuleComponent extends Component {
 
         firstColorAnimation = AnimationMath.fast(firstColorAnimation, module.isState() ? 1 : 0, 8);
         int colordark = ColorUtils.rgba(255, 255, 255, 255);
-        int color0 = interpolateColor(Essence.getHandler().themeManager.getColor(0), colordark, firstColorAnimation);
+        int color0 = interpolateColor(Nebulae.getHandler().themeManager.getColor(0), colordark, firstColorAnimation);
         int color1 = interpolateColor(-1, colordark, firstColorAnimation);
 
-        int bg_0 = interpolateColor(interpolateColor(Essence.getHandler().themeManager.getColor(0), 3, 0.7f), ColorUtils.rgba(45, 45, 45, 80), firstColorAnimation);
+        int bg_0 = interpolateColor(interpolateColor(Nebulae.getHandler().themeManager.getColor(0), 3, 0.7f), ColorUtils.rgba(45, 45, 45, 80), firstColorAnimation);
         int bg01 = ColorUtils.rgba(45, 45, 45, 80);
-        int bg_1 = interpolateColor(interpolateColor(Essence.getHandler().themeManager.getColor(180), 3, 0.5f), bg01, firstColorAnimation);
+        int bg_1 = interpolateColor(interpolateColor(Nebulae.getHandler().themeManager.getColor(180), 3, 0.5f), bg01, firstColorAnimation);
 
 
         ClientHandler.drawGradientRound(getX(), getY(), getWidth(), getHeight(), 3, bg_0, bg_0, new Color(25, 25, 25, 150).getRGB(), new Color(25, 25, 25, 150).getRGB());
@@ -87,7 +87,7 @@ public class ModuleComponent extends Component {
 
         if(!components.isEmpty() && (!showKeyBind && !bind)) {
             twoColorAnimation = AnimationMath.lerp(twoColorAnimation, getHeight() > 25 ? 1.0f : 0.0f, 6);
-            int twoColorAnim = interpolateColor(Essence.getHandler().themeManager.getColor(0), new Color(60, 60, 60, 255).getRGB(), twoColorAnimation);
+            int twoColorAnim = interpolateColor(Nebulae.getHandler().themeManager.getColor(0), new Color(60, 60, 60, 255).getRGB(), twoColorAnimation);
 
             Fonts.ESSENCE_ICONS.get(17).drawString("f", getX() + (getWidth() - 15), getY() + 6.5f, twoColorAnim);
         }
@@ -114,8 +114,8 @@ public class ModuleComponent extends Component {
 
         if(!Objects.equals(module.  suffix, "")) {
             boolean isFt = Objects.equals(module.suffix, "FT");
-            int bgcolor1 = isFt ? ColorUtils.rgba(255, 30, 30, 255) : Essence.getHandler().themeManager.getColor(0);
-            int bgcolor2 = isFt ? ColorUtils.rgba(200, 90, 90, 255) : Essence.getHandler().themeManager.getColor(0);
+            int bgcolor1 = isFt ? ColorUtils.rgba(255, 30, 30, 255) : Nebulae.getHandler().themeManager.getColor(0);
+            int bgcolor2 = isFt ? ColorUtils.rgba(200, 90, 90, 255) : Nebulae.getHandler().themeManager.getColor(0);
 
             int textcolor = isFt ? -1 : ColorUtils.rgb(0, 0, 0);
 
@@ -146,7 +146,7 @@ public class ModuleComponent extends Component {
             hovered = true;
             for (Component component : components) {
                 if (component.isVisible()) {
-                    if (Essence.getHandler().getModuleList().clientSounds.isState() && Essence.getHandler().getModuleList().getClientSounds().soundActive.get(2).get()) {
+                    if (Nebulae.getHandler().getModuleList().clientSounds.isState() && Nebulae.getHandler().getModuleList().getClientSounds().soundActive.get(2).get()) {
                         SoundUtil.playSound("hover.wav", 60, false);
                     }
                 }
@@ -181,7 +181,7 @@ public class ModuleComponent extends Component {
 
     private void drawModuleName() {
         toggleAnimation = AnimationMath.fast(toggleAnimation, module.isState() ? 1 : 0, 8);
-        int blendedColor = interpolateColor(Essence.getHandler().themeManager.getColor(0), new Color(Essence.getHandler().styler.clr120, Essence.getHandler().styler.clr120, Essence.getHandler().styler.clr120).getRGB(), toggleAnimation);
+        int blendedColor = interpolateColor(Nebulae.getHandler().themeManager.getColor(0), new Color(Nebulae.getHandler().styler.clr120, Nebulae.getHandler().styler.clr120, Nebulae.getHandler().styler.clr120).getRGB(), toggleAnimation);
         Fonts.ICONS2.get(18).drawString("s", getX() + 4f, getY() + 6.5f, blendedColor);
         Fonts.SUISSEINTL.get(16).drawString(module.getName(), getX() + 16f, getY() + 6f, blendedColor);
     }
@@ -196,10 +196,10 @@ public class ModuleComponent extends Component {
             bindText = BindMapping.getReverseKey(module.getBind());
         }
         if (module.getConfigSettings().isEmpty()) {
-            ClientHandler.drawRound(getX() + getWidth() - Fonts.SUISSEINTL.get(16).getStringWidth(bindText) - 7 - 2, getY() + 3,  Fonts.SUISSEINTL.get(16).getStringWidth(bindText) + 4, 9, 1, new Color(Essence.getHandler().styler.clr24, Essence.getHandler().styler.clr24, Essence.getHandler().styler.clr24).getRGB());
+            ClientHandler.drawRound(getX() + getWidth() - Fonts.SUISSEINTL.get(16).getStringWidth(bindText) - 7 - 2, getY() + 3,  Fonts.SUISSEINTL.get(16).getStringWidth(bindText) + 4, 9, 1, new Color(Nebulae.getHandler().styler.clr24, Nebulae.getHandler().styler.clr24, Nebulae.getHandler().styler.clr24).getRGB());
             Fonts.SUISSEINTL.get(13).drawString(bindText, getX() + getWidth() - Fonts.SUISSEINTL.get(16).getStringWidth(bindText) - 7, getY() + 6.5f, -1);
         } else {
-            ClientHandler.drawRound(getX() + getWidth() - Fonts.SUISSEINTL.get(16).getStringWidth(bindText) - 7 - 2, getY() + 3.5f,  Fonts.SUISSEINTL.get(16).getStringWidth(bindText) + 4, 9, 1, new Color(Essence.getHandler().styler.clr24, Essence.getHandler().styler.clr24, Essence.getHandler().styler.clr24).getRGB());
+            ClientHandler.drawRound(getX() + getWidth() - Fonts.SUISSEINTL.get(16).getStringWidth(bindText) - 7 - 2, getY() + 3.5f,  Fonts.SUISSEINTL.get(16).getStringWidth(bindText) + 4, 9, 1, new Color(Nebulae.getHandler().styler.clr24, Nebulae.getHandler().styler.clr24, Nebulae.getHandler().styler.clr24).getRGB());
             Fonts.SUISSEINTL.get(13).drawString(bindText, getX() + getWidth() - Fonts.SUISSEINTL.get(16).getStringWidth(bindText) - 6, getY() + 6.5f, -1);
         }
     }
@@ -235,11 +235,11 @@ public class ModuleComponent extends Component {
             }
             if (button == 1) {
                 if (!lastHovered) {
-                    if (Essence.getHandler().getModuleList().getClientSounds().isState() && Essence.getHandler().getModuleList().getClientSounds().soundActive.get(8).get() && !module.getConfigSettings().isEmpty()) {
+                    if (Nebulae.getHandler().getModuleList().getClientSounds().isState() && Nebulae.getHandler().getModuleList().getClientSounds().soundActive.get(8).get() && !module.getConfigSettings().isEmpty()) {
                         SoundUtil.playSound("opened.wav", 65, false);
                     }
                 } else {
-                    if (Essence.getHandler().getModuleList().getClientSounds().isState() && Essence.getHandler().getModuleList().getClientSounds().soundActive.get(8).get() && !module.getConfigSettings().isEmpty()) {
+                    if (Nebulae.getHandler().getModuleList().getClientSounds().isState() && Nebulae.getHandler().getModuleList().getClientSounds().soundActive.get(8).get() && !module.getConfigSettings().isEmpty()) {
                         SoundUtil.playSound("closed.wav", 65, false);
                     }
                 }
@@ -274,10 +274,10 @@ public class ModuleComponent extends Component {
         if (bind) {
             if (key == GLFW.GLFW_KEY_DELETE) {
                 module.setBind(0);
-                Essence.getHandler().notificationManager.pushNotify("Убран бинд с функции " + module.getName(), NotificationManager.Type.Info);
+                Nebulae.getHandler().notificationManager.pushNotify("Убран бинд с функции " + module.getName(), NotificationManager.Type.Info);
             } else {
                 module.setBind(key);
-                Essence.getHandler().notificationManager.pushNotify("Добавлен бинд на " + BindMapping.getReverseKey(module.getBind()) + " для функции " + module.getName(), NotificationManager.Type.Info);
+                Nebulae.getHandler().notificationManager.pushNotify("Добавлен бинд на " + BindMapping.getReverseKey(module.getBind()) + " для функции " + module.getName(), NotificationManager.Type.Info);
             }
             bind = false;
         }

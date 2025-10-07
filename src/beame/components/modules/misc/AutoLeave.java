@@ -1,7 +1,7 @@
 package beame.components.modules.misc;
 
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.command.AbstractCommand;
 import beame.module.Category;
 import beame.module.Module;
@@ -38,7 +38,7 @@ public class AutoLeave extends Module {
 
             for (PlayerEntity player : mc.world.getPlayers()) {
                 if (player == mc.player) continue;
-                if (Essence.getHandler().friends.isFriend(player.getScoreboardName())) continue;
+                if (Nebulae.getHandler().friends.isFriend(player.getScoreboardName())) continue;
                 if (!player.botEntity) continue;
 
                 double dist = mc.player.getDistance(player);

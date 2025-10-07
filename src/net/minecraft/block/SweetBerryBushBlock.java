@@ -2,7 +2,7 @@ package net.minecraft.block;
 
 import java.util.Random;
 
-import beame.Essence;
+import beame.Nebulae;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -83,7 +83,7 @@ public class SweetBerryBushBlock extends BushBlock implements IGrowable
     {
         if (entityIn instanceof LivingEntity && entityIn.getType() != EntityType.FOX && entityIn.getType() != EntityType.BEE)
         {
-            entityIn.setMotionMultiplier(state, Essence.getHandler().getModuleList().getCollisionDisabler().isState() ? Essence.getHandler().getModuleList().getCollisionDisabler().addtivites.get(1).get() ? new Vector3d(0.0F, 0.0F, 0.0F) : new Vector3d(0.8F, 0.75D, 0.8F) : new Vector3d(0.8F, 0.75D, 0.8F));
+            entityIn.setMotionMultiplier(state, Nebulae.getHandler().getModuleList().getCollisionDisabler().isState() ? Nebulae.getHandler().getModuleList().getCollisionDisabler().addtivites.get(1).get() ? new Vector3d(0.0F, 0.0F, 0.0F) : new Vector3d(0.8F, 0.75D, 0.8F) : new Vector3d(0.8F, 0.75D, 0.8F));
 
 
             if (!worldIn.isRemote && state.get(AGE) > 0 && (entityIn.lastTickPosX != entityIn.getPosX() || entityIn.lastTickPosZ != entityIn.getPosZ()))

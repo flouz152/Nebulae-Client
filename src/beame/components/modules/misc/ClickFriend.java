@@ -1,6 +1,6 @@
 package beame.components.modules.misc;
 
-import beame.Essence;
+import beame.Nebulae;
 import events.Event;
 import events.EventKey;
 import beame.module.Category;
@@ -22,11 +22,11 @@ public class ClickFriend extends Module {
         if (event instanceof EventKey) {
             if (((EventKey) event).key == bind.get() && mc.pointedEntity instanceof LivingEntity) {
                 String entityName = mc.pointedEntity.getName().getString();
-                if (Essence.getHandler().getFriends().isFriend(entityName)) {
-                    Essence.getHandler().getFriends().remFriend(entityName);
+                if (Nebulae.getHandler().getFriends().isFriend(entityName)) {
+                    Nebulae.getHandler().getFriends().remFriend(entityName);
                   //  AbstractCommand.addMessage("Удалил " + entityName + " из друзей!");
                 } else {
-                    Essence.getHandler().getFriends().addFriend(entityName);
+                    Nebulae.getHandler().getFriends().addFriend(entityName);
                   // AbstractCommand.addMessage("Добавил " + entityName + " в друзья!");
                 }
             }

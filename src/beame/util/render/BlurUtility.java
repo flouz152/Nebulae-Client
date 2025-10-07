@@ -1,6 +1,6 @@
 package beame.util.render;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.Stencil;
 import beame.util.shader.ShaderUtil;
 import net.minecraft.client.Minecraft;
@@ -20,8 +20,8 @@ public class BlurUtility {
     }
 
     public void render(Runnable run) {
-        if(!Essence.getHandler().getModuleList().hud.disableBlur.get()) {
-            float enabledAnimation = Essence.getHandler().getModuleList().hud.enabledAnimation;
+        if(!Nebulae.getHandler().getModuleList().hud.disableBlur.get()) {
+            float enabledAnimation = Nebulae.getHandler().getModuleList().hud.enabledAnimation;
             if (enabledAnimation > 0.1f) {
                 Stencil.initStencilToWrite();
                 run.run();
@@ -34,7 +34,7 @@ public class BlurUtility {
     }
 
     public void updateBlur(float offset, int steps) {
-        if(!Essence.getHandler().getModuleList().hud.disableBlur.get()) {
+        if(!Nebulae.getHandler().getModuleList().hud.disableBlur.get()) {
             Minecraft mc = Minecraft.getInstance();
             Framebuffer mcFramebuffer = mc.getFramebuffer();
             ADDITIONAL.setup();

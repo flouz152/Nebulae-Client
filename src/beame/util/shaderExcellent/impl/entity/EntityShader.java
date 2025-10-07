@@ -1,6 +1,6 @@
 package beame.util.shaderExcellent.impl.entity;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.IMinecraft;
 import beame.util.render.CustomFramebuffer2;
 import beame.util.render.RenderUtil;
@@ -62,7 +62,7 @@ public class EntityShader implements IMinecraft {
         kawaseUp.setUniformf("offset", offset, offset);
         kawaseUp.setUniformi("check", 1);
 
-        switch (Essence.getHandler().getModuleList().shaderEsp.mode().get()) {
+        switch (Nebulae.getHandler().getModuleList().shaderEsp.mode().get()) {
             case "Внешний": {
                 kawaseUp.setUniformi("inTexture", 0);
                 kawaseUp.setUniformi("textureToCheck", 16);

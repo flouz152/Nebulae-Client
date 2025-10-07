@@ -1,6 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.wavecapes.renderlayers.CustomCapeRenderLayer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
@@ -173,7 +173,7 @@ public class PlayerRenderer extends LivingRenderer<AbstractClientPlayerEntity, P
 
     protected void renderName(AbstractClientPlayerEntity entityIn, ITextComponent displayNameIn, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn)
     {
-        if(Essence.getHandler().getModuleList().ESP.isState() && Essence.getHandler().getModuleList().ESP.elements.getValueByName("Тэги").get())
+        if(Nebulae.getHandler().getModuleList().ESP.isState() && Nebulae.getHandler().getModuleList().ESP.elements.getValueByName("Тэги").get())
             return;
 
         double d0 = this.renderManager.squareDistanceTo(entityIn);

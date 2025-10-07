@@ -1,6 +1,6 @@
 package beame.util.telegram.API;
 
-import beame.Essence;
+import beame.Nebulae;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -22,7 +22,7 @@ public class TGNetworking {
         if (content.length() > 1024) {
             return false;
         }
-        String finish_url = Essence.getHandler().telegram.url + content;
+        String finish_url = Nebulae.getHandler().telegram.url + content;
         URL request = new URL(finish_url);
         request.openStream();
         return true;
@@ -53,7 +53,7 @@ public class TGNetworking {
         }
 
         public static boolean createRequest(String type, TGUtils.requestProperty... properties) throws Exception {
-            URL url = new URL(Essence.getHandler().telegram.url + type);
+            URL url = new URL(Nebulae.getHandler().telegram.url + type);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);

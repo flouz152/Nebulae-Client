@@ -19,7 +19,7 @@ public abstract class AbstractCommand implements IMinecraft {
 // leaked by itskekoff; discord.gg/sk3d 6UFJgAuH
     public final String command = this.getClass().getAnnotation(CommandInfo.class).name();
     public final String description = this.getClass().getAnnotation(CommandInfo.class).description();
-    public static final String tag = TextFormatting.BLUE + "essence" + TextFormatting.GRAY + " > " + TextFormatting.RESET;
+    public static final String tag = TextFormatting.BLUE + "nebulae" + TextFormatting.GRAY + " > " + TextFormatting.RESET;
 
     public abstract String name();
 

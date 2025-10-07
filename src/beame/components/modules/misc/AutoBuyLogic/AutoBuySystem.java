@@ -1,6 +1,6 @@
 package beame.components.modules.misc.AutoBuyLogic;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.command.AbstractCommand;
 import beame.components.modules.misc.AutoBuyLogic.AutoBuyUtil.MessageType;
 import beame.components.modules.misc.AutoBuyLogic.Items.AutoBuyItemClass;
@@ -47,7 +47,7 @@ public class AutoBuySystem {
     public TimerUtil sleep = new TimerUtil();
     public TimerUtil buy = new TimerUtil();
     public TimerUtil ping = new TimerUtil();
-    private final Path priceFile = Essence.getHandler().getClientDir().resolve("autobuy.json");
+    private final Path priceFile = Nebulae.getHandler().getClientDir().resolve("autobuy.json");
     private final Gson gson = new Gson();
     private boolean isParsingPrices = false;
     private int currentParsingIndex = 0;
@@ -108,7 +108,7 @@ public class AutoBuySystem {
 
     public void onUpdate(EventUpdate event) {
         if (this.enabled) {
-            long delay = (long)Math.min(350.0F, (float)AutoBuyUtil.calculateDelay() * (Essence.getHandler().autoBuyGUI.server == 0 ? 2.0F : 6.0F));
+            long delay = (long)Math.min(350.0F, (float)AutoBuyUtil.calculateDelay() * (Nebulae.getHandler().autoBuyGUI.server == 0 ? 2.0F : 6.0F));
             if (this.updater.hasTimeElapsed(delay)) {
                 this.pushUpdatePage();
                 this.updater.reset();
@@ -119,7 +119,7 @@ public class AutoBuySystem {
                 this.ping.reset();
             }
 
-            Essence.getHandler().autoSell.onUpdate();
+            Nebulae.getHandler().autoSell.onUpdate();
         }
     }
 
@@ -127,7 +127,7 @@ public class AutoBuySystem {
         if (!this.enabled) {
             return false;
         } else {
-            Essence.getHandler().autoSell.onChatMessage(text);
+            Nebulae.getHandler().autoSell.onChatMessage(text);
             AutoBuyUtil.MessageType type = AutoBuyUtil.getMessageType(text);
             if (type == MessageType.No) {
                 if (text.startsWith("Ваш пинг: ")) {
@@ -203,31 +203,31 @@ public class AutoBuySystem {
                                     int finalPrice = price / slot.getStack().getCount();
                                     AutoBuyItemClass itemToBuy = null;
                                     if (slot.getStack().getItem() == Items.ENCHANTED_BOOK) {
-                                        itemToBuy = Essence.getHandler().autoBuy.items.isNeedToBuyEnchanted(slot.getStack());
+                                        itemToBuy = Nebulae.getHandler().autoBuy.items.isNeedToBuyEnchanted(slot.getStack());
                                     } else {
-                                        itemToBuy = Essence.getHandler().autoBuy.items.isNeedToBuy(slot.getStack());
+                                        itemToBuy = Nebulae.getHandler().autoBuy.items.isNeedToBuy(slot.getStack());
                                     }
 
                                     if (itemToBuy == null && slot.getStack().isEnchanted()) {
-                                        itemToBuy = Essence.getHandler().autoBuy.items.isNeedToBuyEnchanted(slot.getStack());
+                                        itemToBuy = Nebulae.getHandler().autoBuy.items.isNeedToBuyEnchanted(slot.getStack());
                                     }
 
                                     if (itemToBuy == null) {
                                         String itemType = AutoBuyUtil.getSpookyItemType(slot.getStack());
                                         if (itemType != null) {
-                                            itemToBuy = Essence.getHandler().autoBuy.items.isNeedToBuy(slot.getStack(), itemType);
+                                            itemToBuy = Nebulae.getHandler().autoBuy.items.isNeedToBuy(slot.getStack(), itemType);
                                         }
                                     }
 
                                     if (itemToBuy == null) {
                                         HashMap<Attribute, Map.Entry<Float, AttributeModifier.Operation>> attributes = AutoBuyUtil.getAttributes(slot.getStack());
                                         if (attributes != null && !attributes.isEmpty()) {
-                                            itemToBuy = Essence.getHandler().autoBuy.items.isNeedToBuy(slot.getStack(), attributes);
+                                            itemToBuy = Nebulae.getHandler().autoBuy.items.isNeedToBuy(slot.getStack(), attributes);
                                         }
                                     }
 
                                     if (itemToBuy == null) {
-                                        itemToBuy = Essence.getHandler().autoBuy.items.isNeedToBuyPotion(slot.getStack());
+                                        itemToBuy = Nebulae.getHandler().autoBuy.items.isNeedToBuyPotion(slot.getStack());
                                     }
 
                                     if (itemToBuy != null) {
@@ -253,9 +253,9 @@ public class AutoBuySystem {
     }
 
     private void pushTGMessage(String content) {
-        if (Essence.getHandler().telegram != null) {
-            if (Essence.getHandler().telegram.inited) {
-                Essence.getHandler().telegram.sendMessage(content);
+        if (Nebulae.getHandler().telegram != null) {
+            if (Nebulae.getHandler().telegram.inited) {
+                Nebulae.getHandler().telegram.sendMessage(content);
             }
 
         }

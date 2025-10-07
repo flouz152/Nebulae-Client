@@ -1,6 +1,6 @@
 package beame.util.drag;
 
-import beame.Essence;
+import beame.Nebulae;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -12,7 +12,7 @@ import java.util.HashMap;
 public class DraggableManager {
 // leaked by itskekoff; discord.gg/sk3d v9xN7JkC
     public static HashMap<String, Dragging> draggables = new HashMap();
-    public static final File DRAG_DATA = new File(Essence.getHandler().getClientDir() + "\\elements.json");
+    public static final File DRAG_DATA = new File(Nebulae.getHandler().getClientDir() + "\\elements.json");
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create();
 
     public static void save() {

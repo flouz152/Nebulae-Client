@@ -1,6 +1,6 @@
 package net.minecraft.client.entity.player;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.wavecapes.CapeHolder;
 import beame.wavecapes.sim.StickSimulation;
 import com.google.common.hash.Hashing;
@@ -104,7 +104,7 @@ public abstract class AbstractClientPlayerEntity extends PlayerEntity implements
     }
 
     public boolean hasCustomCape() {
-        return this instanceof ClientPlayerEntity || Essence.getHandler().friends.isFriend(this.getNameClear());
+        return this instanceof ClientPlayerEntity || Nebulae.getHandler().friends.isFriend(this.getNameClear());
     }
 
     /**
@@ -129,7 +129,7 @@ public abstract class AbstractClientPlayerEntity extends PlayerEntity implements
 
         if (this.hasCustomCape()) {
             if (this instanceof ClientPlayerEntity) {
-                return new ResourceLocation("night/image/Essence.png");
+                return new ResourceLocation("night/image/Nebulae.png");
             }
         }
 

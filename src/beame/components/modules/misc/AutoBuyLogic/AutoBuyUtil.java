@@ -1,7 +1,7 @@
 package beame.components.modules.misc.AutoBuyLogic;
 
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.ClientHelper;
 import com.google.common.collect.Multimap;
 import com.google.gson.JsonArray;
@@ -95,7 +95,7 @@ public class AutoBuyUtil {
 
 
     public static boolean isFake(ItemStack item, int buyPrice) {
-        if(Essence.getHandler().autoBuyGUI.server == 0) return false;
+        if(Nebulae.getHandler().autoBuyGUI.server == 0) return false;
 
         int itemPrice = getPrice(item);
         float badPriceFloat = buyPrice / 1.72f;
@@ -105,7 +105,7 @@ public class AutoBuyUtil {
     }
 
     public static int calculateDelay() {
-        int pping = Essence.getHandler().autoBuy.curping;
+        int pping = Nebulae.getHandler().autoBuy.curping;
         int ping = (pping == 0) ? 150 : Math.min(pping, 300);
         return (int)(ping * 1.5f);
     }

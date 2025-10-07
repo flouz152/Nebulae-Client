@@ -1,6 +1,6 @@
 package beame.util.other;
 
-import beame.Essence;
+import beame.Nebulae;
 import com.google.common.eventbus.Subscribe;
 import events.impl.packet.EventPacket;
 import lombok.Getter;
@@ -25,7 +25,7 @@ public class ServerUtils {
         this.lastPacketTime = -1L;
         Arrays.fill(ticks, 0.0F);
 
-        Essence.getHandler().getEventBus().register(this);
+        Nebulae.getHandler().getEventBus().register(this);
     }
 
     public ServerUtils() {

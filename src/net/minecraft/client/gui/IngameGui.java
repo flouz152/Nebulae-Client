@@ -1,6 +1,6 @@
 package net.minecraft.client.gui;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.animation.AnimationMath;
 import beame.util.color.ColorUtils;
 import beame.util.fonts.Fonts;
@@ -228,7 +228,7 @@ public class IngameGui extends AbstractGui {
             this.mc.getTextureManager().bindTexture(GUI_ICONS_LOCATION);
             RenderSystem.enableBlend();
             RenderSystem.enableAlphaTest();
-            if (!Essence.getHandler().getModuleList().crosshair.isState()) {
+            if (!Nebulae.getHandler().getModuleList().crosshair.isState()) {
                 this.renderAttackIndicator(matrixStack);
             }
             GlStateManager.enableAlphaTest();
@@ -281,27 +281,27 @@ public class IngameGui extends AbstractGui {
         MainWindow mainWindow = mc.getMainWindow();
         mc.gameRenderer.setupOverlayRendering(2);
 
-        if (!Essence.getHandler().unhooked) {
-            Essence.getHandler().notificationManager.render(matrixStack);
-            Essence.getHandler().gps.renderGPS(matrixStack);
-            Essence.getHandler().styler.update();
+        if (!Nebulae.getHandler().unhooked) {
+            Nebulae.getHandler().notificationManager.render(matrixStack);
+            Nebulae.getHandler().gps.renderGPS(matrixStack);
+            Nebulae.getHandler().styler.update();
             //EventManager.call(new EventRender(partialTicks, matrixStack, mainWindow, EventRender.Type.RENDER2D, null));
 
-            if (Essence.getHandler().interpolateState > 0.97)
-                Essence.getHandler().needValueInterpolate = 0;
-            if (Essence.getHandler().interpolateState < 0.02)
-                Essence.getHandler().needValueInterpolate = 1;
-            Essence.getHandler().interpolateState = AnimationMath.fast(Essence.getHandler().interpolateState, Essence.getHandler().needValueInterpolate, 4);
-            Essence.getHandler().getDropDownGui().alpha = AnimationMath.fast(Essence.getHandler().getDropDownGui().alpha, Essence.getHandler().getDropDownGui().needAlpha, 35);
-            if (Essence.getHandler().getDropDownGui().close && Essence.getHandler().getDropDownGui().needAlpha == 0 && Essence.getHandler().getDropDownGui().alpha < 0.05f) {
+            if (Nebulae.getHandler().interpolateState > 0.97)
+                Nebulae.getHandler().needValueInterpolate = 0;
+            if (Nebulae.getHandler().interpolateState < 0.02)
+                Nebulae.getHandler().needValueInterpolate = 1;
+            Nebulae.getHandler().interpolateState = AnimationMath.fast(Nebulae.getHandler().interpolateState, Nebulae.getHandler().needValueInterpolate, 4);
+            Nebulae.getHandler().getDropDownGui().alpha = AnimationMath.fast(Nebulae.getHandler().getDropDownGui().alpha, Nebulae.getHandler().getDropDownGui().needAlpha, 35);
+            if (Nebulae.getHandler().getDropDownGui().close && Nebulae.getHandler().getDropDownGui().needAlpha == 0 && Nebulae.getHandler().getDropDownGui().alpha < 0.05f) {
                 mc.displayGuiScreen((Screen) null);
-                Essence.getHandler().getDropDownGui().close = false;
+                Nebulae.getHandler().getDropDownGui().close = false;
             }
         }
 
         mc.gameRenderer.setupOverlayRendering();
 
-        if (!(Essence.getHandler().getModuleList().hud.isState() && Essence.getHandler().getModuleList().hud.widgets.get("Эффекты").get())) {
+        if (!(Nebulae.getHandler().getModuleList().hud.isState() && Nebulae.getHandler().getModuleList().hud.widgets.get("Эффекты").get())) {
             this.renderPotionIcons(matrixStack);
         }
 
@@ -494,7 +494,7 @@ public class IngameGui extends AbstractGui {
     }
 
     protected void renderPotionIcons(MatrixStack matrixStack) {
-        if (Essence.getHandler().getModuleList().hud.isState() && Essence.getHandler().getModuleList().hud.widgets.get("Эффекты").get())
+        if (Nebulae.getHandler().getModuleList().hud.isState() && Nebulae.getHandler().getModuleList().hud.widgets.get("Эффекты").get())
             return;
 
         Collection<EffectInstance> collection = this.mc.player.getActivePotionEffects();
@@ -596,17 +596,17 @@ public class IngameGui extends AbstractGui {
 
             enabledAnimation = AnimationMath.fast(enabledAnimation, 1, 8);
 
-            int bg_0 = interpolateColor(interpolateColor(Essence.getHandler().themeManager.getColor(0), 3, 0.7f), ColorUtils.rgba(255, 255, 255, 80), enabledAnimation);
+            int bg_0 = interpolateColor(interpolateColor(Nebulae.getHandler().themeManager.getColor(0), 3, 0.7f), ColorUtils.rgba(255, 255, 255, 80), enabledAnimation);
             int bg01 = ColorUtils.rgba(45, 45, 45, 1);
             int bg_1 = interpolateColor(interpolateColor(255, 255, 0.5f), ColorUtils.rgba(255, 255, 255, 1), enabledAnimation);
 
             this.setBlitOffset(-90);
 
-            if (Essence.getHandler().getModuleList().hud.isState() && Essence.getHandler().getModuleList().hud.widgets.get(6).get()) {
-                ClientHandler.drawSexyRect(i - 91, this.scaledHeight - 22, 182, 21.5f, Essence.getHandler().getModuleList().hud.rounding.get(), true);
+            if (Nebulae.getHandler().getModuleList().hud.isState() && Nebulae.getHandler().getModuleList().hud.widgets.get(6).get()) {
+                ClientHandler.drawSexyRect(i - 91, this.scaledHeight - 22, 182, 21.5f, Nebulae.getHandler().getModuleList().hud.rounding.get(), true);
 //                ClientHandler.drawRound(i - 91, this.scaledHeight - 22, 182, 22, 2, ColorUtils.rgba(14, 14, 14, 175));
-                ClientHandler.drawRound(i - 91 - 1 + playerentity.inventory.currentItem * 20 + 2, this.scaledHeight - 22 + 1, 20, 20, Essence.getHandler().getModuleList().hud.rounding.get(), ColorUtils.rgba(25, 25, 25, 255));
-                ClientHandler.drawRound(i - 91 - 1 + playerentity.inventory.currentItem * 20 + 3f, this.scaledHeight - 22 + 2, 18f, 18f, Essence.getHandler().getModuleList().hud.rounding.get(), ColorUtils.rgba(14, 14, 14, 200));
+                ClientHandler.drawRound(i - 91 - 1 + playerentity.inventory.currentItem * 20 + 2, this.scaledHeight - 22 + 1, 20, 20, Nebulae.getHandler().getModuleList().hud.rounding.get(), ColorUtils.rgba(25, 25, 25, 255));
+                ClientHandler.drawRound(i - 91 - 1 + playerentity.inventory.currentItem * 20 + 3f, this.scaledHeight - 22 + 2, 18f, 18f, Nebulae.getHandler().getModuleList().hud.rounding.get(), ColorUtils.rgba(14, 14, 14, 200));
                 Fonts.LOGO.get(20).drawString("Z", i - 87.5f - 1 + playerentity.inventory.currentItem * 20 + 2, this.scaledHeight - 13, new Color(255, 255, 255, 25).getRGB());
             } else {
                 this.blit(matrixStack, i - 91, this.scaledHeight - 22, 0, 0, 182, 22);
@@ -615,7 +615,7 @@ public class IngameGui extends AbstractGui {
 
             if (!itemstack.isEmpty()) {
 
-                if (Essence.getHandler().getModuleList().hud.isState() && Essence.getHandler().getModuleList().hud.widgets.get(6).get()) {
+                if (Nebulae.getHandler().getModuleList().hud.isState() && Nebulae.getHandler().getModuleList().hud.widgets.get(6).get()) {
                     if (!itemstack.isEmpty()) {
                         if (handside == HandSide.LEFT) {
                             ClientHandler.drawSexyRect(i - 91 - 29, this.scaledHeight - 22, 22, 21.5f, 4, true);
@@ -829,9 +829,9 @@ public class IngameGui extends AbstractGui {
         int i = this.getFontRenderer().getStringPropertyWidth(itextcomponent);
         int j = i;
         int k = this.getFontRenderer().getStringWidth(": ");
-//        && Essence.getHandler().getModuleList().mcUtils.removals.get(2).get()
+//        && Nebulae.getHandler().getModuleList().mcUtils.removals.get(2).get()
 
-        if (Essence.getHandler().getModuleList().mcUtils.isState() && Essence.getHandler().getModuleList().mcUtils.removals.get(2).get()) {
+        if (Nebulae.getHandler().getModuleList().mcUtils.isState() && Nebulae.getHandler().getModuleList().mcUtils.removals.get(2).get()) {
         } else {
             for (Score score : collection) {
                 ScorePlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(score.getPlayerName());

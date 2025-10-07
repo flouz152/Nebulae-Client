@@ -1,6 +1,6 @@
 package net.minecraft.client.renderer;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.modules.render.CustomFog;
 import beame.util.color.ColorUtils;
 import com.mojang.blaze3d.platform.GlStateManager;
@@ -125,10 +125,10 @@ public class FogRenderer
                 return worldIn.func_239132_a_().func_230494_a_(Vector3d.unpack(biomemanager.getBiomeAtPosition(p_lambda$updateFogColor$0_3_, p_lambda$updateFogColor$0_4_, p_lambda$updateFogColor$0_5_).getFogColor()), f12);
             });
             vector3d4 = CustomColors.getWorldFogColor(vector3d4, worldIn, activeRenderInfoIn.getRenderViewEntity(), partialTicks);
-            CustomFog customFog = Essence.getHandler().getModuleList().customFog;
+            CustomFog customFog = Nebulae.getHandler().getModuleList().customFog;
             if (customFog.isState()) {
                 if(customFog.color.is("Тема")) {
-                    final float[] colors = ColorUtils.rgba(ColorUtils.setAlpha(Essence.getHandler().themeManager.getColor(0), 255));
+                    final float[] colors = ColorUtils.rgba(ColorUtils.setAlpha(Nebulae.getHandler().themeManager.getColor(0), 255));
                     red = Math.max(0, colors[0] - (customFog.themeBlackness.get()/255));
                     green = Math.max(0, colors[1] - (customFog.themeBlackness.get()/255));
                     blue = Math.max(0, colors[2] - (customFog.themeBlackness.get()/255));
@@ -407,7 +407,7 @@ public class FogRenderer
             else
             {
                 fogStandard = true;
-                CustomFog fog = Essence.getHandler().getModuleList().customFog;
+                CustomFog fog = Nebulae.getHandler().getModuleList().customFog;
 
                 f3 = p_setupFog_2_ * Config.getFogStart();
                 if(fog.isState()) {

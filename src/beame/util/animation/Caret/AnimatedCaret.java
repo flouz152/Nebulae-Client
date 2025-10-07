@@ -1,6 +1,6 @@
 package beame.util.animation.Caret;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.color.ColorUtils;
 import beame.util.fonts.Fonts;
 import beame.util.render.ClientHandler;
@@ -20,6 +20,6 @@ public class AnimatedCaret {
             animatedX = targetX;
         }
 
-        ClientHandler.drawRound(animatedX, y, 1, 10, 3, ColorUtils.rgba(Essence.getHandler().styler.clr_main, Essence.getHandler().styler.clr_main, Essence.getHandler().styler.clr_main, alpha));
+        ClientHandler.drawRound(animatedX, y, 1, 10, 3, ColorUtils.rgba(Nebulae.getHandler().styler.clr_main, Nebulae.getHandler().styler.clr_main, Nebulae.getHandler().styler.clr_main, alpha));
     }
 }

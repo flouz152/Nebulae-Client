@@ -5,7 +5,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.clickgui.DropDownGui;
 import events.EventManager;
 import events.impl.player.LookEvent;
@@ -155,7 +155,7 @@ public class MouseHelper
 
                 if (flag)
                 {
-                    Essence.getHandler().keyPress(-100 + i);
+                    Nebulae.getHandler().keyPress(-100 + i);
 
                     if (this.minecraft.player.isSpectator() && i == 2)
                     {

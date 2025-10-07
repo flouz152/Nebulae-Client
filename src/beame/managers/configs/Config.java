@@ -1,6 +1,6 @@
 package beame.managers.configs;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.command.AbstractCommand;
 import beame.feature.notify.NotificationManager;
 import lombok.Getter;
@@ -33,10 +33,10 @@ public class Config {
         String configContent = "";
         try {
             JSONArray ja = new JSONArray();
-            ja.put(Essence.getHandler().themeManager.currentTheme);
+            ja.put(Nebulae.getHandler().themeManager.currentTheme);
 
             JSONArray modules = new JSONArray();
-            for(Module module : Essence.getHandler().getModuleList().getModules()){
+            for(Module module : Nebulae.getHandler().getModuleList().getModules()){
                 JSONArray inmodulesettings = new JSONArray();
                 if(!module.getConfigSettings().isEmpty()){
                     for(ConfigSetting a : module.getConfigSettings()){
@@ -93,7 +93,7 @@ public class Config {
             ja.put(modules);
 
             if (!name.equals("automaticsaved")) {
-                Essence.getHandler().notificationManager.pushNotify("Конфиг успешно сохранен!", NotificationManager.Type.Saved);
+                Nebulae.getHandler().notificationManager.pushNotify("Конфиг успешно сохранен!", NotificationManager.Type.Saved);
             }
             configContent = ja.toString();
         } catch (Exception e) {
@@ -142,7 +142,7 @@ public class Config {
                 int moduleBind = module.getInt(2);
 
                 boolean moduleFound = false;
-                for (ModuleList.MModule m : Essence.getHandler().getModuleList().replacments) {
+                for (ModuleList.MModule m : Nebulae.getHandler().getModuleList().replacments) {
                     if (m.name.equals(moduleName)) {
                         moduleFound = true;
                         m.module.markState(moduleValue);
@@ -216,7 +216,7 @@ public class Config {
             return new CfgResult(false, "Ошибка загрузки конфигурации");
         }
 
-        if (Essence.getHandler().notificationManager != null) Essence.getHandler().notificationManager.pushNotify("Конфигурация '" + name + "' успешно загружена!", NotificationManager.Type.Loaded);
+        if (Nebulae.getHandler().notificationManager != null) Nebulae.getHandler().notificationManager.pushNotify("Конфигурация '" + name + "' успешно загружена!", NotificationManager.Type.Loaded);
         return new CfgResult(true);
     }
 

@@ -1,6 +1,6 @@
 package net.minecraft.client.gui.screen.inventory;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.modules.misc.AutoBuyLogic.AutoBuySystem;
 import beame.components.modules.misc.AutoBuyLogic.Items.BuyedItem;
 import beame.feature.notify.NotificationManager;
@@ -92,8 +92,8 @@ public class ChestScreen extends ContainerScreen<ChestContainer> implements IHas
         this.blit(matrixStack, i, j, 0, 0, this.xSize, this.inventoryRows * 18 + 17);
         this.blit(matrixStack, i, j + this.inventoryRows * 18 + 17, 0, 126, this.xSize, 96);
 
-        if(title.getString().contains("Аукционы") || title.getString().contains("Поиск") && Essence.getHandler().getModuleList().autoBuy.isState())  {
-            boolean state = Essence.getHandler().getModuleList().autoBuy.isState();
+        if(title.getString().contains("Аукционы") || title.getString().contains("Поиск") && Nebulae.getHandler().getModuleList().autoBuy.isState())  {
+            boolean state = Nebulae.getHandler().getModuleList().autoBuy.isState();
             if(state) Animator = AnimationMath.fast(Animator, 1, 8);
 
             int abbx = i - 180;
@@ -103,7 +103,7 @@ public class ChestScreen extends ContainerScreen<ChestContainer> implements IHas
 
             this.blit(matrixStack, abbx, abby + this.inventoryRows * 2 + 23, 0, 126, this.xSize, 96);
             this.blit(matrixStack, abbx, abby, 0, 0, this.xSize, this.inventoryRows * 18 + 17);
-            mc.fontRenderer.drawString(matrixStack, TextFormatting.RED + "[☄]" + TextFormatting.GOLD + " Покупки " + TextFormatting.RED + "[Essence]", abbx + 8, abby + 6, -1);
+            mc.fontRenderer.drawString(matrixStack, TextFormatting.RED + "[☄]" + TextFormatting.GOLD + " Покупки " + TextFormatting.RED + "[Nebulae]", abbx + 8, abby + 6, -1);
             mc.fontRenderer.drawStringWithShadow(matrixStack, TextFormatting.WHITE + "        Список можно листать", abbx, abby + (17 + (this.inventoryRows * 18 + 0.5f) + 5) + 6, -1);
             mc.fontRenderer.drawStringWithShadow(matrixStack, "" + TextFormatting.BLUE + TextFormatting.BOLD + TextFormatting.ITALIC + "DELETE" + TextFormatting.WHITE + ": очистить список", abbx + 17, abby + (17 + (this.inventoryRows * 18 + 0.5f) + 5) + 6 + 12, -1);
             //mc.fontRenderer.drawStringWithShadow(matrixStack, "" + TextFormatting.BLUE + TextFormatting.BOLD + TextFormatting.ITALIC + "INSERT" + TextFormatting.WHITE + ": авто-перевыставление", abbx + 4, abby + (17 + (this.inventoryRows * 18 + 0.5f) + 5) + 6 + 24, -1);
@@ -111,7 +111,7 @@ public class ChestScreen extends ContainerScreen<ChestContainer> implements IHas
             int index = 0;
             int yindex = 0;
 
-            List<BuyedItem> allItems = Essence.getHandler().autoBuy.getBuyedItems();
+            List<BuyedItem> allItems = Nebulae.getHandler().autoBuy.getBuyedItems();
             List<BuyedItem> items = new ArrayList<>();
             if(allItems != null && !allItems.isEmpty()) {
                 for(BuyedItem item : allItems) {
@@ -174,26 +174,26 @@ public class ChestScreen extends ContainerScreen<ChestContainer> implements IHas
                 }
             }
 
-            abbutton = new Button(i + 35, j - 25, 110, 20, ITextComponent.getTextComponentOrEmpty((Essence.getHandler().autoBuy.isEnabled() ? TextFormatting.GREEN : TextFormatting.RED) + "Autobuy: " + (Essence.getHandler().autoBuy.isEnabled() ? "включен" : "выключен")), (drawAutobuyButton) -> {
-                if (!Essence.getHandler().autoBuy.isEnabled()) {
-                    Essence.getHandler().autoBuy.enable();
+            abbutton = new Button(i + 35, j - 25, 110, 20, ITextComponent.getTextComponentOrEmpty((Nebulae.getHandler().autoBuy.isEnabled() ? TextFormatting.GREEN : TextFormatting.RED) + "Autobuy: " + (Nebulae.getHandler().autoBuy.isEnabled() ? "включен" : "выключен")), (drawAutobuyButton) -> {
+                if (!Nebulae.getHandler().autoBuy.isEnabled()) {
+                    Nebulae.getHandler().autoBuy.enable();
                 } else {
-                    Essence.getHandler().autoBuy.disable();
+                    Nebulae.getHandler().autoBuy.disable();
                 }
             });
             if (!buttons.contains(abbutton))
                 addButton(abbutton);
 
             Button parseButton = new Button(i + 180, j + 5, 110, 20, ITextComponent.getTextComponentOrEmpty(
-                    (Essence.getHandler().autoBuy.priceParser.isParsing() ? TextFormatting.RED : TextFormatting.WHITE) +
-                            (Essence.getHandler().autoBuy.priceParser.isParsing() ? "Выключить парсер" : "Спарсить цены")
+                    (Nebulae.getHandler().autoBuy.priceParser.isParsing() ? TextFormatting.RED : TextFormatting.WHITE) +
+                            (Nebulae.getHandler().autoBuy.priceParser.isParsing() ? "Выключить парсер" : "Спарсить цены")
             ), (parsePricesButton) -> {
-                if (Essence.getHandler().autoBuy.priceParser.isParsing()) {
-                    Essence.getHandler().getModuleList().autoBuy.event(new EventStopPriceParsing());
-                    Essence.getHandler().getModuleList().autoBuy.parser.set(false);
+                if (Nebulae.getHandler().autoBuy.priceParser.isParsing()) {
+                    Nebulae.getHandler().getModuleList().autoBuy.event(new EventStopPriceParsing());
+                    Nebulae.getHandler().getModuleList().autoBuy.parser.set(false);
                 } else {
-                    Essence.getHandler().getModuleList().autoBuy.event(new EventStartPriceParsing());
-                    Essence.getHandler().getModuleList().autoBuy.parser.set(true);
+                    Nebulae.getHandler().getModuleList().autoBuy.event(new EventStartPriceParsing());
+                    Nebulae.getHandler().getModuleList().autoBuy.parser.set(true);
                 }
             });
             if (!buttons.contains(parseButton))
@@ -216,7 +216,7 @@ public class ChestScreen extends ContainerScreen<ChestContainer> implements IHas
             int delete = 261;
             if (keyCode == delete) {
                 System.out.println("Clear list");
-                Essence.getHandler().autoBuy.clearBuyedItems();
+                Nebulae.getHandler().autoBuy.clearBuyedItems();
             } else if (keyCode == insert) {
                 // KomaruBuy.getHandler().notificationManager.pushNotify("Авто перевыставление " + (!KomaruBuy.getHandler().autobuy.enableReroll ? "включено" : "выключено"), KomaruBuy.getHandler().autobuy.enableReroll ? NotificationManager.Type.Off : NotificationManager.Type.On);
                 // KomaruBuy.getHandler().autobuy.enableReroll = !KomaruBuy.getHandler().autobuy.enableReroll;

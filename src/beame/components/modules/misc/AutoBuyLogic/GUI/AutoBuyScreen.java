@@ -1,9 +1,9 @@
 package beame.components.modules.misc.AutoBuyLogic.GUI;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.modules.misc.AutoBuyLogic.Items.AutoBuyItemClass;
 import beame.feature.notify.NotificationManager;
-import beame.screens.api.EssenceTextBox;
+import beame.screens.api.NebulaeTextBox;
 import beame.util.ClientHelper;
 import beame.util.animation.AnimationMath;
 import beame.util.color.ColorUtils;
@@ -29,7 +29,7 @@ public class AutoBuyScreen extends Screen {
     private AutoBuyItemClass selectedItem = null;
     public boolean hoveredFT = false, hoveredST = false, hoveredSave = false, hoveredFound = false;
 
-    public EssenceTextBox input;
+    public NebulaeTextBox input;
     private int prevSelectedIndex = -1;
 
     int counter = 0;
@@ -39,7 +39,7 @@ public class AutoBuyScreen extends Screen {
         super.tick();
 
         width = 255;
-        int N = Essence.getHandler().autoBuy.items.list.size();
+        int N = Nebulae.getHandler().autoBuy.items.list.size();
         int rows = (int) Math.ceil(N / 11.0);
         height = 80 + rows * 22 + 60;
         x = (float) mc.getMainWindow().getScaledWidth() / 2 - width / 2;
@@ -55,7 +55,7 @@ public class AutoBuyScreen extends Screen {
                 String currentText = input.getText();
                 boolean wasFocused = input.isFocused();
                 buttons.remove(input);
-                input = new EssenceTextBox(mc.fontRenderer, (int) (x + 14), (int) (y + height - 29), 133, 15, ITextComponent.getTextComponentOrEmpty(currentText));
+                input = new NebulaeTextBox(mc.fontRenderer, (int) (x + 14), (int) (y + height - 29), 133, 15, ITextComponent.getTextComponentOrEmpty(currentText));
                 if (wasFocused) {
                     input.setFocused2(true);
                 }
@@ -80,11 +80,11 @@ public class AutoBuyScreen extends Screen {
             int inputH = 15;
 
             if (input == null) {
-                String initialText = formatNumber(String.valueOf(Essence.getHandler().autoBuy.items.list.get(selectedIndex).buyPrice));
-                input = new EssenceTextBox(mc.fontRenderer, inputX, inputY, inputW, inputH, ITextComponent.getTextComponentOrEmpty(initialText));
+                String initialText = formatNumber(String.valueOf(Nebulae.getHandler().autoBuy.items.list.get(selectedIndex).buyPrice));
+                input = new NebulaeTextBox(mc.fontRenderer, inputX, inputY, inputW, inputH, ITextComponent.getTextComponentOrEmpty(initialText));
                 addButton(input);
             } else if (selectedIndex != prevSelectedIndex) {
-                String newText = formatNumber(String.valueOf(Essence.getHandler().autoBuy.items.list.get(selectedIndex).buyPrice));
+                String newText = formatNumber(String.valueOf(Nebulae.getHandler().autoBuy.items.list.get(selectedIndex).buyPrice));
                 input.setText(newText);
             }
             prevSelectedIndex = selectedIndex;
@@ -108,9 +108,9 @@ public class AutoBuyScreen extends Screen {
         }
 
         float textPos = 12;
-        String title = "Essence || AutoBuy";
+        String title = "Nebulae || AutoBuy";
         ClientHandler.drawSexyRect(x + textPos - 4, y + textPos - 4, Fonts.SF_BOLD.get(14).getStringWidth(title) + 23, 15, 3, false);
-        Fonts.ESSENCE_ICONS.get(18).drawString("u", x + textPos, y + 2 + textPos, Essence.getHandler().themeManager.getThemeColor(0));
+        Fonts.ESSENCE_ICONS.get(18).drawString("u", x + textPos, y + 2 + textPos, Nebulae.getHandler().themeManager.getThemeColor(0));
         Fonts.SF_BOLD.get(14).drawString(title, x + textPos + 12, y + 2 + textPos, ColorUtils.getColor(120));
 
         {
@@ -131,7 +131,7 @@ public class AutoBuyScreen extends Screen {
 
         int index = 0;
         int yIndex = 0;
-        for (AutoBuyItemClass item : Essence.getHandler().autoBuy.items.list) {
+        for (AutoBuyItemClass item : Nebulae.getHandler().autoBuy.items.list) {
             int itemX = (int) (x + 10f + (index * 22f));
             int itemY = (int) (y + 35f + (yIndex * 22f));
 
@@ -193,17 +193,17 @@ public class AutoBuyScreen extends Screen {
             server = 0;
         } else if (hoveredSave) {
             if (input != null) {
-                Essence.getHandler().autoBuy.items.setPrice(Essence.getHandler().autoBuy.items.list.get(selectedIndex), input.text);
+                Nebulae.getHandler().autoBuy.items.setPrice(Nebulae.getHandler().autoBuy.items.list.get(selectedIndex), input.text);
             }
         } else if (hoveredFound) {
             if (selectedIndex != -1) {
-                String item = Essence.getHandler().autoBuy.items.list.get(selectedIndex).displayName;
+                String item = Nebulae.getHandler().autoBuy.items.list.get(selectedIndex).displayName;
                 mc.player.sendChatMessage("/ah search " + item);
             }
         } else {
             int index = 0;
             int yIndex = 0;
-            for (AutoBuyItemClass item : Essence.getHandler().autoBuy.items.list) {
+            for (AutoBuyItemClass item : Nebulae.getHandler().autoBuy.items.list) {
                 int itemX = (int) (x + 10f + (index * 22f));
                 int itemY = (int) (y + 35f + (yIndex * 22f));
 
@@ -211,23 +211,23 @@ public class AutoBuyScreen extends Screen {
                 if (hovered) {
                     if (button == 0) {
                         selectedIndex = index + (yIndex * 11);
-                        AutoBuyItemClass originalItem = Essence.getHandler().autoBuy.items.list.get(selectedIndex);
+                        AutoBuyItemClass originalItem = Nebulae.getHandler().autoBuy.items.list.get(selectedIndex);
                         if (ClientHelper.isConnectedToServer("spookytime")) {
                             selectedItem = new AutoBuyItemClass(originalItem.buyPrice, originalItem.item, originalItem.spookyItemType, originalItem.texture);
                         } else {
                             selectedItem = new AutoBuyItemClass(originalItem.buyPrice, originalItem.item, originalItem.attributes);
                         }
                     } else if (button == 1) {
-                        AutoBuyItemClass itemToReset = Essence.getHandler().autoBuy.items.list.get(index + (yIndex * 11));
+                        AutoBuyItemClass itemToReset = Nebulae.getHandler().autoBuy.items.list.get(index + (yIndex * 11));
                         itemToReset.buyPrice = 0;
-                        Essence.getHandler().autoBuy.savePrices();
-                        Essence.getHandler().notificationManager.pushNotify("Покупка " + itemToReset.displayName + " отменена.", NotificationManager.Type.Info);
+                        Nebulae.getHandler().autoBuy.savePrices();
+                        Nebulae.getHandler().notificationManager.pushNotify("Покупка " + itemToReset.displayName + " отменена.", NotificationManager.Type.Info);
                     } else if (button == 2) {
-                        AutoBuyItemClass itemToToggle = Essence.getHandler().autoBuy.items.list.get(index + (yIndex * 11));
+                        AutoBuyItemClass itemToToggle = Nebulae.getHandler().autoBuy.items.list.get(index + (yIndex * 11));
                         itemToToggle.isParsingEnabled = !itemToToggle.isParsingEnabled;
-                        Essence.getHandler().autoBuy.savePrices();
+                        Nebulae.getHandler().autoBuy.savePrices();
                         String status = itemToToggle.isParsingEnabled ? "включен" : "отключен";
-                        Essence.getHandler().notificationManager.pushNotify("Парсинг цен для " + itemToToggle.displayName + " " + status, NotificationManager.Type.Info);
+                        Nebulae.getHandler().notificationManager.pushNotify("Парсинг цен для " + itemToToggle.displayName + " " + status, NotificationManager.Type.Info);
                     }
                 }
 

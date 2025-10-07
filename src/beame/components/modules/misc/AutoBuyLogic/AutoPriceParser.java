@@ -1,6 +1,6 @@
 package beame.components.modules.misc.AutoBuyLogic;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.command.AbstractCommand;
 import beame.components.modules.misc.AutoBuyLogic.Items.AutoBuyItemClass;
 import beame.util.math.TimerUtil;
@@ -46,11 +46,11 @@ public class AutoPriceParser implements Listener<Event> {
     @Override
     public void handle(Event event) {
         if (event instanceof EventUpdate) {
-            if (!Essence.getHandler().getModuleList().autoBuy.parser.get() && isParsingPrices) {
+            if (!Nebulae.getHandler().getModuleList().autoBuy.parser.get() && isParsingPrices) {
                 stopPriceParsing();
             }
         } else if (event instanceof EventContainerUpdated) {
-            if (!Essence.getHandler().getModuleList().autoBuy.parser.get() && isParsingPrices) {
+            if (!Nebulae.getHandler().getModuleList().autoBuy.parser.get() && isParsingPrices) {
                 stopPriceParsing();
             }
             if (isParsingPrices && isWaitingForResults()) {
@@ -66,7 +66,7 @@ public class AutoPriceParser implements Listener<Event> {
     }
 
     public void startPriceParsing() {
-        if (!Essence.getHandler().getModuleList().autoBuy.parser.get()) {
+        if (!Nebulae.getHandler().getModuleList().autoBuy.parser.get()) {
        //     AbstractCommand.addMessage("${red}Автопарсер отключен! Включите настройку 'Автопарсер' в AutoBuyGUI.");
             return;
         }
@@ -77,7 +77,7 @@ public class AutoPriceParser implements Listener<Event> {
         }
 
         itemsToParse.clear();
-        for (AutoBuyItemClass item : Essence.getHandler().autoBuy.items.list) {
+        for (AutoBuyItemClass item : Nebulae.getHandler().autoBuy.items.list) {
             if (item.isParsingEnabled) {
                 itemsToParse.add(item);
             }
@@ -121,8 +121,8 @@ public class AutoPriceParser implements Listener<Event> {
             waitingForResults = false;
             needsPageUpdate = false;
             AbstractCommand.addMessage("Парсинг цен завершен!");
-            Essence.getHandler().autoBuy.savePrices();
-            Essence.getHandler().getModuleList().autoBuy.parser.set(false);
+            Nebulae.getHandler().autoBuy.savePrices();
+            Nebulae.getHandler().getModuleList().autoBuy.parser.set(false);
             
             return;
         }
@@ -150,7 +150,7 @@ public class AutoPriceParser implements Listener<Event> {
     public void updatePriceParsing() {
         if (!isParsingPrices) return;
 
-        if (!Essence.getHandler().getModuleList().autoBuy.parser.get()) {
+        if (!Nebulae.getHandler().getModuleList().autoBuy.parser.get()) {
             return;
         }
 
@@ -270,7 +270,7 @@ public class AutoPriceParser implements Listener<Event> {
         }
 
         if (lowestPrice != Integer.MAX_VALUE) {
-            float discountPercent = Essence.getHandler().getModuleList().autoBuy.parser2.get();
+            float discountPercent = Nebulae.getHandler().getModuleList().autoBuy.parser2.get();
             int newPrice = (int) (lowestPrice * (1 - discountPercent / 100.0));
             currentItem.buyPrice = newPrice;
             AbstractCommand.addMessage("${white}Обновлена цена для ${green}" + currentItem.displayName + "${white}: ${yellow}" + lowestPrice + "${white} → ${green}" + newPrice + "${white} (скидка ${red}" + discountPercent + "%${white})");
@@ -285,14 +285,14 @@ public class AutoPriceParser implements Listener<Event> {
 
     public void checkParsingDelay() {
         if (isParsingPrices && !waitingForResults && parsingDelay.hasTimeElapsed(1000) && closeScreenTimer.hasTimeElapsed(100)) {
-            if (Essence.getHandler().getModuleList().autoBuy.parser.get()) {
+            if (Nebulae.getHandler().getModuleList().autoBuy.parser.get()) {
                 startNextSearch();
             }
         }
     }
 
     public void up() {
-        if (!Essence.getHandler().getModuleList().autoBuy.parser.get() && isParsingPrices) {
+        if (!Nebulae.getHandler().getModuleList().autoBuy.parser.get() && isParsingPrices) {
             stopPriceParsing();
             return;
         }

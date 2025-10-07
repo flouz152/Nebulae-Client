@@ -1,6 +1,6 @@
 package beame.components.modules.misc;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.command.AbstractCommand;
 import beame.feature.notify.NotificationManager;
 import beame.util.ClientHelper;
@@ -286,7 +286,7 @@ public class MinecraftUtils extends Module {
             if (effect.getDuration() < 200 && isTrackedPotion(effect) && !notifiedEffects.contains(effectKey)) {
                 String potionName = I18n.format(effect.getPotion().getName());
                 AbstractCommand.addMessage("Скоро закончится зелье " + potionName);
-                Essence.getHandler().notificationManager.pushNotify("Скоро закончится зелье " + potionName, NotificationManager.Type.Info);
+                Nebulae.getHandler().notificationManager.pushNotify("Скоро закончится зелье " + potionName, NotificationManager.Type.Info);
                 notifiedEffects.add(effectKey);
             }
         }
@@ -327,7 +327,7 @@ public class MinecraftUtils extends Module {
             if (!isOwnMessage) {
                 String notifyMessage = playerName + " попросил о спеке";
                 AbstractCommand.addMessage(notifyMessage);
-                Essence.getHandler().notificationManager.pushNotify(notifyMessage, NotificationManager.Type.Staff);
+                Nebulae.getHandler().notificationManager.pushNotify(notifyMessage, NotificationManager.Type.Staff);
             }
         }
     }
@@ -339,7 +339,7 @@ public class MinecraftUtils extends Module {
             if (mc.player.getHealth() <= 8.0f) {
                 if (!lowHealthNotified) {
                     AbstractCommand.addMessage("§c§lВнимание! §rНизкий уровень здоровья!");
-                    Essence.getHandler().notificationManager.pushNotify("Низкий уровень здоровья!", NotificationManager.Type.Staff);
+                    Nebulae.getHandler().notificationManager.pushNotify("Низкий уровень здоровья!", NotificationManager.Type.Staff);
                     lowHealthNotified = true;
                 }
             } else {

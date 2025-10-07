@@ -1,7 +1,7 @@
 /*
 package fun.rockstarity.api.helpers.math.aura.modes;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.feature.features.Combat.Aura;
 import fun.rockstarity.api.helpers.math.MathUtility;
 import fun.rockstarity.api.helpers.math.TimerUtility;
@@ -52,7 +52,7 @@ public class SpookyRotation extends RotationMode {
 
 	@Override
 	public void update(LivingEntity target) {
-		Aura aura = Essence.getHandler().getModuleList().aura;
+		Aura aura = Nebulae.getHandler().getModuleList().aura;
 		if (target != null) {
 			Vector3d vec = VectorUtility.getBestVector(target, 0);
 			rotateVector.x = mc.player.rotationYawHead; rotateVector.y = mc.player.rotationPitchHead;

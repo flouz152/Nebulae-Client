@@ -1,6 +1,6 @@
 package beame.feature.ui;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.animation.AnimationMath;
 import beame.util.color.ColorUtils;
 import beame.util.drag.Dragging;
@@ -13,7 +13,7 @@ import static beame.util.IMinecraft.mc;
 
 public class InfoDraw {
 // leaked by itskekoff; discord.gg/sk3d gWxUijK7
-    public Dragging InfoDrag = Essence.getHandler().createDraggable("info", 5, mc.getMainWindow().getScaledHeight() - 35);
+    public Dragging InfoDrag = Nebulae.getHandler().createDraggable("info", 5, mc.getMainWindow().getScaledHeight() - 35);
     
     float bps_width = 50;
     float coords_width = 50;
@@ -50,8 +50,8 @@ public class InfoDraw {
     }
 
     private void renderPart(String icon, String text, float pos, float x, float y, float width, float height) {
-        ClientHandler.drawSexyRect(InfoDrag.getX() + x, pos + y, width, height, Essence.getHandler().getModuleList().hud.rounding.get(), false);
-        Fonts.ESSENCE_ICONS.get(18).drawString(icon, InfoDrag.getX() + x + 4, pos + y + 2 + 4, Essence.getHandler().themeManager.getThemeColor(0));
+        ClientHandler.drawSexyRect(InfoDrag.getX() + x, pos + y, width, height, Nebulae.getHandler().getModuleList().hud.rounding.get(), false);
+        Fonts.ESSENCE_ICONS.get(18).drawString(icon, InfoDrag.getX() + x + 4, pos + y + 2 + 4, Nebulae.getHandler().themeManager.getThemeColor(0));
         Fonts.SF_BOLD.get(14).drawString(text, InfoDrag.getX() + x + 15, pos + y + 2 + 4f, ColorUtils.getColor(120));
     }
 }

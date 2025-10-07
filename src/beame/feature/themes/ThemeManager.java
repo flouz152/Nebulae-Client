@@ -22,7 +22,7 @@ public class ThemeManager {
                 new Theme("Bloody", new Color(210, 30, 45), new Color(113, 19, 19)),
                 new Theme("Ocean", new Color(79, 109, 213), new Color(70, 99, 159)),
                 new Theme("Megaphone", new Color(98, 170, 39), new Color(118, 64, 221)),
-                new Theme("Essence", new Color(89, 76, 211), new Color(36, 20, 76)),
+                new Theme("Nebulae", new Color(89, 76, 211), new Color(36, 20, 76)),
                 new Theme("Fire", new Color(251, 210, 71), new Color(227, 142, 63)),
                 new Theme("Blue combo", new Color(0, 88, 255), new Color(123, 191, 236)),
                 new Theme("Cute ^_^", new Color(230, 137, 189), new Color(234, 225, 225)),

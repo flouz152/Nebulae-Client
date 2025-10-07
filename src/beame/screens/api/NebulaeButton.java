@@ -1,6 +1,6 @@
 package beame.screens.api;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.color.ColorUtils;
 import beame.util.fonts.Fonts;
 import beame.util.render.ClientHandler;
@@ -9,7 +9,7 @@ import net.minecraft.client.gui.widget.button.AbstractButton;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.text.ITextComponent;
 
-public class EssenceButton extends AbstractButton {
+public class NebulaeButton extends AbstractButton {
 // leaked by itskekoff; discord.gg/sk3d CB4IaJtH
     public String text;
     public int x, y, width, height;
@@ -17,8 +17,8 @@ public class EssenceButton extends AbstractButton {
 
     public boolean hover = false;
 
-    public EssenceButton(String text, int x, int y, int width, int height, Button.IPressable callback) {
-        super(x, y, width, height, ITextComponent.getTextComponentOrEmpty("essencebutton_" + text));
+    public NebulaeButton(String text, int x, int y, int width, int height, Button.IPressable callback) {
+        super(x, y, width, height, ITextComponent.getTextComponentOrEmpty("nebulaebutton_" + text));
         this.text = text;
         this.x = x;
         this.y = y;
@@ -29,11 +29,11 @@ public class EssenceButton extends AbstractButton {
 
     public void render(MatrixStack matrixStack) {
         ClientHandler.drawRound(x, y, width, height, 3, ColorUtils.getColor(20, 20, 20, hover ? 80 : 50));
-        Fonts.SF_BOLD.get(14).drawCenteredString(matrixStack, text, x + width / 2 - 1, y + height / 2 - 1.5f, hover ? Essence.getHandler().themeManager.getColor(180) : -1);
+        Fonts.SF_BOLD.get(14).drawCenteredString(matrixStack, text, x + width / 2 - 1, y + height / 2 - 1.5f, hover ? Nebulae.getHandler().themeManager.getColor(180) : -1);
     }
 
     @Override
     public void onPress() {
-        callback.onPress(new Button(x, y, width, height, ITextComponent.getTextComponentOrEmpty("essencebutton2_" + text), callback));
+        callback.onPress(new Button(x, y, width, height, ITextComponent.getTextComponentOrEmpty("nebulaebutton2_" + text), callback));
     }
 }

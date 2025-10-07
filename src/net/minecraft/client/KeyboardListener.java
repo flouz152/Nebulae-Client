@@ -3,7 +3,7 @@ package net.minecraft.client;
 import java.util.Locale;
 import javax.annotation.Nullable;
 
-import beame.Essence;
+import beame.Nebulae;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.IGuiEventListener;
 import net.minecraft.client.gui.INestedGuiEventHandler;
@@ -364,8 +364,8 @@ public class KeyboardListener
                 if (action == 1)
                 {
                     if (mc.currentScreen == null) {
-                        Essence.getHandler().keyPress(key);
-                        Essence.getHandler().getModuleList().keyPress(key);
+                        Nebulae.getHandler().keyPress(key);
+                        Nebulae.getHandler().getModuleList().keyPress(key);
                     }
 
                     if (this.mc.gameSettings.keyBindFullscreen.matchesKey(key, scanCode))

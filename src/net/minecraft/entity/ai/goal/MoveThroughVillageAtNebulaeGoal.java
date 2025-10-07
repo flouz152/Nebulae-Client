@@ -12,7 +12,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.server.ServerWorld;
 
-public class MoveThroughVillageAtEssenceGoal extends Goal
+public class MoveThroughVillageAtNebulaeGoal extends Goal
 {
 // leaked by itskekoff; discord.gg/sk3d rEzoIxTB
     private final CreatureEntity entity;
@@ -20,7 +20,7 @@ public class MoveThroughVillageAtEssenceGoal extends Goal
     @Nullable
     private BlockPos field_220758_c;
 
-    public MoveThroughVillageAtEssenceGoal(CreatureEntity entity, int p_i50321_2_)
+    public MoveThroughVillageAtNebulaeGoal(CreatureEntity entity, int p_i50321_2_)
     {
         this.entity = entity;
         this.field_220757_b = p_i50321_2_;

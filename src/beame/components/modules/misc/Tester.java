@@ -1,6 +1,6 @@
 package beame.components.modules.misc;
 
-import beame.Essence;
+import beame.Nebulae;
 import events.Event;
 import beame.module.Category;
 import beame.module.Module;
@@ -11,7 +11,7 @@ public class Tester extends Module {
 
     @Override
     public void event(Event event) {
-        Essence.getHandler().styler.Style = Essence.getHandler().styler.Style == 1 ? 0 : 1;
+        Nebulae.getHandler().styler.Style = Nebulae.getHandler().styler.Style == 1 ? 0 : 1;
         this.toggle();
     }
 }

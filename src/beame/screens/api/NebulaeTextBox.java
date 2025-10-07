@@ -31,7 +31,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TranslationTextComponent;
 
-public class EssenceTextBox extends Widget implements IRenderable, IGuiEventListener
+public class NebulaeTextBox extends Widget implements IRenderable, IGuiEventListener
 {
 // leaked by itskekoff; discord.gg/sk3d Z0W4naod
     private final FontRenderer fontRenderer;
@@ -72,14 +72,14 @@ public class EssenceTextBox extends Widget implements IRenderable, IGuiEventList
         return IReorderingProcessor.fromString(p_195610_0_, Style.EMPTY);
     };
 
-    public EssenceTextBox(FontRenderer p_i232260_1_, int p_i232260_2_, int p_i232260_3_, int p_i232260_4_, int p_i232260_5_, ITextComponent p_i232260_6_)
+    public NebulaeTextBox(FontRenderer p_i232260_1_, int p_i232260_2_, int p_i232260_3_, int p_i232260_4_, int p_i232260_5_, ITextComponent p_i232260_6_)
     {
-        this(p_i232260_1_, p_i232260_2_, p_i232260_3_, p_i232260_4_, p_i232260_5_, (EssenceTextBox)null, p_i232260_6_);
+        this(p_i232260_1_, p_i232260_2_, p_i232260_3_, p_i232260_4_, p_i232260_5_, (NebulaeTextBox)null, p_i232260_6_);
         this.text = p_i232260_6_.getString();
         this.start_text = p_i232260_6_.getString();
     }
 
-    public EssenceTextBox(FontRenderer p_i232259_1_, int p_i232259_2_, int p_i232259_3_, int p_i232259_4_, int p_i232259_5_, @Nullable EssenceTextBox p_i232259_6_, ITextComponent p_i232259_7_)
+    public NebulaeTextBox(FontRenderer p_i232259_1_, int p_i232259_2_, int p_i232259_3_, int p_i232259_4_, int p_i232259_5_, @Nullable NebulaeTextBox p_i232259_6_, ITextComponent p_i232259_7_)
     {
         super(p_i232259_2_, p_i232259_3_, p_i232259_4_, p_i232259_5_, p_i232259_7_);
         this.fontRenderer = p_i232259_1_;

@@ -1,6 +1,6 @@
 package net.minecraft.client.renderer;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.modules.render.SwingAnimations;
 import beame.components.modules.render.Viewmodel;
 import com.google.common.base.MoreObjects;
@@ -289,7 +289,7 @@ public class FirstPersonRenderer
 
         float f3 = MathHelper.lerp(partialTicks, playerEntityIn.prevRenderArmPitch, playerEntityIn.renderArmPitch);
         float f4 = MathHelper.lerp(partialTicks, playerEntityIn.prevRenderArmYaw, playerEntityIn.renderArmYaw);
-        if(!Essence.getHandler().getModuleList().aura.isState()) {
+        if(!Nebulae.getHandler().getModuleList().aura.isState()) {
             matrixStackIn.rotate(Vector3f.XP.rotationDegrees((playerEntityIn.getPitch(partialTicks) - f3) * 0.1F));
             matrixStackIn.rotate(Vector3f.YP.rotationDegrees((playerEntityIn.getYaw(partialTicks) - f4) * 0.1F));
         }
@@ -486,7 +486,7 @@ public class FirstPersonRenderer
                     matrixStackIn.rotate(Vector3f.ZP.rotationDegrees((float)j * -85.0F));
                 }
                 else {
-                    SwingAnimations swingAnimations = Essence.getHandler().getModuleList().swingAnimations;
+                    SwingAnimations swingAnimations = Nebulae.getHandler().getModuleList().swingAnimations;
                     float f6 = -0.4F * MathHelper.sin(MathHelper.sqrt(swingProgress) * (float)Math.PI);
                     float f7 = 0.2F * MathHelper.sin(MathHelper.sqrt(swingProgress) * ((float)Math.PI * 2F));
                     float f10 = -0.2F * MathHelper.sin(swingProgress * (float)Math.PI);
@@ -497,7 +497,7 @@ public class FirstPersonRenderer
                     float eqprogress = !swingAnimations.isState() ? equippedProgress : 0;
                     this.transformSideFirstPerson(matrixStackIn, handside, eqprogress);
 
-                    Viewmodel viewmodel = Essence.getHandler().getModuleList().viewmodel;
+                    Viewmodel viewmodel = Nebulae.getHandler().getModuleList().viewmodel;
                     if(viewmodel.isState()) {
                         if(handside == HandSide.RIGHT) { viewmodel.setupRightHand(matrixStackIn); }
                         if(handside == HandSide.LEFT) { viewmodel.setupLeftHand(matrixStackIn); }

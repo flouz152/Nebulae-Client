@@ -1,6 +1,6 @@
 package beame.components.modules.combat.AuraHandlers.other;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.modules.combat.AuraHandlers.component.core.combat.FreeLookHandler;
 import events.Event;
 import events.impl.player.EventInput;
@@ -64,7 +64,7 @@ public class RotationHandler extends Handler {
     }
 
     private void handleMovementCorrection(EventInput movementEvent) {
-        if (Essence.getHandler().getModuleList().aura.correctionType.is("Свободный")) {
+        if (Nebulae.getHandler().getModuleList().aura.correctionType.is("Свободный")) {
             return;
         }
 

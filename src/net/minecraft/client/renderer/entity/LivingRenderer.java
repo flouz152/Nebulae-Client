@@ -1,6 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
-import beame.Essence;
+import beame.Nebulae;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
@@ -167,7 +167,7 @@ public abstract class LivingRenderer<T extends LivingEntity, M extends EntityMod
                 }
 
                 int i = getPackedOverlay(entityIn, f6);
-                this.entityModel.render(matrixStackIn, ivertexbuilder, packedLightIn, i, 1.0F, 1.0F, 1.0F, flag2 ? (Essence.getHandler().getModuleList().seeInvisible.isState() ? Essence.getHandler().getModuleList().seeInvisible.alpha.get().floatValue() : 0.15F) : 1.0F);
+                this.entityModel.render(matrixStackIn, ivertexbuilder, packedLightIn, i, 1.0F, 1.0F, 1.0F, flag2 ? (Nebulae.getHandler().getModuleList().seeInvisible.isState() ? Nebulae.getHandler().getModuleList().seeInvisible.alpha.get().floatValue() : 0.15F) : 1.0F);
             }
 
             if (!entityIn.isSpectator()) {
@@ -473,7 +473,7 @@ public abstract class LivingRenderer<T extends LivingEntity, M extends EntityMod
 //                    i = 655360;
 //                }
 
-                this.entityModel.render(matrixStackIn, ivertexbuilder, packedLightIn, i, 1.0F, 1.0F, 1.0F, flag2 ? (Essence.getHandler().getModuleList().seeInvisible.isState() ? Essence.getHandler().getModuleList().seeInvisible.alpha.get() : 0.15F) : 1.0F);
+                this.entityModel.render(matrixStackIn, ivertexbuilder, packedLightIn, i, 1.0F, 1.0F, 1.0F, flag2 ? (Nebulae.getHandler().getModuleList().seeInvisible.isState() ? Nebulae.getHandler().getModuleList().seeInvisible.alpha.get() : 0.15F) : 1.0F);
             }
 
             if (!entityIn.isSpectator()) {

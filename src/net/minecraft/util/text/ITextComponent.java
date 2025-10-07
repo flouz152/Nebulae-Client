@@ -1,6 +1,6 @@
 package net.minecraft.util.text;
 
-import beame.Essence;
+import beame.Nebulae;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -49,16 +49,16 @@ public interface ITextComponent extends Message, ITextProperties
     default String getString()
     {
         String stringi = ITextProperties.super.getString();
-        if(Essence.getHandler() != null) {
-            if (Essence.getHandler().getModuleList().nameProtect.isState()) {
+        if(Nebulae.getHandler() != null) {
+            if (Nebulae.getHandler().getModuleList().nameProtect.isState()) {
                 if (stringi.contains(mc.session.getUsername())) {
-                    stringi = stringi.replace(mc.session.getUsername(), Essence.getHandler().getModuleList().nameProtect.nameInput.get());
+                    stringi = stringi.replace(mc.session.getUsername(), Nebulae.getHandler().getModuleList().nameProtect.nameInput.get());
                 }
 
-                if (Essence.getHandler().getModuleList().nameProtect.friends.get()) {
+                if (Nebulae.getHandler().getModuleList().nameProtect.friends.get()) {
                     for (String friendName : getFriendNames()) {
                         if (stringi.contains(friendName)) {
-                            stringi = stringi.replace(friendName, Essence.getHandler().getModuleList().nameProtect.nameInput.get());
+                            stringi = stringi.replace(friendName, Nebulae.getHandler().getModuleList().nameProtect.nameInput.get());
                         }
                     }
                 }
@@ -145,18 +145,18 @@ public interface ITextComponent extends Message, ITextProperties
 
     default <T> Optional<T> func_230534_b_(ITextProperties.IStyledTextAcceptor<T> acceptor, Style style) {
         String stringi = this.getUnformattedComponentText();
-        if(Essence.getHandler() != null) {
-            if (Essence.getHandler().getModuleList().nameProtect.isState()) {
+        if(Nebulae.getHandler() != null) {
+            if (Nebulae.getHandler().getModuleList().nameProtect.isState()) {
                 // Заменяем свой ник
                 if (stringi.contains(mc.session.getUsername())) {
-                    stringi = stringi.replace(mc.session.getUsername(), Essence.getHandler().getModuleList().nameProtect.nameInput.get());
+                    stringi = stringi.replace(mc.session.getUsername(), Nebulae.getHandler().getModuleList().nameProtect.nameInput.get());
                 }
                 
                 // Заменяем ники друзей
-                if (Essence.getHandler().getModuleList().nameProtect.friends.get()) {
+                if (Nebulae.getHandler().getModuleList().nameProtect.friends.get()) {
                     for (String friendName : getFriendNames()) {
                         if (stringi.contains(friendName)) {
-                            stringi = stringi.replace(friendName, Essence.getHandler().getModuleList().nameProtect.nameInput.get());
+                            stringi = stringi.replace(friendName, Nebulae.getHandler().getModuleList().nameProtect.nameInput.get());
                         }
                     }
                 }
@@ -167,18 +167,18 @@ public interface ITextComponent extends Message, ITextProperties
 
     default <T> Optional<T> func_230533_b_(ITextProperties.ITextAcceptor<T> acceptor) {
         String stringi = this.getUnformattedComponentText();
-        if(Essence.getHandler() != null) {
-            if (Essence.getHandler().getModuleList().nameProtect.isState()) {
+        if(Nebulae.getHandler() != null) {
+            if (Nebulae.getHandler().getModuleList().nameProtect.isState()) {
                 // Заменяем свой ник
                 if (stringi.contains(mc.session.getUsername())) {
-                    stringi = stringi.replace(mc.session.getUsername(), Essence.getHandler().getModuleList().nameProtect.nameInput.get());
+                    stringi = stringi.replace(mc.session.getUsername(), Nebulae.getHandler().getModuleList().nameProtect.nameInput.get());
                 }
                 
                 // Заменяем ники друзей
-                if (Essence.getHandler().getModuleList().nameProtect.friends.get()) {
+                if (Nebulae.getHandler().getModuleList().nameProtect.friends.get()) {
                     for (String friendName : getFriendNames()) {
                         if (stringi.contains(friendName)) {
-                            stringi = stringi.replace(friendName, Essence.getHandler().getModuleList().nameProtect.nameInput.get());
+                            stringi = stringi.replace(friendName, Nebulae.getHandler().getModuleList().nameProtect.nameInput.get());
                         }
                     }
                 }
@@ -190,20 +190,20 @@ public interface ITextComponent extends Message, ITextProperties
     static ITextComponent getTextComponentOrEmpty(@Nullable String p_244388_0_)
     {
         StringTextComponent stringi = new StringTextComponent(p_244388_0_);
-        if(Essence.getHandler() != null) {
-            if (Essence.getHandler().getModuleList().nameProtect.isState()) {
+        if(Nebulae.getHandler() != null) {
+            if (Nebulae.getHandler().getModuleList().nameProtect.isState()) {
                 String text = stringi.getText();
                 
                 // Заменяем свой ник
                 if (text.contains(mc.session.getUsername())) {
-                    text = text.replace(mc.session.getUsername(), Essence.getHandler().getModuleList().nameProtect.nameInput.get());
+                    text = text.replace(mc.session.getUsername(), Nebulae.getHandler().getModuleList().nameProtect.nameInput.get());
                 }
                 
                 // Заменяем ники друзей
-                if (Essence.getHandler().getModuleList().nameProtect.friends.get()) {
+                if (Nebulae.getHandler().getModuleList().nameProtect.friends.get()) {
                     for (String friendName : getFriendNames()) {
                         if (text.contains(friendName)) {
-                            text = text.replace(friendName, Essence.getHandler().getModuleList().nameProtect.nameInput.get());
+                            text = text.replace(friendName, Nebulae.getHandler().getModuleList().nameProtect.nameInput.get());
                         }
                     }
                 }
@@ -216,8 +216,8 @@ public interface ITextComponent extends Message, ITextProperties
     }
     
     private static java.util.List<String> getFriendNames() {
-        if (Essence.getHandler() != null && Essence.getHandler().friends != null) {
-            return Essence.getHandler().friends.getFriendNames();
+        if (Nebulae.getHandler() != null && Nebulae.getHandler().friends != null) {
+            return Nebulae.getHandler().friends.getFriendNames();
         }
         return new java.util.ArrayList<>();
     }

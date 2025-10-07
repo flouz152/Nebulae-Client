@@ -22,7 +22,7 @@ public class TimeCommand
         })).then(Commands.literal("noon").executes((p_198825_0_) ->
         {
             return setTime(p_198825_0_.getSource(), 6000);
-        })).then(Commands.literal("Essence").executes((p_198822_0_) ->
+        })).then(Commands.literal("Nebulae").executes((p_198822_0_) ->
         {
             return setTime(p_198822_0_.getSource(), 13000);
         })).then(Commands.literal("midEssence").executes((p_200563_0_) ->

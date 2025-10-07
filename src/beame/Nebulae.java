@@ -44,7 +44,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import beame.components.modules.misc.AutoBuyLogic.AutoSell;
 
 @Getter
-public class Essence {
+public class Nebulae {
 // leaked by itskekoff; discord.gg/sk3d PnBU8glo
     private static final List<Module> modules = new CopyOnWriteArrayList<>();
 
@@ -56,11 +56,11 @@ public class Essence {
     public boolean disableMove = false;
 
     @Getter
-    private static Essence handler;
+    private static Nebulae handler;
 
-    private final Path clientDir = Paths.get(Minecraft.getInstance().gameDir.getAbsolutePath(), "Essence");
+    private final Path clientDir = Paths.get(Minecraft.getInstance().gameDir.getAbsolutePath(), "Nebulae");
     @Getter
-    private final Path filesDir = Paths.get(Minecraft.getInstance().gameDir.getAbsolutePath(),  "essence", "cfg");
+    private final Path filesDir = Paths.get(Minecraft.getInstance().gameDir.getAbsolutePath(), "nebulae", "cfg");
     private MacroManager macroManager;
     private StaffManager staffManager;
     private ModuleList moduleList;
@@ -128,7 +128,7 @@ public class Essence {
             altManager = new AltManager();
             waveyCapesBase = new WaveyCapesBase();
 
-            dropDownGui = new DropDownGui(new StringTextComponent("ESSENCE"));
+            dropDownGui = new DropDownGui(new StringTextComponent("NEBULAE"));
             autoTotem = new AutoTotem();
             autoBuy = new AutoBuySystem();
             autoBuy.loadPrices();
@@ -154,7 +154,7 @@ public class Essence {
 
     }
 
-    public Essence() {
+    public Nebulae() {
         ShaderManager.loadShaders();
         ProxyConfig.loadConfig();
         initialize();
@@ -188,7 +188,7 @@ public class Essence {
         if(!unhooked) {
             EventManager.call(new EventKey(key, true));
             macroManager.onKeyPressed(key);
-            if (key == Essence.getHandler().getModuleList().getClickGUI().clickGuiBind.get()) {
+            if (key == Nebulae.getHandler().getModuleList().getClickGUI().clickGuiBind.get()) {
                 Minecraft.getInstance().displayGuiScreen(dropDownGui);
             }
         }

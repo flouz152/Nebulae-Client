@@ -1,6 +1,6 @@
 package net.minecraft.client.gui.overlay;
 
-import beame.Essence;
+import beame.Nebulae;
 import com.google.common.collect.Maps;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -57,7 +57,7 @@ public class BossOverlayGui extends AbstractGui {
                 }
 
                 if (flag) {
-                    if (Essence.getHandler().getModuleList().mcUtils.isState() && Essence.getHandler().getModuleList().mcUtils.removals.get(1).get()) {
+                    if (Nebulae.getHandler().getModuleList().mcUtils.isState() && Nebulae.getHandler().getModuleList().mcUtils.removals.get(1).get()) {
 
                     } else {
                         this.client.getTextureManager().bindTexture(GUI_BARS_TEXTURES);

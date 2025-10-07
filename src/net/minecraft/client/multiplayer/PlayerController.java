@@ -1,6 +1,6 @@
 package net.minecraft.client.multiplayer;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.baritone.utils.accessor.IPlayerControllerMP;
 import com.mojang.datafixers.util.Pair;
 import events.EventManager;
@@ -137,8 +137,8 @@ public class PlayerController implements IPlayerControllerMP {
      * Called when the player is hitting a block with an item.
      */
     public boolean clickBlock(BlockPos loc, Direction face) {
-        if (Essence.getHandler().getModuleList().noInteract.isState())
-            if (!Essence.getHandler().getModuleList().noInteract.interactAllowed)
+        if (Nebulae.getHandler().getModuleList().noInteract.isState())
+            if (!Nebulae.getHandler().getModuleList().noInteract.interactAllowed)
                 return false;
 
         if (this.mc.player.blockActionRestricted(this.mc.world, loc, this.currentGameType)) {
@@ -301,8 +301,8 @@ public class PlayerController implements IPlayerControllerMP {
                 boolean flag = !p_217292_1_.getHeldItemMainhand().isEmpty() || !p_217292_1_.getHeldItemOffhand().isEmpty();
                 boolean flag1 = p_217292_1_.isSecondaryUseActive() && flag;
 
-                if (Essence.getHandler().getModuleList().noInteract.isState())
-                    if (!Essence.getHandler().getModuleList().noInteract.interactAllowed)
+                if (Nebulae.getHandler().getModuleList().noInteract.isState())
+                    if (!Nebulae.getHandler().getModuleList().noInteract.interactAllowed)
                         return ActionResultType.FAIL;
 
                 if (!flag1) {

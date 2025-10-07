@@ -1,6 +1,6 @@
 package beame.module;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.modules.combat.*;
 import beame.components.modules.misc.*;
 import beame.components.modules.movement.*;
@@ -233,7 +233,7 @@ public class ModuleList {
 
         );
 
-        Essence.getHandler().getEventBus().register(this);
+        Nebulae.getHandler().getEventBus().register(this);
     }
 
     private void registerAll(Module... modules) {

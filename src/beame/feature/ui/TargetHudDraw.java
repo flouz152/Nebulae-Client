@@ -1,6 +1,6 @@
 package beame.feature.ui;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.modules.render.NameProtect;
 import beame.util.Scissor;
 import beame.util.animation.AnimationMath;
@@ -25,7 +25,7 @@ import static beame.util.IMinecraft.mc;
 
 public class TargetHudDraw {
 // leaked by itskekoff; discord.gg/sk3d 1NNVoWMN
-    public Dragging THDrag = Essence.getHandler().createDraggable("targethud", 438, 400);
+    public Dragging THDrag = Nebulae.getHandler().createDraggable("targethud", 438, 400);
 
     public NameProtect nameProtect = new NameProtect();
 
@@ -61,10 +61,10 @@ public class TargetHudDraw {
         float x = percentX * window.getScaledWidth();
         float y = percentY * window.getScaledHeight();
 
-        if(Essence.getHandler().getModuleList().aura == null)
+        if(Nebulae.getHandler().getModuleList().aura == null)
             return;
 
-        LivingEntity target = mc.currentScreen instanceof ChatScreen && Essence.getHandler().getModuleList().aura.getTarget() == null ? mc.player : Essence.getHandler().getModuleList().aura.getTarget();
+        LivingEntity target = mc.currentScreen instanceof ChatScreen && Nebulae.getHandler().getModuleList().aura.getTarget() == null ? mc.player : Nebulae.getHandler().getModuleList().aura.getTarget();
         boolean targetActive = target != null;
         assert mc.player != null;
         Entity over = RaytraceUtility.getMouseOver(mc.player, mc.player.rotationYaw, mc.player.rotationPitch, 3.0f);
@@ -81,11 +81,11 @@ public class TargetHudDraw {
         animation = AnimationMath.fast(animation, targetActive ? 1 : 0, targetActive ? 8 : 16);
 
         String playerName = mc.getSession().getUsername().length() > 8 ? mc.getSession().getUsername().substring(0, 8) + "..." : mc.getSession().getUsername();
-        String nameInput = Essence.getHandler().getModuleList().nameProtect.nameInput.get();
+        String nameInput = Nebulae.getHandler().getModuleList().nameProtect.nameInput.get();
 
         String name = targetActive ? (target instanceof PlayerEntity ?
                 (target == mc.player ?
-                        (Essence.getHandler().getModuleList().nameProtect.isState() ?
+                        (Nebulae.getHandler().getModuleList().nameProtect.isState() ?
                                 (nameInput.length() > 10 ? nameInput.substring(0, 9) + "..." : nameInput) : playerName)
                         : target.getName().getString().length() > 8 ? target.getName().getString().substring(0, 8) : target.getName().getString())
                 : target.getName().getString())
@@ -129,15 +129,15 @@ public class TargetHudDraw {
         }
 
         if (animation > 0.2) {
-            ClientHandler.drawSexyRect(x, y, x_size, y_size, Essence.getHandler().getModuleList().hud.rounding.get(), true);
-            ClientHandler.drawSexyRect(x, y + 6 + y_size2 - y_size, x_size, 13, Essence.getHandler().getModuleList().hud.rounding.get(), false);
+            ClientHandler.drawSexyRect(x, y, x_size, y_size, Nebulae.getHandler().getModuleList().hud.rounding.get(), true);
+            ClientHandler.drawSexyRect(x, y + 6 + y_size2 - y_size, x_size, 13, Nebulae.getHandler().getModuleList().hud.rounding.get(), false);
 
             float bar_size = Math.min((x_size - 6)*(hpAnimated/maxHealth), (x_size - 6));
             float bar_size2 = Math.min((x_size - 6)*(secondHpAnimated/maxHealth), (x_size - 6));
 
-            int accent1 = Essence.getHandler().themeManager.getColor(0);
-            int accent1_ddark = ColorUtils.interpolateColor(Essence.getHandler().themeManager.getColor(0), 3, 0.75f);
-            int accent1_dark = ColorUtils.interpolateColor(Essence.getHandler().themeManager.getColor(0), 3, 0.45f);
+            int accent1 = Nebulae.getHandler().themeManager.getColor(0);
+            int accent1_ddark = ColorUtils.interpolateColor(Nebulae.getHandler().themeManager.getColor(0), 3, 0.75f);
+            int accent1_dark = ColorUtils.interpolateColor(Nebulae.getHandler().themeManager.getColor(0), 3, 0.45f);
 
             ClientHandler.drawRound(x + 3, y + (y_size2 - 4f), x_size - 6, 4, 1, accent1_dark);
             ClientHandler.drawRound(x + 3, y + (y_size2 - 4f), bar_size2, 4, 1, accent1_ddark);
@@ -148,7 +148,7 @@ public class TargetHudDraw {
             if (target instanceof AbstractClientPlayerEntity) {
                 ClientHandler.drawPlayerIcon(x + 5, y + 3f, 8F, 8F, 8F, 8F, 8, 8, 64F, 64F, (AbstractClientPlayerEntity) target);
             } else {
-                Fonts.ESSENCE_ICONS.get(16).drawString(matrixStack, "1", x + 4f, y + 6f, Essence.getHandler().getThemeManager().getColor(0));
+                Fonts.ESSENCE_ICONS.get(16).drawString(matrixStack, "1", x + 4f, y + 6f, Nebulae.getHandler().getThemeManager().getColor(0));
             }
 
             Scissor.push();
@@ -156,7 +156,7 @@ public class TargetHudDraw {
             Fonts.SUISSEINTL.get(14).drawString(name, x + 15.5f, y + 5.5f, -1);
             Scissor.unset();
             Scissor.pop();
-            Fonts.SUISSEINTL.get(14).drawString(strHp, x + x_size - strHpSize - 5 - 3, y + 6, Essence.getHandler().themeManager.getColor(180));
+            Fonts.SUISSEINTL.get(14).drawString(strHp, x + x_size - strHpSize - 5 - 3, y + 6, Nebulae.getHandler().themeManager.getColor(180));
         }
 
         RenderSystem.popMatrix();

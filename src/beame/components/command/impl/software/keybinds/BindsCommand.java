@@ -1,6 +1,6 @@
 package beame.components.command.impl.software.keybinds;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.command.AbstractCommand;
 import beame.util.BindMapping;
 import beame.module.Module;
@@ -20,7 +20,7 @@ public class BindsCommand extends AbstractCommand {
         }
 
         StringBuilder bindList = new StringBuilder("Список биндов:\n");
-        List<Module> modules = Essence.getHandler().getModuleList().getModules();
+        List<Module> modules = Nebulae.getHandler().getModuleList().getModules();
 
         for (int i = 0; i < modules.size(); i++) {
             Module module = modules.get(i);

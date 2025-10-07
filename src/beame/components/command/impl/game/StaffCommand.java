@@ -1,6 +1,6 @@
 package beame.components.command.impl.game;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.command.AbstractCommand;
 import beame.managers.staff.StaffManager;
 import net.minecraft.client.Minecraft;
@@ -95,7 +95,7 @@ public class StaffCommand extends AbstractCommand {
     }
 
     private static StaffManager staffManager() {
-        return Essence.getHandler().getStaffManager();
+        return Nebulae.getHandler().getStaffManager();
     }
 
     @Override

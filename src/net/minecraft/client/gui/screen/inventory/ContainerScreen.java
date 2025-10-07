@@ -1,6 +1,6 @@
 package net.minecraft.client.gui.screen.inventory;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.modules.misc.AuctionHelper;
 import beame.components.modules.player.ItemScroller;
 import beame.components.modules.render.ESP;
@@ -155,7 +155,7 @@ public abstract class ContainerScreen<T extends Container> extends Screen implem
 
             if (this.isSlotSelected(slot, (double)mouseX, (double)mouseY) && slot.isEnabled())
             {
-                ItemScroller itemScroller = Essence.getHandler().getModuleList().itemScroller;
+                ItemScroller itemScroller = Nebulae.getHandler().getModuleList().itemScroller;
                 if (itemScroller.isState()) {
                     if (GLFW.glfwGetMouseButton(Minecraft.getInstance().getMainWindow().getHandle(), GLFW.GLFW_MOUSE_BUTTON_LEFT) == GLFW.GLFW_PRESS && GLFW.glfwGetKey(Minecraft.getInstance().getMainWindow().getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT) == GLFW.GLFW_PRESS && slot.getStack().getItem() != Items.AIR) {
                         if(scroller.hasReached(itemScroller.cooldown.get())) {
@@ -224,7 +224,7 @@ public abstract class ContainerScreen<T extends Container> extends Screen implem
 
         if (hoveredSlot != null && hoveredSlot.getHasStack()) {
             ItemStack stack = hoveredSlot.getStack();
-            if (Essence.getHandler().getModuleList().getShulkerView().isState()) {
+            if (Nebulae.getHandler().getModuleList().getShulkerView().isState()) {
                 if (stack.getItem().getTranslationKey().toLowerCase().contains("shulker")
                 ) {
                     int posX = 8;
@@ -237,7 +237,7 @@ public abstract class ContainerScreen<T extends Container> extends Screen implem
                     RenderSystem.enableDepthTest();
                     this.itemRenderer.zLevel = 500.0F;
                     matrixStack.translate(0, 0, 500);
-                    for (ItemStack itemStack : Essence.getHandler().getModuleList().getShulkerView().getShulkerBoxItems(stack)) {
+                    for (ItemStack itemStack : Nebulae.getHandler().getModuleList().getShulkerView().getShulkerBoxItems(stack)) {
                         ESP.drawItemStack(itemStack, posX + mouseX - 385, posY + mouseY - 234, true, true, 1);
                         posX += spacing;
 
@@ -356,7 +356,7 @@ public abstract class ContainerScreen<T extends Container> extends Screen implem
             }
         }
 
-        AuctionHelper auctionHelper = Essence.getHandler().getModuleList().ahHelper;
+        AuctionHelper auctionHelper = Nebulae.getHandler().getModuleList().ahHelper;
         if (auctionHelper.isState() && (this.title.getString().contains("Аукцион") || this.title.getString().contains("Поиск:"))) {
             if (auctionHelper.x != 0) {
                 int x = (int) auctionHelper.x;

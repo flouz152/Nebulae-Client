@@ -1,6 +1,6 @@
 package beame.components.modules.combat;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.modules.combat.AuraHandlers.FuntimeNewRotation;
 import beame.components.modules.combat.AuraHandlers.component.core.combat.Rotation;
 import beame.components.modules.combat.AuraHandlers.component.core.combat.RotationComponent;
@@ -238,7 +238,7 @@ public class Aura extends Module {
         }
         if (AuraUtil.getStrictDistance(target) > range.get() + preRange.get()) return;
 
-        float attackStrength = mc.player.getCooledAttackStrength(synctps.get() ? Essence.getHandler().getServerUtils().getAdjustTicks() : (rotationType.get("СпукиТайм") ? (MathUtil.random(0.97f,1)) : 0.5f));
+        float attackStrength = mc.player.getCooledAttackStrength(synctps.get() ? Nebulae.getHandler().getServerUtils().getAdjustTicks() : (rotationType.get("СпукиТайм") ? (MathUtil.random(0.97f,1)) : 0.5f));
         boolean isReady = attackStrength > (rotationType.get("СпукиТайм") ? MathUtil.random(.87f, .91f) : .87F);
 
         if (!isReady || !timerUtil.hasTimeElapsed()) return;
@@ -508,7 +508,7 @@ public class Aura extends Module {
         float randomturn = MathUtil.random(140, 240);
         float randomtime = MathUtil.random(2, 4f);
 
-        Essence.getHandler().auraHelper.rotationHandler.update(new Rotates(
+        Nebulae.getHandler().auraHelper.rotationHandler.update(new Rotates(
                         mc.player.rotationYaw + clampedYaw,
                         mc.player.rotationPitch + (mc.objectMouseOver.getType() == RayTraceResult.Type.ENTITY ? 0 : clampedPitch)),
                 randomturn,  360F, (int) randomtime, 1);
@@ -819,7 +819,7 @@ public class Aura extends Module {
     private int noCritTicks = 0;
 
     public boolean shouldFalling() {
-        float attackStrength = mc.player.getCooledAttackStrength(synctps.get() ? Essence.getHandler().getServerUtils().getAdjustTicks() : (rotationType.get("СпукиТайм") ? (MathUtil.random(0.97f,1)) : 0.5f));
+        float attackStrength = mc.player.getCooledAttackStrength(synctps.get() ? Nebulae.getHandler().getServerUtils().getAdjustTicks() : (rotationType.get("СпукиТайм") ? (MathUtil.random(0.97f,1)) : 0.5f));
         boolean isReady = attackStrength > (rotationType.get("СпукиТайм") ? MathUtil.random(.87f, .91f) : .87F);
 
         float mb = MathUtil.random(0.001f, 0.008f);
@@ -877,7 +877,7 @@ public class Aura extends Module {
                 return false;
             }
 
-            if (!filter.get("Друзей").get() && Essence.getHandler().friends.isFriend(player.getGameProfile().getName())) {
+            if (!filter.get("Друзей").get() && Nebulae.getHandler().friends.isFriend(player.getGameProfile().getName())) {
                 return false;
             }
 

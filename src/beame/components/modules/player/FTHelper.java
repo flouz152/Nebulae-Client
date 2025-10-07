@@ -1,5 +1,5 @@
 package beame.components.modules.player;
-import beame.Essence;
+import beame.Nebulae;
 import beame.feature.notify.NotificationManager;
 import events.impl.player.EventUpdate;
 import net.minecraft.client.gui.CommandSuggestionHelper;
@@ -158,7 +158,7 @@ public class FTHelper extends Module {
         return mc.world.getPlayers().stream()
                 .anyMatch(player -> player != mc.player &&
                         !player.isSpectator() &&
-                        !Essence.getHandler().friends.isFriend(player.getGameProfile().getName()) &&
+                        !Nebulae.getHandler().friends.isFriend(player.getGameProfile().getName()) &&
                         player.getDistanceSq(mc.player) <= radius * radius);
     }
 
@@ -261,7 +261,7 @@ public class FTHelper extends Module {
 
         try {
             if (!isAnticheatBan) {
-                Essence.getHandler().notificationManager.pushNotify("Игрок был забанен администратором!", NotificationManager.Type.Staff);
+                Nebulae.getHandler().notificationManager.pushNotify("Игрок был забанен администратором!", NotificationManager.Type.Staff);
             }
 
             playerName = message.substring(message.indexOf("]") + 1, message.indexOf("забанен")).trim();
@@ -369,7 +369,7 @@ public class FTHelper extends Module {
     private void processCoordinates(String message) {
         if (!options.get("Авто GPS").get()) return;
 
-        if (message.contains("Появился на координатах")) //PushUtils.sendPush("Essence", "На твоей анархии появился ивент");
+        if (message.contains("Появился на координатах")) //PushUtils.sendPush("Nebulae", "На твоей анархии появился ивент");
             if (message.contains("Координаты:")) {
                 Pattern pattern = Pattern.compile("(-?\\d+)\\s+(-?\\d+)\\s+(-?\\d+)");
                 Matcher matcher = pattern.matcher(message);
@@ -449,7 +449,7 @@ public class FTHelper extends Module {
                     if (invSlot == -1 && hbSlot == -1) {
                         disorientationThrow = false;
                         AbstractCommand.addMessage("Дезориентация не найдена!");
-                        Essence.getHandler().notificationManager.pushNotify("Нет предмета для использования!", NotificationManager.Type.Info);
+                        Nebulae.getHandler().notificationManager.pushNotify("Нет предмета для использования!", NotificationManager.Type.Info);
                         return;
                     }
 
@@ -471,7 +471,7 @@ public class FTHelper extends Module {
                     if (invSlot == -1 && hbSlot == -1) {
                         bojkaThrow = false;
                         AbstractCommand.addMessage("Божья аура не найдена!");
-                        Essence.getHandler().notificationManager.pushNotify("Нет предмета для использования!", NotificationManager.Type.Info);
+                        Nebulae.getHandler().notificationManager.pushNotify("Нет предмета для использования!", NotificationManager.Type.Info);
                         return;
                     }
 
@@ -498,7 +498,7 @@ public class FTHelper extends Module {
                     if (invSlot == -1 && hbSlot == -1) {
                         snejoktrow = false;
                         AbstractCommand.addMessage("Снежок заморозка не найден!");
-                        Essence.getHandler().notificationManager.pushNotify("Нет предмета для использования!", NotificationManager.Type.Info);
+                        Nebulae.getHandler().notificationManager.pushNotify("Нет предмета для использования!", NotificationManager.Type.Info);
                         return;
                     }
 
@@ -524,7 +524,7 @@ public class FTHelper extends Module {
                     if (invSlot == -1 && hbSlot == -1) {
                         trapThrow = false;
                         AbstractCommand.addMessage("Трапка не найдена!");
-                        Essence.getHandler().notificationManager.pushNotify("Нет предмета для использования!", NotificationManager.Type.Info);
+                        Nebulae.getHandler().notificationManager.pushNotify("Нет предмета для использования!", NotificationManager.Type.Info);
                         return;
                     }
 
@@ -553,7 +553,7 @@ public class FTHelper extends Module {
                     if (invSlot == -1 && hbSlot == -1) {
                         plastThrow = false;
                         AbstractCommand.addMessage("Пласт не найден!");
-                        Essence.getHandler().notificationManager.pushNotify("Нет предмета для использования!", NotificationManager.Type.Info);
+                        Nebulae.getHandler().notificationManager.pushNotify("Нет предмета для использования!", NotificationManager.Type.Info);
                         return;
                     }
 
@@ -580,7 +580,7 @@ public class FTHelper extends Module {
                     if (invSlot == -1 && hbSlot == -1) {
                         blatantThrow = false;
                         AbstractCommand.addMessage("Явная пыль не найдена!");
-                        Essence.getHandler().notificationManager.pushNotify("Нет предмета для использования!", NotificationManager.Type.Info);
+                        Nebulae.getHandler().notificationManager.pushNotify("Нет предмета для использования!", NotificationManager.Type.Info);
                         return;
                     }
 

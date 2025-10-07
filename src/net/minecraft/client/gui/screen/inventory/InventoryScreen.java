@@ -1,6 +1,6 @@
 package net.minecraft.client.gui.screen.inventory;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.IMinecraft;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -193,7 +193,7 @@ public class InventoryScreen extends DisplayEffectsScreen<PlayerContainer> imple
             if (!(stack.getItem() == Items.SHULKER_BOX || stack.getItem() == Items.BLUE_SHULKER_BOX || stack.getItem() == Items.BLACK_SHULKER_BOX || stack.getItem() == Items.YELLOW_SHULKER_BOX || stack.getItem() == Items.BROWN_SHULKER_BOX || stack.getItem() == Items.CYAN_SHULKER_BOX || stack.getItem() == Items.GRAY_SHULKER_BOX || stack.getItem() == Items.LIGHT_BLUE_SHULKER_BOX || stack.getItem() == Items.LIGHT_GRAY_SHULKER_BOX || stack.getItem() == Items.GREEN_SHULKER_BOX || stack.getItem() == Items.LIME_SHULKER_BOX || stack.getItem() == Items.MAGENTA_SHULKER_BOX || stack.getItem() == Items.ORANGE_SHULKER_BOX || stack.getItem() == Items.PINK_SHULKER_BOX || stack.getItem() == Items.PURPLE_SHULKER_BOX || stack.getItem() == Items.WHITE_SHULKER_BOX)) {
                 this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
             } else {
-                if (!Essence.getHandler().getModuleList().getShulkerView().isState()) {
+                if (!Nebulae.getHandler().getModuleList().getShulkerView().isState()) {
                     this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
                 }
             }

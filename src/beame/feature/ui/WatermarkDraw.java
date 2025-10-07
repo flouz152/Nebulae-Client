@@ -1,6 +1,6 @@
 package beame.feature.ui;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.animation.AnimationMath;
 import beame.util.animation.NumberTransition;
 import beame.util.color.ColorUtils;
@@ -22,8 +22,8 @@ public class WatermarkDraw {
 
     public void render(boolean ghost) {
         float pos = 8;
-        String username = Essence.getHandler().getUserName();
-        String title = "Essence";
+        String username = Nebulae.getHandler().getUserName();
+        String title = "Nebulae";
         String server = HudUtil.serverIP();
         tempFps = NumberTransition.result(tempFps, mc.debugFPS);
         String fps = ((int) tempFps) + " fps";
@@ -38,14 +38,14 @@ public class WatermarkDraw {
 
         { // main part
 
-            ClientHandler.drawSexyRect(pos, pos, title_width, 15, Essence.getHandler().getModuleList().hud.rounding.get(), true);
+            ClientHandler.drawSexyRect(pos, pos, title_width, 15, Nebulae.getHandler().getModuleList().hud.rounding.get(), true);
 //
 //            Fonts.SF_BOLD.get(39).drawString("/", pos + title_width - 15, pos - 1, ColorUtils.setAlpha(ColorUtils.getColor(60), 90));
 //            Fonts.SF_BOLD.get(39).drawString("/", pos + title_width - 12, pos - 1, ColorUtils.setAlpha(ColorUtils.getColor(60), 90));
 
             if (ghost)
-                Fonts.LOGO.get(18).drawString("Z", pos + 3, pos + 2 + 4.5f, Essence.getHandler().themeManager.getThemeColor(0));
-            Fonts.SF_BOLD.get(14).drawGradientString(title, pos + 5 + (ghost ? 10 : 0), pos + 2 + 4.5f, Essence.getHandler().themeManager.getThemeColor(0), Essence.getHandler().themeManager.getColor(180), 55, 7);
+                Fonts.LOGO.get(18).drawString("Z", pos + 3, pos + 2 + 4.5f, Nebulae.getHandler().themeManager.getThemeColor(0));
+            Fonts.SF_BOLD.get(14).drawGradientString(title, pos + 5 + (ghost ? 10 : 0), pos + 2 + 4.5f, Nebulae.getHandler().themeManager.getThemeColor(0), Nebulae.getHandler().themeManager.getColor(180), 55, 7);
 
 
 
@@ -61,7 +61,7 @@ public class WatermarkDraw {
         int alpha = 255;
 
 
-        ClientHandler.drawSexyRect(pos + x, pos + y, width, height, Essence.getHandler().getModuleList().hud.rounding.get(), false);
+        ClientHandler.drawSexyRect(pos + x, pos + y, width, height, Nebulae.getHandler().getModuleList().hud.rounding.get(), false);
         Fonts.ESSENCE_ICONS.get(18).drawString(icon, pos + x + 4, pos + y + 2 + 4, ColorUtils.rgba(60, 60, 60, alpha));
         Fonts.SF_BOLD.get(14).drawString(text, pos + x + 15, pos + y + 2 + 4f, ColorUtils.getColor(120));
     }

@@ -1,6 +1,6 @@
 package beame.components.modules.misc;
 
-import beame.Essence;
+import beame.Nebulae;
 import events.Event;
 import events.impl.packet.EventPacket;
 import beame.module.Category;
@@ -35,7 +35,7 @@ public class AutoAccept extends Module {
                         String sender = words[words.length - 1];
 
                         
-                        boolean needAccept = onlyFriend.get() ? Essence.getHandler().friends.isFriend(sender) : true;
+                        boolean needAccept = onlyFriend.get() ? Nebulae.getHandler().friends.isFriend(sender) : true;
 
                         if(!tpAccept.get()) {
                             return;
@@ -57,7 +57,7 @@ public class AutoAccept extends Module {
                         
 
                         
-                        boolean needAccept = onlyFriend.get() ? Essence.getHandler().friends.isFriend(sender) : true;
+                        boolean needAccept = onlyFriend.get() ? Nebulae.getHandler().friends.isFriend(sender) : true;
 
                         if(!clanAccept.get()) {
                             return;

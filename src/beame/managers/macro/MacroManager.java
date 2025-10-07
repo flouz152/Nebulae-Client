@@ -1,6 +1,6 @@
 package beame.managers.macro;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.command.AbstractCommand;
 import beame.util.IMinecraft;
 import lombok.Cleanup;
@@ -16,7 +16,7 @@ import java.util.List;
 public class MacroManager implements IMinecraft {
 // leaked by itskekoff; discord.gg/sk3d Z0U6hyBR
     public List<Macro> macroList = new ArrayList<>();
-    public static final File macroFile = new File(Essence.getHandler().getClientDir() + "\\macro.json");
+    public static final File macroFile = new File(Nebulae.getHandler().getClientDir() + "\\macro.json");
 
     public void init() throws IOException {
         if (!macroFile.exists()) {

@@ -1,6 +1,6 @@
 package beame.components.modules.misc;
 
-import beame.Essence;
+import beame.Nebulae;
 
 import beame.util.IMinecraft;
 import events.Event;
@@ -28,33 +28,33 @@ public class AutoBuy extends Module implements IMinecraft {
     @Override
     public void event(Event event) {
         if (event instanceof EventStartPriceParsing) {
-            Essence.getHandler().autoBuy.startPriceParsing();
+            Nebulae.getHandler().autoBuy.startPriceParsing();
         }
         if (event instanceof events.impl.EventStopPriceParsing) {
-            Essence.getHandler().autoBuy.stopPriceParsing();
+            Nebulae.getHandler().autoBuy.stopPriceParsing();
         }
         if (event instanceof EventKey eventKey) {
             if ((eventKey).key == autobuyGuiBind.get()) {
-                mc.displayGuiScreen(Essence.getHandler().autoBuyGUI);
+                mc.displayGuiScreen(Nebulae.getHandler().autoBuyGUI);
             }
         }
-        if (Essence.getHandler().autoBuy.isEnabled()) {
+        if (Nebulae.getHandler().autoBuy.isEnabled()) {
             if (event instanceof events.impl.player.EventUpdate) {
-                Essence.getHandler().autoBuy.onUpdate((events.impl.player.EventUpdate) event);
-                Essence.getHandler().autoBuy.processBuy();
+                Nebulae.getHandler().autoBuy.onUpdate((events.impl.player.EventUpdate) event);
+                Nebulae.getHandler().autoBuy.processBuy();
             } else if (event instanceof events.impl.packet.EventPacket) {
                 events.impl.packet.EventPacket packet = (events.impl.packet.EventPacket) event;
                 if (packet.getPacket() instanceof net.minecraft.network.play.server.SChatPacket chatPacket) {
                     String chatMessage = chatPacket.getChatComponent().getString();
-                    event.setCancel(Essence.getHandler().autoBuy.onChatMessage(chatMessage));
+                    event.setCancel(Nebulae.getHandler().autoBuy.onChatMessage(chatMessage));
                 }
             } else if (event instanceof events.impl.player.EventContainerUpdated) {
-                Essence.getHandler().autoBuy.processBuy();
+                Nebulae.getHandler().autoBuy.processBuy();
             }
         }
         if (event instanceof events.impl.player.EventUpdate) {
-            Essence.getHandler().autoBuy.up();
+            Nebulae.getHandler().autoBuy.up();
         }
-        Essence.getHandler().autoBuy.priceParser.handle(event);
+        Nebulae.getHandler().autoBuy.priceParser.handle(event);
     }
 }

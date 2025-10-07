@@ -1,6 +1,6 @@
 package beame.components.modules.player;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.command.AbstractCommand;
 import beame.util.player.InventoryUtility;
 import events.Event;
@@ -22,7 +22,7 @@ public class AutoDisorient extends Module {
         if (mc.world == null || mc.player == null) return false;
         return mc.world.getPlayers().stream()
                 .anyMatch(player -> player != mc.player &&
-                        !player.isSpectator() && !Essence.getHandler().friends.isFriend(player.getGameProfile().getName()) &&
+                        !player.isSpectator() && !Nebulae.getHandler().friends.isFriend(player.getGameProfile().getName()) &&
                         player.getDistanceSq(mc.player) <= radius * radius);
     }
 

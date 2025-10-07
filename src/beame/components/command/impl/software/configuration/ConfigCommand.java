@@ -1,6 +1,6 @@
 package beame.components.command.impl.software.configuration;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.command.AbstractCommand;
 import beame.managers.configs.ConfigManager;
 
@@ -21,7 +21,7 @@ public class ConfigCommand extends AbstractCommand {
         }
 
         String action = args[1].toLowerCase();
-        ConfigManager cfgManager = Essence.cfgManager;
+        ConfigManager cfgManager = Nebulae.cfgManager;
 
         Map<String, Runnable> actions = Map.of(
                 "list", () -> listConfigs(cfgManager),
@@ -63,14 +63,14 @@ public class ConfigCommand extends AbstractCommand {
 
     private void openDirectory() {
         try {
-            Runtime.getRuntime().exec("explorer " + Essence.getHandler().getFilesDir().toFile().getAbsolutePath());
+            Runtime.getRuntime().exec("explorer " + Nebulae.getHandler().getFilesDir().toFile().getAbsolutePath());
         } catch (Exception e) {
             addMessage("Не удалось открыть директорию.");
         }
     }
 
     private void resetModules() {
-        Essence.getHandler().getModuleList().getModules().forEach(module -> {
+        Nebulae.getHandler().getModuleList().getModules().forEach(module -> {
             if (module.state) module.setState(false);
         });
         addMessage("Конфигурация успешно сброшена!");

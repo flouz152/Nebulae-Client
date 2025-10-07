@@ -1,6 +1,6 @@
 package beame.components.modules.player;
 
-import beame.Essence;
+import beame.Nebulae;
 import events.Event;
 import events.impl.render.Render2DEvent;
 import beame.module.Category;
@@ -22,7 +22,7 @@ public class NoInteract extends Module {
     public void event(Event event) {
         if (event instanceof Render2DEvent) {
             if (onlyAura.get()) {
-                interactAllowed = !Essence.getHandler().getModuleList().aura.isState();
+                interactAllowed = !Nebulae.getHandler().getModuleList().aura.isState();
             } else {
                 interactAllowed = false;
             }

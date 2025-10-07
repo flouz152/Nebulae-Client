@@ -1,6 +1,6 @@
 package beame.components.modules.render;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.autobuy.AuctionUtil;
 import beame.util.color.ColorUtils;
 import beame.util.fonts.Fonts;
@@ -233,7 +233,7 @@ public class ESP extends Module {
         boolean isFriend = false;
         if (isPlayer && entity instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) entity;
-            isFriend = Essence.getHandler().friends.isFriend(player.getGameProfile().getName());
+            isFriend = Nebulae.getHandler().friends.isFriend(player.getGameProfile().getName());
         }
         boolean showElements = isPlayer ? elements.get(0).get() : item_elements.get(0).get();
 
@@ -322,7 +322,7 @@ public class ESP extends Module {
 
     private void drawBox(int type, double x, double y, double endX, double endY, boolean isFriend) {
         int boxColor = BOX_COLOR;
-        int rectColor = Essence.getHandler().themeManager.getColor(0);
+        int rectColor = Nebulae.getHandler().themeManager.getColor(0);
 
         if (type == 0) {
             drawSimpleBox(x, y, endX, endY, boxColor, rectColor);

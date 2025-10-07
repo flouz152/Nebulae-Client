@@ -1,6 +1,6 @@
 package beame.util.color;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.feature.themes.Theme;
 import beame.util.math.Interpolator;
 import beame.util.math.MathUtil;
@@ -232,7 +232,7 @@ public class ColorUtils {
     }
 
     public int fade(int index) {
-        return fade(4, index, Essence.getHandler().themeManager.getColor(0), Essence.getHandler().themeManager.getColor(0));
+        return fade(4, index, Nebulae.getHandler().themeManager.getColor(0), Nebulae.getHandler().themeManager.getColor(0));
     }
 
     public int overCol(int color1, int color2, float percent01) {

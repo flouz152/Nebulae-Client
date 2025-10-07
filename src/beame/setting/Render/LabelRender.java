@@ -1,6 +1,6 @@
 package beame.setting.Render;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.color.ColorUtils;
 import beame.util.fonts.Fonts;
 import beame.util.math.MathUtil;
@@ -23,7 +23,7 @@ public class LabelRender extends Component {
         setWidth(67);
         setHeight(0);
 
-        Fonts.SUISSEINTL.get(14).drawString(setting.getName(), getX() + 2, getY() + 1, ColorUtils.rgb(Essence.getHandler().styler.clr120, Essence.getHandler().styler.clr120, Essence.getHandler().styler.clr120));
+        Fonts.SUISSEINTL.get(14).drawString(setting.getName(), getX() + 2, getY() + 1, ColorUtils.rgb(Nebulae.getHandler().styler.clr120, Nebulae.getHandler().styler.clr120, Nebulae.getHandler().styler.clr120));
     }
 
     @Override

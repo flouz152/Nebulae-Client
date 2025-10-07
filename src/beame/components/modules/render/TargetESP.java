@@ -1,6 +1,6 @@
 package beame.components.modules.render;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.modules.combat.Aura;
 import beame.util.animation.Animation;
 import beame.util.animation.AnimationMath;
@@ -55,7 +55,7 @@ public class TargetESP extends Module {
 
     @Override
     public void event(Event event) {
-        Aura aura = Essence.getHandler().getModuleList().aura;
+        Aura aura = Nebulae.getHandler().getModuleList().aura;
         alphaState = AnimationMath.fast(alphaState, aura.getTarget() != null ? 1 : 0, 8);
 
         if(!aura.isState()) return;
@@ -96,17 +96,17 @@ public class TargetESP extends Module {
         if(currentTarget == null) return;
         if(currentTarget == mc.player) return;
 
-        int clr = Essence.getHandler().themeManager.getColor(0);
+        int clr = Nebulae.getHandler().themeManager.getColor(0);
         int color;
         if (redOnHurt.get()) {
             if (currentTarget instanceof LivingEntity && ((LivingEntity)currentTarget).hurtTime > 0) {
                 color = interpolateColor(ColorUtils.rgba(220, 80, 80, 255), ColorUtils.rgba(220, 80, 80, 255),
                         Math.min((((LivingEntity)currentTarget).hurtTime/2f), 1));
             } else {
-                color = Essence.getHandler().themeManager.getColor(0);
+                color = Nebulae.getHandler().themeManager.getColor(0);
             }
         } else {
-            color = interpolateColor(Essence.getHandler().themeManager.getColor(1), Essence.getHandler().themeManager.getColor(0),
+            color = interpolateColor(Nebulae.getHandler().themeManager.getColor(1), Nebulae.getHandler().themeManager.getColor(0),
                     Math.min((((LivingEntity)currentTarget).hurtTime/2f), 1));
         }
 
@@ -141,17 +141,17 @@ public class TargetESP extends Module {
         if(currentTarget == null) return;
         if(currentTarget == mc.player) return;
 
-        int clr = Essence.getHandler().themeManager.getColor(0);
+        int clr = Nebulae.getHandler().themeManager.getColor(0);
         int color;
         if (redOnHurt.get()) {
             if (currentTarget instanceof LivingEntity && ((LivingEntity)currentTarget).hurtTime > 0) {
                 color = interpolateColor(ColorUtils.rgba(220, 80, 80, 255), ColorUtils.rgba(220, 80, 80, 255),
                         Math.min((((LivingEntity)currentTarget).hurtTime/2f), 1));
             } else {
-                color = Essence.getHandler().themeManager.getColor(0);
+                color = Nebulae.getHandler().themeManager.getColor(0);
             }
         } else {
-            color = interpolateColor(Essence.getHandler().themeManager.getColor(1), Essence.getHandler().themeManager.getColor(0),
+            color = interpolateColor(Nebulae.getHandler().themeManager.getColor(1), Nebulae.getHandler().themeManager.getColor(0),
                     Math.min((((LivingEntity)currentTarget).hurtTime/2f), 1));
         }
 

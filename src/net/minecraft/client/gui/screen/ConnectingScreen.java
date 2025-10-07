@@ -1,6 +1,6 @@
 package net.minecraft.client.gui.screen;
 
-import beame.Essence;
+import beame.Nebulae;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import java.net.InetAddress;
 import java.net.UnknownHostException;

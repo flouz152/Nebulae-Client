@@ -1,6 +1,6 @@
 package beame.util.player;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.modules.combat.Aura;
 import beame.util.math.MathUtil;
 import beame.util.other.MoveUtil;
@@ -217,7 +217,7 @@ public class PlayerUtil {
             eventTrace.cancel();
         }
         if (event instanceof EventMotion eventMotion) {
-            Aura aura = Essence.getHandler().getModuleList().aura;
+            Aura aura = Nebulae.getHandler().getModuleList().aura;
             //aura.rotation().x = yaw;
             //aura.rotation().y = pitch;
             eventMotion.setYaw(yaw);

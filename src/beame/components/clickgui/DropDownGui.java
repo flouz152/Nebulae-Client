@@ -1,6 +1,6 @@
 package beame.components.clickgui;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.clickgui.elements.Panel;
 import beame.util.animation.AnimationMath;
 import beame.util.color.ColorUtils;
@@ -54,7 +54,7 @@ public class DropDownGui extends Screen {
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         if(!close) needAlpha = 1;
 
-        if (Essence.getHandler().getModuleList().getClickGUI().clickGuiHints.get()) {
+        if (Nebulae.getHandler().getModuleList().getClickGUI().clickGuiHints.get()) {
             boolean anyHovered = false;
             for (Panel panel : panels) {
                 for (ModuleComponent module : panel.moduleComponents) {

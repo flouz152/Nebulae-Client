@@ -1,6 +1,6 @@
 package beame.util.render;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.IMinecraft;
 import beame.util.Stencil;
 import beame.util.shader.ShaderUtil;
@@ -33,14 +33,14 @@ public class GaussianBlur {
     }
 
     public static void startBlur() {
-        if(Essence.getHandler().getModuleList().hud.disableBlur.get())
+        if(Nebulae.getHandler().getModuleList().hud.disableBlur.get())
             return;
 
         Stencil.initStencilToWrite();
     }
 
     public static void endBlur(float radius, float compression) {
-        if(Essence.getHandler().getModuleList().hud.disableBlur.get())
+        if(Nebulae.getHandler().getModuleList().hud.disableBlur.get())
             return;
 
         Stencil.readStencilBuffer(1);
@@ -66,7 +66,7 @@ public class GaussianBlur {
     }
 
     public static void blur(float radius, float compression) {
-        if(Essence.getHandler().getModuleList().hud.disableBlur.get())
+        if(Nebulae.getHandler().getModuleList().hud.disableBlur.get())
             return;
 
         framebuffer = ShaderUtil.createFrameBuffer(framebuffer);

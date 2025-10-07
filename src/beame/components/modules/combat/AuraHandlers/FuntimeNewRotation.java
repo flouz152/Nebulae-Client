@@ -1,7 +1,7 @@
 package beame.components.modules.combat.AuraHandlers;
 
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.modules.combat.AuraHandlers.other.RayTraceUtil;
 import beame.util.IMinecraft;
 import beame.util.math.MathUtil;
@@ -96,7 +96,7 @@ public class FuntimeNewRotation implements IMinecraft {
                 currentRotation
         );
 
-        this.raycasted = (RayTraceUtil.getTargetedEntity(target, currentRotation.x, currentRotation.y, Essence.getHandler().getModuleList().getAura().getRange().get() + Essence.getHandler().getModuleList().getAura().getPreRange().get()) == target);
+        this.raycasted = (RayTraceUtil.getTargetedEntity(target, currentRotation.x, currentRotation.y, Nebulae.getHandler().getModuleList().getAura().getRange().get() + Nebulae.getHandler().getModuleList().getAura().getPreRange().get()) == target);
     }
 
     public Vector3d getVectorToTarget(LivingEntity target, Vector2f currentRotation, float factor) {

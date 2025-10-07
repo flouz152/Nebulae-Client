@@ -1,6 +1,6 @@
 package net.minecraft.client.renderer.entity.layers;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.color.ColorUtils;
 import com.mojang.authlib.GameProfile;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -137,7 +137,7 @@ public class HeadLayer<T extends LivingEntity, M extends EntityModel<T> & IHasHe
 
             matrixStackIn.pop();
         }
-//        if (Essence.getHandler().getModuleList().visuality.isState() && Essence.getHandler().getModuleList().visuality.elements.get(0).get() && entitylivingbaseIn instanceof PlayerEntity player && ((player instanceof ClientPlayerEntity))) {
+//        if (Nebulae.getHandler().getModuleList().visuality.isState() && Nebulae.getHandler().getModuleList().visuality.elements.get(0).get() && entitylivingbaseIn instanceof PlayerEntity player && ((player instanceof ClientPlayerEntity))) {
 //            float width = player.getWidth();
 //
 //
@@ -165,15 +165,15 @@ public class HeadLayer<T extends LivingEntity, M extends EntityModel<T> & IHasHe
 //                buffer.begin(GL_TRIANGLE_FAN, POSITION_COLOR);
 //                {
 //                    buffer.pos(matrixStackIn.getLast().getMatrix(), 0, .3f, 0)
-//                            .color(ColorUtils.setAlpha(Essence.getHandler().themeManager.getColor(0), 255))
+//                            .color(ColorUtils.setAlpha(Nebulae.getHandler().themeManager.getColor(0), 255))
 //                            .endVertex();
 //                    for (int i = 0, size = 360; i <= size; i++) {
 //                        buffer.pos(matrixStackIn.getLast().getMatrix(),
 //                                        -MathHelper.sin(i * PI2 / size) * width, 0,
 //                                        MathHelper.cos(i * PI2 / size) * width)
-//                                .color(ColorUtils.setAlpha(Essence.getHandler().themeManager.getColor(i * 5), 255))
+//                                .color(ColorUtils.setAlpha(Nebulae.getHandler().themeManager.getColor(i * 5), 255))
 //                                .endVertex();
-//                        System.out.println("Current color: " + Essence.getHandler().themeManager.getColor(i * 5));
+//                        System.out.println("Current color: " + Nebulae.getHandler().themeManager.getColor(i * 5));
 //
 //                    }
 //                }
@@ -184,9 +184,9 @@ public class HeadLayer<T extends LivingEntity, M extends EntityModel<T> & IHasHe
 //                        buffer.pos(matrixStackIn.getLast().getMatrix(),
 //                                        -MathHelper.sin(i * PI2 / size) * width, 0,
 //                                        MathHelper.cos(i * PI2 / size) * width)
-//                                .color(ColorUtils.setAlpha(Essence.getHandler().themeManager.getColor(i), 255))
+//                                .color(ColorUtils.setAlpha(Nebulae.getHandler().themeManager.getColor(i), 255))
 //                                .endVertex();
-//                        System.out.println("Current color: " + Essence.getHandler().themeManager.getColor(i * 5));
+//                        System.out.println("Current color: " + Nebulae.getHandler().themeManager.getColor(i * 5));
 //
 //                    }
 //                }

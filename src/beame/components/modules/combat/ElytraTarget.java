@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.command.AbstractCommand;
 import beame.components.modules.combat.Aura;
 import beame.feature.notify.NotificationManager;
@@ -178,7 +178,7 @@ public class ElytraTarget extends Module {
     @Override
     public void event(Event event) {
         try {
-            Aura aura = Essence.getHandler().getModuleList().aura;
+            Aura aura = Nebulae.getHandler().getModuleList().aura;
             LivingEntity target = aura.getTarget();
 
             if (!PlayerUtil.isInGame()) return;
@@ -239,7 +239,7 @@ public class ElytraTarget extends Module {
 
                 if (target != null && mc.player.getDistanceVec(target.getPosX(), target.getPosY(), target.getPosZ()) < 10) {
                     if (target.lastSwing.passed(100) && !target.lastSwing.passed(400) && target.tryAttack && mc.player.hurtTime == 0 && visuals.get("Миссы противника").get() && !isLeaving(target)) {
-                        Essence.getHandler().notificationManager.pushNotify(target.getName().getString() + " missed shot due to resolver", NotificationManager.Type.Info);
+                        Nebulae.getHandler().notificationManager.pushNotify(target.getName().getString() + " missed shot due to resolver", NotificationManager.Type.Info);
                         target.tryAttack = false;
                     }
                 }
@@ -473,7 +473,7 @@ public class ElytraTarget extends Module {
         }
     }
     private void handleDesync(Event event) {
-        Aura aura = Essence.getHandler().getModuleList().aura;
+        Aura aura = Nebulae.getHandler().getModuleList().aura;
         LivingEntity target = aura.getTarget();
         Vector3d closestPoint = null;
         if (target != null) {

@@ -12,13 +12,13 @@ public class PushUtils {
         try {
 
             String script =
-                    "$AppId = 'Essence.Client'\n" +
+                    "$AppId = 'Nebulae.Client'\n" +
                             "\n" +
                             "# Регистрируем приложение для уведомлений\n" +
                             "$regPath = 'HKCU:\\SOFTWARE\\Classes\\AppUserModelId\\' + $AppId\n" +
                             "if (!(Test-Path $regPath)) {\n" +
                             "    New-Item -Path $regPath -Force | Out-Null\n" +
-                            "    New-ItemProperty -Path $regPath -Name 'DisplayName' -Value 'EssenceClient' -PropertyType String -Force | Out-Null\n" +
+                            "    New-ItemProperty -Path $regPath -Name 'DisplayName' -Value 'NebulaeClient' -PropertyType String -Force | Out-Null\n" +
                             "    New-ItemProperty -Path $regPath -Name 'ShowInSettings' -Value 1 -PropertyType DWord -Force | Out-Null\n" +
                             "}\n" +
                             "\n" +
@@ -42,8 +42,8 @@ public class PushUtils {
                             "$XmlDoc.LoadXml($XmlText)\n" +
                             "\n" +
                             "$Toast = [Windows.UI.Notifications.ToastNotification]::new($XmlDoc)\n" +
-                            "$Toast.Tag = 'EssenceClient'\n" +
-                            "$Toast.Group = 'EssenceClient'\n" +
+                            "$Toast.Tag = 'NebulaeClient'\n" +
+                            "$Toast.Group = 'NebulaeClient'\n" +
                             "\n" +
                             "try {\n" +
                             "    $Notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier($AppId)\n" +

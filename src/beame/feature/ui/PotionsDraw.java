@@ -1,6 +1,6 @@
 package beame.feature.ui;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.util.animation.AnimationMath;
 import beame.util.color.ColorUtils;
 import beame.util.drag.Dragging;
@@ -30,7 +30,7 @@ import static beame.util.color.ColorUtils.interpolateColor;
 
 public class PotionsDraw {
 // leaked by itskekoff; discord.gg/sk3d Pa4SmUyk
-    public Dragging PotionsDrag = Essence.getHandler().createDraggable("potions", 3, 200);
+    public Dragging PotionsDrag = Nebulae.getHandler().createDraggable("potions", 3, 200);
 
     float animatedHpots = 16;
     float animatedWpots = 80;
@@ -64,15 +64,15 @@ public class PotionsDraw {
         RenderSystem.pushMatrix();
         AnimationMath.sizeAnimation(x + (animatedWpots / 2), y + (16 / 2), animation);
 
-        ClientHandler.drawSexyRect(x, y, animatedWpots, 16, Essence.getHandler().getModuleList().hud.rounding.get(), true);
+        ClientHandler.drawSexyRect(x, y, animatedWpots, 16, Nebulae.getHandler().getModuleList().hud.rounding.get(), true);
         
-        int iconColor = ColorUtils.setAlpha(Essence.getHandler().themeManager.getColor(0), (int)(255 * animation));
+        int iconColor = ColorUtils.setAlpha(Nebulae.getHandler().themeManager.getColor(0), (int)(255 * animation));
         Fonts.ESSENCE_ICONS.get(15).drawString("h", x + animatedWpots - 10 - 5, y + 2 + 5, iconColor);
         
         int titleColor = ColorUtils.setAlpha(new Color(255, 255, 255, 225).getRGB(), (int)(225 * animation));
         Fonts.SUISSEINTL.get(13).drawString("Potions", x + 5, y + 2 + 5, titleColor);
         if (hasEffects) {
-        ClientHandler.drawSexyRect(x, y + 20, animatedWpots, animatedHpots, Essence.getHandler().getModuleList().hud.rounding.get(), false);
+        ClientHandler.drawSexyRect(x, y + 20, animatedWpots, animatedHpots, Nebulae.getHandler().getModuleList().hud.rounding.get(), false);
 
         for (EffectInstance f : effects) {
             Effect ef = f.getPotion();
@@ -100,7 +100,7 @@ public class PotionsDraw {
                 int red = interpolateColor(ColorUtils.rgba(180, 180, 180, alpha), Color.RED.getRGB(), 0.3f);
                     if (showText) {
                         fon.drawString((text.length() > 8 ? text.substring(0, 8) + ".." : text) + (f.getAmplifier()+1 > 1 ? " " + (f.getAmplifier()+1) : ""), x + 8 + 7, y + 21.5f + potoff + 2.5f + 3, isNegative ? red : ColorUtils.rgba(180, 180, 180, alpha));
-                fon.drawString(time, x + animatedWpots - 8 - fon.getStringWidth(time), y + 21.5f + potoff + 2.5f + 3, ColorUtils.setAlpha(lowTime ? red : Essence.getHandler().themeManager.getColor(0), alpha));
+                fon.drawString(time, x + animatedWpots - 8 - fon.getStringWidth(time), y + 21.5f + potoff + 2.5f + 3, ColorUtils.setAlpha(lowTime ? red : Nebulae.getHandler().themeManager.getColor(0), alpha));
                     }
 
                 PotionSpriteUploader potionspriteuploader = mc.getPotionSpriteUploader();

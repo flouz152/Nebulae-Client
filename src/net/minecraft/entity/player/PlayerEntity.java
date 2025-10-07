@@ -1,6 +1,6 @@
 package net.minecraft.entity.player;
 
-import beame.Essence;
+import beame.Nebulae;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
@@ -1196,7 +1196,7 @@ public abstract class PlayerEntity extends LivingEntity {
                                 targetEntity.addVelocity((double) (-MathHelper.sin(this.rotationYaw * ((float) Math.PI / 180F)) * (float) i * 0.5F), 0.1D, (double) (MathHelper.cos(this.rotationYaw * ((float) Math.PI / 180F)) * (float) i * 0.5F));
                             }
 
-                            boolean keepSprintState = Essence.getHandler().getModuleList().sprint.isState() && Essence.getHandler().getModuleList().sprint.keepSprint.get() && !Minecraft.getInstance().player.isInWater() && this instanceof ClientPlayerEntity;
+                            boolean keepSprintState = Nebulae.getHandler().getModuleList().sprint.isState() && Nebulae.getHandler().getModuleList().sprint.keepSprint.get() && !Minecraft.getInstance().player.isInWater() && this instanceof ClientPlayerEntity;
                             if (!keepSprintState) {
                                 this.setMotion(this.getMotion().mul(0.6D, 1.0D, 0.6D));
                                 this.setSprinting(false);

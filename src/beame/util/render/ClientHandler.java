@@ -1,6 +1,6 @@
 package beame.util.render;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.components.command.AbstractCommand;
 import beame.util.IMinecraft;
 import beame.util.color.ColorUtils;
@@ -424,20 +424,20 @@ public class ClientHandler {
 
     public static void drawSexyRect(float x, float y, float w, float h, float round, boolean colored) {
         int clr_bg = colored ? new Color(17, 17, 17).getRGB() : new Color(60, 60, 60, 100).getRGB();
-        int clr_bg2 = new Color(Essence.getHandler().styler.clr17, Essence.getHandler().styler.clr17, Essence.getHandler().styler.clr17).getRGB();
+        int clr_bg2 = new Color(Nebulae.getHandler().styler.clr17, Nebulae.getHandler().styler.clr17, Nebulae.getHandler().styler.clr17).getRGB();
 
-        int clr_0 = interpolateColor(clr_bg, Essence.getHandler().themeManager.getColor(0), 0.35f);
-        int clr_180 = interpolateColor(clr_bg, Essence.getHandler().themeManager.getColor(255), 0.35f);
+        int clr_0 = interpolateColor(clr_bg, Nebulae.getHandler().themeManager.getColor(0), 0.35f);
+        int clr_180 = interpolateColor(clr_bg, Nebulae.getHandler().themeManager.getColor(255), 0.35f);
 
         int clr0 = ColorUtils.setAlpha(clr_0, 255);
         int clr1 = ColorUtils.setAlpha(clr_180, 255);
-        int clr3 = colored ? interpolateColor(clr0, clr1, Essence.getHandler().interpolateState) : clr_bg;
+        int clr3 = colored ? interpolateColor(clr0, clr1, Nebulae.getHandler().interpolateState) : clr_bg;
         int clr2_1 = colored ? interpolateColor(clr_bg, clr0, 0.5f) : clr_bg;
         int clr2_2 = colored ? interpolateColor(clr_bg, clr1, 0.5f) : clr_bg;
 
         int clr = ColorUtils.setAlpha(clr_bg2, colored ? 170 : 160);
 
-        if (!colored && w > 0 && h > 0 && !Essence.getHandler().getModuleList().hud.disableBlur.get()) {
+        if (!colored && w > 0 && h > 0 && !Nebulae.getHandler().getModuleList().hud.disableBlur.get()) {
             IWrapper.blurQueue.add(() -> {
                 RenderSystem.pushMatrix();
                 RenderSystem.enableBlend();
@@ -473,14 +473,14 @@ public class ClientHandler {
 
     public static void drawSexyRectFromPanel(float x, float y, float w, float h, float round, boolean colored) {
         int clr_bg = colored ? new Color(17, 17, 17).getRGB() : new Color(15, 15, 15, 100).getRGB();
-        int clr_bg2 = new Color(Essence.getHandler().styler.clr17, Essence.getHandler().styler.clr17, Essence.getHandler().styler.clr17).getRGB();
+        int clr_bg2 = new Color(Nebulae.getHandler().styler.clr17, Nebulae.getHandler().styler.clr17, Nebulae.getHandler().styler.clr17).getRGB();
 
-        int clr_0 = interpolateColor(clr_bg, Essence.getHandler().themeManager.getColor(0), 0.35f);
-        int clr_180 = interpolateColor(clr_bg, Essence.getHandler().themeManager.getColor(255), 0.35f);
+        int clr_0 = interpolateColor(clr_bg, Nebulae.getHandler().themeManager.getColor(0), 0.35f);
+        int clr_180 = interpolateColor(clr_bg, Nebulae.getHandler().themeManager.getColor(255), 0.35f);
 
         int clr0 = ColorUtils.setAlpha(clr_0, 255);
         int clr1 = ColorUtils.setAlpha(clr_180, 255);
-        int clr3 = colored ? interpolateColor(clr0, clr1, Essence.getHandler().interpolateState) : clr_bg;
+        int clr3 = colored ? interpolateColor(clr0, clr1, Nebulae.getHandler().interpolateState) : clr_bg;
         int clr2_1 = colored ? interpolateColor(clr_bg, clr0, 0.2f) : clr_bg;
         int clr2_2 = colored ? interpolateColor(clr_bg, clr1, 0.2f) : clr_bg;
 

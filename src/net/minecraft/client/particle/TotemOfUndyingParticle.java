@@ -40,7 +40,7 @@ public class TotemOfUndyingParticle extends SimpleAnimatedParticle
 
         public Particle makeParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed)
         {
-            Particles particles = beame.Essence.getHandler().getModuleList().particles;
+            Particles particles = beame.Nebulae.getHandler().getModuleList().particles;
             if (particles != null && particles.isState() && particles.getTypep().get("Тотеме").get()) {
                 return null;
             }

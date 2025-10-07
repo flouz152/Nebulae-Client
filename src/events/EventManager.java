@@ -1,6 +1,6 @@
 package events;
 
-import beame.Essence;
+import beame.Nebulae;
 import beame.module.Module;
 import net.minecraft.client.Minecraft;
 
@@ -12,7 +12,7 @@ public class EventManager {
             return;
         }
 
-        if(!Essence.getHandler().unhooked) {
+        if(!Nebulae.getHandler().unhooked) {
             if (event.isCancel())
                 return;
 
@@ -21,13 +21,13 @@ public class EventManager {
     }
 
     private static void callEvent(Event event) {
-        for (final Module module : Essence.getHandler().getModuleList().getModules()) {
+        for (final Module module : Nebulae.getHandler().getModuleList().getModules()) {
             if (!module.isState())
                 continue;
 
             module.event(event);
         }
 
-        Essence.getHandler().auraHelper.callAll(event);
+        Nebulae.getHandler().auraHelper.callAll(event);
     }
 }

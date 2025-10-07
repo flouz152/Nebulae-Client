@@ -1,6 +1,6 @@
 package net.minecraft.client.gui.screen;
 
-import beame.screens.EssenceMainMenu;
+import beame.screens.NebulaeMainMenu;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.gui.advancements.AdvancementsScreen;
 import net.minecraft.client.gui.widget.button.Button;
@@ -94,15 +94,15 @@ public class IngameMenuScreen extends Screen
 
             if (flag)
             {
-                this.minecraft.displayGuiScreen(new EssenceMainMenu());
+                this.minecraft.displayGuiScreen(new NebulaeMainMenu());
             }
             else if (flag1)
             {
                 RealmsBridgeScreen realmsbridgescreen = new RealmsBridgeScreen();
-                realmsbridgescreen.func_231394_a_(new EssenceMainMenu());
+                realmsbridgescreen.func_231394_a_(new NebulaeMainMenu());
             }
             else {
-                this.minecraft.displayGuiScreen(new MultiplayerScreen(new EssenceMainMenu()));
+                this.minecraft.displayGuiScreen(new MultiplayerScreen(new NebulaeMainMenu()));
             }
         }));
 
