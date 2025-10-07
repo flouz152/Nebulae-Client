@@ -1,0 +1,10 @@
+{
+  "uuid": "6e28c61c-5a0e-45c3-bb6a-6a6b36f48732",
+  "name": "Nebulae Helper Tools",
+  "author": "Nebulae",
+  "description": "Standalone bundle of the Nebulae FTHelper and TargetESP modules with a light GUI.",
+  "version": "1.0.0",
+  "minecraft": {
+    "version": "1.16.5"
+  }
+}
