@@ -2,30 +2,45 @@ package beame.labyaddon.module.render;
 
 import beame.labyaddon.config.NebulaeAddonConfig;
 import beame.labyaddon.core.AddonModule;
+import beame.labyaddon.util.IMinecraft;
+import beame.labyaddon.util.animation.Animation;
+import beame.labyaddon.util.animation.AnimationMath;
+import beame.labyaddon.util.animation.Direction;
+import beame.labyaddon.util.animation.impl.DecelerateAnimation;
+import beame.labyaddon.util.color.ColorUtils;
+import beame.labyaddon.util.math.MathUtil;
+import beame.labyaddon.util.render.ClientHandler;
+import beame.labyaddon.util.render.W2S;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ActiveRenderInfo;
-import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldVertexBufferUploader;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.settings.PointOfView;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Matrix4f;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector3d;
+import org.joml.Vector2d;
 import org.lwjgl.opengl.GL11;
 
-import java.util.Arrays;
-
 /**
- * Lightweight TargetESP implementation used by the standalone add-on.
- * <p>
- * The effect is intentionally less flashy than in the full client but retains
- * the rotating ghosts / circle visuals players expect.
+ * Port of the original TargetESP module with the rendering logic used by the main client.
  */
-public class TargetESPModule extends AddonModule {
+public class TargetESPModule extends AddonModule implements IMinecraft {
 
-    private static final String[] TYPES = new String[]{"Призраки", "Круг", "Квадрат", "Новый квадрат"};
+    private static final ResourceLocation QUAD_TEXTURE = new ResourceLocation("night/image/target/Quad.png");
+    private static final ResourceLocation QUAD2_TEXTURE = new ResourceLocation("night/image/target/Quad2.png");
+    private static final ResourceLocation GLOW_TEXTURE = new ResourceLocation("night/image/glow.png");
+
+    private static final String[] TYPES = {"Призраки", "Круг", "Квадрат", "Новый квадрат"};
+
+    private final Animation alpha = new DecelerateAnimation(600, 255.0D);
+    private float alphaState = 0.0F;
+    private long startTime = System.currentTimeMillis();
 
     private String type = TYPES[0];
     private boolean redOnHurt = true;
@@ -43,8 +58,8 @@ public class TargetESPModule extends AddonModule {
 
     @Override
     public void onTick() {
-        Entity pointed = Minecraft.getInstance().pointedEntity;
         LivingEntity candidate = null;
+        Entity pointed = Minecraft.getInstance().pointedEntity;
         if (pointed instanceof LivingEntity && pointed != mc.player) {
             candidate = (LivingEntity) pointed;
         }
@@ -52,158 +67,246 @@ public class TargetESPModule extends AddonModule {
         if (candidate == null && mc.player != null && mc.world != null) {
             double bestDistance = Double.MAX_VALUE;
             for (Entity entity : mc.world.getAllEntities()) {
-                if (entity instanceof LivingEntity && entity != mc.player && entity.isAlive()) {
-                    double dist = entity.getDistanceSq(mc.player);
-                    if (dist < bestDistance && dist < 144) { // 12 blocks
+                if (entity instanceof LivingEntity living && living != mc.player && living.isAlive()) {
+                    double dist = living.getDistanceSq(mc.player);
+                    if (dist < bestDistance && dist < 144.0D) {
                         bestDistance = dist;
-                        candidate = (LivingEntity) entity;
+                        candidate = living;
                     }
                 }
             }
         }
 
         this.currentTarget = candidate;
+        alphaState = AnimationMath.fast(alphaState, candidate != null ? 1.0F : 0.0F, 8.0F);
+        alpha.setDirection(candidate != null ? Direction.FORWARDS : Direction.BACKWARDS);
+    }
+
+    @Override
+    public void onRender2D(MatrixStack stack, float partialTicks) {
+        if (!isEnabled() || currentTarget == null) {
+            return;
+        }
+
+        if ("Квадрат".equals(type) || "Новый квадрат".equals(type)) {
+            draw2DMarker(stack, currentTarget, partialTicks);
+        }
     }
 
     @Override
     public void onRender3D(MatrixStack stack, float partialTicks) {
-        LivingEntity target = this.currentTarget;
-        if (target == null || !target.isAlive()) {
+        if (!isEnabled() || currentTarget == null) {
             return;
         }
 
-        ActiveRenderInfo camera = mc.gameRenderer.getActiveRenderInfo();
-        Vector3d cameraPos = camera.getProjectedView();
+        if ("Призраки".equals(type) || "Круг".equals(type)) {
+            draw3DMarker(stack, currentTarget, partialTicks);
+        }
+    }
 
-        double x = MathHelper.lerp(partialTicks, target.lastTickPosX, target.getPosX()) - cameraPos.x;
-        double y = MathHelper.lerp(partialTicks, target.lastTickPosY, target.getPosY()) - cameraPos.y;
-        double z = MathHelper.lerp(partialTicks, target.lastTickPosZ, target.getPosZ()) - cameraPos.z;
+    private void draw2DMarker(MatrixStack stack, Entity target, float partialTicks) {
+        if (target == null || target == mc.player) {
+            return;
+        }
 
+        int baseColor = getBaseColor(target);
+        Vector3d previous = new Vector3d(target.lastTickPosX, target.lastTickPosY, target.lastTickPosZ);
+        Vector3d interpolated = MathUtil.interpolate(target.getPositionVec(), previous, partialTicks);
+        Vector2d screen = W2S.project(interpolated.x, interpolated.y + target.getHeight() / 2.0F, interpolated.z);
+        if (screen == null) {
+            return;
+        }
+
+        float size = mc.gameSettings.getPointOfView() == PointOfView.FIRST_PERSON ? 90.0F : 60.0F;
+        float rotation = (float) (Math.sin(System.currentTimeMillis() / 1000.0D) * 120.0D);
+        ResourceLocation texture = "Квадрат".equals(type) ? QUAD_TEXTURE : QUAD2_TEXTURE;
+        ClientHandler.drawImage(stack, texture, (float) screen.x - size / 2.0F, (float) screen.y - size / 2.0F, size, size,
+                ColorUtils.setAlpha(baseColor, (int) alpha.getOutput()), rotation);
+    }
+
+    private void draw3DMarker(MatrixStack stack, Entity target, float partialTicks) {
+        if (target == null || target == mc.player) {
+            return;
+        }
+
+        int color = getBaseColor(target);
+        if ("Призраки".equals(type)) {
+            renderGhosts(stack, target, partialTicks, color);
+        } else {
+            renderCircle(stack, target, partialTicks, color);
+        }
+    }
+
+    private void renderGhosts(MatrixStack stack, Entity target, float partialTicks, int color) {
         stack.push();
+        RenderSystem.pushMatrix();
+        RenderSystem.disableLighting();
+        RenderSystem.depthMask(false);
+        RenderSystem.enableBlend();
+        RenderSystem.shadeModel(GL11.GL_SMOOTH);
+        RenderSystem.disableCull();
+        RenderSystem.disableAlphaTest();
+        RenderSystem.blendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE, 0, 1);
+
+        ActiveRenderInfo camera = mc.getRenderManager().info;
+        stack.translate(-camera.getProjectedView().getX(), -camera.getProjectedView().getY(), -camera.getProjectedView().getZ());
+
+        Vector3d previous = new Vector3d(target.lastTickPosX, target.lastTickPosY, target.lastTickPosZ);
+        Vector3d interpolated = MathUtil.interpolate(target.getPositionVec(), previous, partialTicks);
+        interpolated = interpolated.add(0.2D, target.getHeight() / 4.0F + 0.75D, 0.0D);
+        stack.translate(interpolated.x, interpolated.y, interpolated.z);
+
+        mc.getTextureManager().bindTexture(GLOW_TEXTURE);
+
+        double radius = 0.7D;
+        float speed = ghostsSpeed;
+        float width = ghostsWidth;
+        double distance = 12.0D;
+        int length = Math.round(ghostsLength);
+        float angleStep = ghostsAngle;
+        float size = width * 60.0F;
+
+        int[] base = ColorUtils.rgba(color);
+        for (int axis = 0; axis < 3; axis++) {
+            for (int i = 0; i < length; i++) {
+                Quaternion rotation = camera.getRotation().copy();
+                buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR_TEX);
+                double angle = angleStep * ((System.currentTimeMillis() - startTime) - i * distance) / speed;
+                double sin = Math.sin(angle) * radius;
+                double cos = Math.cos(angle) * radius;
+                switch (axis) {
+                    case 0 -> stack.translate(sin, cos, -cos);
+                    case 1 -> stack.translate(-sin, sin, -cos);
+                    case 2 -> stack.translate(cos, -sin, -sin);
+                }
+                stack.translate(-size / 2.0F, -size / 2.0F, 0.0D);
+                stack.rotate(rotation);
+                stack.translate(size / 2.0F, size / 2.0F, 0.0D);
+
+                int alphaValue = Math.max(0, Math.min(255, (int) (alphaState * (i * 10.0F))));
+                buffer.pos(stack.getLast().getMatrix(), 0.0F, -size, 0.0F)
+                        .color(base[0], base[1], base[2], alphaValue).tex(0.0F, 0.0F).endVertex();
+                buffer.pos(stack.getLast().getMatrix(), -size, -size, 0.0F)
+                        .color(base[0], base[1], base[2], alphaValue).tex(0.0F, 1.0F).endVertex();
+                buffer.pos(stack.getLast().getMatrix(), -size, 0.0F, 0.0F)
+                        .color(base[0], base[1], base[2], alphaValue).tex(1.0F, 1.0F).endVertex();
+                buffer.pos(stack.getLast().getMatrix(), 0.0F, 0.0F, 0.0F)
+                        .color(base[0], base[1], base[2], alphaValue).tex(1.0F, 0.0F).endVertex();
+                WorldVertexBufferUploader.draw(buffer);
+
+                stack.translate(-size / 2.0F, -size / 2.0F, 0.0D);
+                rotation.conjugate();
+                stack.rotate(rotation);
+                stack.translate(size / 2.0F, size / 2.0F, 0.0D);
+                switch (axis) {
+                    case 0 -> stack.translate(-sin, -cos, cos);
+                    case 1 -> stack.translate(sin, -sin, cos);
+                    case 2 -> stack.translate(-cos, sin, sin);
+                }
+            }
+        }
+
+        RenderSystem.defaultBlendFunc();
+        RenderSystem.disableBlend();
+        RenderSystem.enableCull();
+        RenderSystem.enableAlphaTest();
+        RenderSystem.depthMask(true);
+        RenderSystem.popMatrix();
+        stack.pop();
+    }
+
+    private void renderCircle(MatrixStack stack, Entity target, float partialTicks, int color) {
+        EntityRendererManager rm = mc.getRenderManager();
+        stack.push();
+
+        double x = target.lastTickPosX + (target.getPosX() - target.lastTickPosX) * partialTicks - rm.info.getProjectedView().getX();
+        double y = target.lastTickPosY + (target.getPosY() - target.lastTickPosY) * partialTicks - rm.info.getProjectedView().getY();
+        double z = target.lastTickPosZ + (target.getPosZ() - target.lastTickPosZ) * partialTicks - rm.info.getProjectedView().getZ();
+
         stack.translate(x, y, z);
 
-        int color = redOnHurt && target.hurtTime > 0 ? 0xFFDC5050 : 0xFF5AA8FF;
-        if ("Квадрат".equals(type) || "Новый квадрат".equals(type)) {
-            drawGroundSquare(stack, target, color, "Новый квадрат".equals(type));
-        } else if ("Круг".equals(type)) {
-            drawCircle(stack, target, color, partialTicks);
-        } else {
-            drawGhosts(stack, target, color, partialTicks);
+        float height = target.getHeight();
+        double duration = Math.max(10.0D, circleSpeed);
+        double elapsed = System.currentTimeMillis() % duration;
+        boolean side = elapsed > duration / 2.0D;
+        double progress = elapsed / (duration / 2.0D);
+        progress = side ? (progress - 1.0D) : 1.0D - progress;
+        progress = progress < 0.5D ? 2.0D * progress * progress : 1.0D - Math.pow(-2.0D * progress + 2.0D, 2.0D) / 2.0D;
+        double eased = (height / 2.0F) * (progress > 0.5D ? 1.0D - progress : progress) * (side ? -1.0D : 1.0D);
+
+        GL11.glDepthMask(false);
+        GL11.glEnable(GL11.GL_LINE_SMOOTH);
+        GL11.glHint(GL11.GL_LINE_SMOOTH_HINT, GL11.GL_NICEST);
+        RenderSystem.disableTexture();
+        RenderSystem.enableBlend();
+        RenderSystem.disableAlphaTest();
+        RenderSystem.shadeModel(GL11.GL_SMOOTH);
+        RenderSystem.disableCull();
+        RenderSystem.lineWidth(1.5F);
+
+        int[] base = ColorUtils.rgba(color);
+        int lineAlpha = Math.max(0, Math.min(255, (int) (base[3] * 0.5F)));
+
+        buffer.begin(GL11.GL_TRIANGLE_STRIP, DefaultVertexFormats.POSITION_COLOR);
+        for (int i = 0; i <= 360; i++) {
+            double angle = Math.toRadians(i);
+            double radius = target.getWidth() * 0.8D;
+            float xPos = (float) (Math.cos(angle) * radius);
+            float zPos = (float) (Math.sin(angle) * radius);
+            buffer.pos(stack.getLast().getMatrix(), xPos, (float) (height * progress), zPos)
+                    .color(base[0], base[1], base[2], lineAlpha).endVertex();
+            buffer.pos(stack.getLast().getMatrix(), xPos, (float) (height * progress + eased), zPos)
+                    .color(base[0], base[1], base[2], 0).endVertex();
         }
+        WorldVertexBufferUploader.draw(buffer);
+
+        buffer.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION_COLOR);
+        for (int i = 0; i <= 360; i++) {
+            double angle = Math.toRadians(i);
+            double radius = target.getWidth() * 0.8D;
+            float xPos = (float) (Math.cos(angle) * radius);
+            float zPos = (float) (Math.sin(angle) * radius);
+            buffer.pos(stack.getLast().getMatrix(), xPos, (float) (height * progress), zPos)
+                    .color(base[0], base[1], base[2], lineAlpha).endVertex();
+        }
+        WorldVertexBufferUploader.draw(buffer);
+
+        RenderSystem.enableCull();
+        RenderSystem.disableBlend();
+        RenderSystem.enableTexture();
+        RenderSystem.enableAlphaTest();
+        GL11.glDepthMask(true);
+        GL11.glDisable(GL11.GL_LINE_SMOOTH);
+        GL11.glHint(GL11.GL_LINE_SMOOTH_HINT, GL11.GL_DONT_CARE);
+        RenderSystem.shadeModel(GL11.GL_FLAT);
 
         stack.pop();
     }
 
-    private void drawCircle(MatrixStack stack, LivingEntity target, int color, float partialTicks) {
-        RenderSystem.pushMatrix();
-        RenderSystem.disableTexture();
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
-        RenderSystem.disableDepthTest();
+    private int getBaseColor(Entity target) {
+        int themePrimary = 0xFF5AA8FF;
+        int themeSecondary = 0xFF2A6BE6;
 
-        float alpha = 0.5F;
-        float radius = target.getWidth();
-        double progress = (System.currentTimeMillis() % (long) circleSpeed) / circleSpeed;
-        float offset = (float) progress * 360.0F;
-
-        Tessellator tessellator = Tessellator.getInstance();
-        Matrix4f matrix = stack.getLast().getMatrix();
-        tessellator.getBuffer().begin(GL11.GL_LINE_LOOP, DefaultVertexFormats.POSITION_COLOR);
-        for (int i = 0; i < 90; i++) {
-            double angle = Math.toRadians(offset + (i * 4));
-            float x = (float) (Math.cos(angle) * radius * 1.4F);
-            float z = (float) (Math.sin(angle) * radius * 1.4F);
-            float y = 0.05F + target.getHeight() * 0.01F;
-            tessellator.getBuffer().pos(matrix, x, y, z).color(color >> 16 & 0xFF, color >> 8 & 0xFF, color & 0xFF, (int) (alpha * 255.0F)).endVertex();
+        if (redOnHurt && target instanceof LivingEntity living && living.hurtTime > 0) {
+            return ColorUtils.interpolateColor(ColorUtils.rgba(220, 80, 80, 255), ColorUtils.rgba(220, 80, 80, 255),
+                    Math.min(living.hurtTime / 2.0D, 1.0D));
         }
-        tessellator.draw();
 
-        RenderSystem.enableDepthTest();
-        RenderSystem.disableBlend();
-        RenderSystem.enableTexture();
-        RenderSystem.popMatrix();
+        if (target instanceof LivingEntity living) {
+            return ColorUtils.interpolateColor(themeSecondary, themePrimary, Math.min(living.hurtTime / 2.0D, 1.0D));
+        }
+
+        return themePrimary;
     }
 
-    private void drawGhosts(MatrixStack stack, LivingEntity target, int color, float partialTicks) {
-        RenderSystem.pushMatrix();
-        RenderSystem.disableTexture();
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
-        RenderSystem.disableCull();
-        RenderSystem.disableDepthTest();
-
-        Matrix4f matrix = stack.getLast().getMatrix();
-        Tessellator tessellator = Tessellator.getInstance();
-
-        float alpha = 0.25F;
-        float height = target.getHeight();
-        float radius = Math.max(target.getWidth(), 0.6F) + ghostsWidth;
-        int length = Math.max(6, Math.round(ghostsLength / 2));
-        double time = System.currentTimeMillis() / ghostsSpeed;
-
-        tessellator.getBuffer().begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION_COLOR);
-        for (int i = 0; i < length; i++) {
-            double angle = (time + i) * ghostsAngle;
-            float x = (float) (Math.cos(angle) * radius);
-            float z = (float) (Math.sin(angle) * radius);
-            float y = (height * 0.5F) + (float) Math.sin(angle * 0.7F) * height * 0.25F;
-            tessellator.getBuffer().pos(matrix, x, y, z).color(color >> 16 & 0xFF, color >> 8 & 0xFF, color & 0xFF, (int) (alpha * 255.0F)).endVertex();
-        }
-        tessellator.draw();
-
-        RenderSystem.enableDepthTest();
-        RenderSystem.enableCull();
-        RenderSystem.disableBlend();
-        RenderSystem.enableTexture();
-        RenderSystem.popMatrix();
+    @Override
+    protected void onDisable() {
+        super.onDisable();
+        alphaState = 0.0F;
+        alpha.setDirection(Direction.BACKWARDS);
     }
 
-    private void drawGroundSquare(MatrixStack stack, LivingEntity target, int color, boolean filled) {
-        RenderSystem.pushMatrix();
-        RenderSystem.disableTexture();
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
-        RenderSystem.disableDepthTest();
-
-        float radius = Math.max(target.getWidth(), 0.6F) * 1.5F;
-        float y = 0.02F;
-        Matrix4f matrix = stack.getLast().getMatrix();
-        Tessellator tessellator = Tessellator.getInstance();
-
-        if (filled) {
-            tessellator.getBuffer().begin(GL11.GL_TRIANGLE_FAN, DefaultVertexFormats.POSITION_COLOR);
-        } else {
-            tessellator.getBuffer().begin(GL11.GL_LINE_LOOP, DefaultVertexFormats.POSITION_COLOR);
-        }
-
-        int alpha = filled ? 90 : 200;
-        float[][] corners = new float[][]{
-                {-radius, y, -radius},
-                {radius, y, -radius},
-                {radius, y, radius},
-                {-radius, y, radius}
-        };
-
-        for (float[] corner : corners) {
-            tessellator.getBuffer().pos(matrix, corner[0], corner[1], corner[2])
-                    .color(color >> 16 & 0xFF, color >> 8 & 0xFF, color & 0xFF, alpha)
-                    .endVertex();
-        }
-
-        if (!filled) {
-            tessellator.getBuffer().pos(matrix, corners[0][0], corners[0][1], corners[0][2])
-                    .color(color >> 16 & 0xFF, color >> 8 & 0xFF, color & 0xFF, alpha)
-                    .endVertex();
-        }
-
-        tessellator.draw();
-
-        RenderSystem.enableDepthTest();
-        RenderSystem.disableBlend();
-        RenderSystem.enableTexture();
-        RenderSystem.popMatrix();
-    }
-
+    // Settings bridge for GUI
     public boolean isRedOnHurt() {
         return redOnHurt;
     }
@@ -212,18 +315,21 @@ public class TargetESPModule extends AddonModule {
         this.redOnHurt = redOnHurt;
     }
 
-    public String[] getAvailableTypes() {
-        return TYPES;
-    }
-
     public String getType() {
         return type;
     }
 
     public void setType(String type) {
-        if (Arrays.asList(TYPES).contains(type)) {
-            this.type = type;
+        for (String available : TYPES) {
+            if (available.equals(type)) {
+                this.type = type;
+                return;
+            }
         }
+    }
+
+    public String[] getAvailableTypes() {
+        return TYPES.clone();
     }
 
     public float getGhostsSpeed() {

@@ -28,12 +28,28 @@ laby-addon/
                     │   │   └── FTHelperModule.java
                     │   └── render
                     │       └── TargetESPModule.java
-                    └── ui
-                        ├── NebulaeAddonSettingsGui.java
-                        └── widget
-                            ├── CycleButton.java
-                            ├── FloatSlider.java
-                            └── ToggleButton.java
+                    ├── ui
+                    │   ├── NebulaeAddonSettingsGui.java
+                    │   └── widget
+                    │       ├── CycleButton.java
+                    │       ├── FloatSlider.java
+                    │       └── ToggleButton.java
+                    └── util
+                        ├── IMinecraft.java
+                        ├── animation
+                        │   ├── Animation.java
+                        │   ├── AnimationMath.java
+                        │   ├── Direction.java
+                        │   └── impl
+                        │       └── DecelerateAnimation.java
+                        ├── color
+                        │   └── ColorUtils.java
+                        ├── math
+                        │   ├── MathUtil.java
+                        │   └── TimerUtil.java
+                        └── render
+                            ├── ClientHandler.java
+                            └── W2S.java
 ```
 
 ## Building
