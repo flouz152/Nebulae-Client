@@ -45,7 +45,7 @@ public class ClickGuiScreen extends Screen {
         double centerX = this.width / 2.0D;
         double centerY = this.height / 2.0D;
 
-        matrixStack.push();
+        matrixStack.pushPose();
         matrixStack.translate(centerX, centerY, 0);
         matrixStack.scale(scale, scale, scale);
         matrixStack.translate(-centerX, -centerY, 0);
@@ -54,7 +54,7 @@ public class ClickGuiScreen extends Screen {
             panel.render(matrixStack, mouseX, mouseY, partialTicks);
         }
 
-        matrixStack.pop();
+        matrixStack.popPose();
 
         ModuleButton hovered = getHoveredModule(mouseX, mouseY);
         if (hovered != null && hovered.getDescription() != null && !hovered.getDescription().isEmpty()) {
@@ -62,15 +62,15 @@ public class ClickGuiScreen extends Screen {
         }
 
         if (closing && Math.abs(alpha - targetAlpha) < 0.02F) {
-            Minecraft.getInstance().displayGuiScreen(null);
+            Minecraft.getInstance().setScreen(null);
         }
     }
 
     private void drawDescription(MatrixStack stack, String description) {
         Minecraft minecraft = Minecraft.getInstance();
-        int screenWidth = minecraft.getMainWindow().getScaledWidth();
-        int screenHeight = minecraft.getMainWindow().getScaledHeight();
-        int textWidth = minecraft.fontRenderer.getStringWidth(description);
+        int screenWidth = minecraft.getWindow().getGuiScaledWidth();
+        int screenHeight = minecraft.getWindow().getGuiScaledHeight();
+        int textWidth = minecraft.font.width(description);
         int boxWidth = textWidth + 20;
         int boxHeight = 20;
         int x = screenWidth / 2 - boxWidth / 2;
@@ -79,7 +79,7 @@ public class ClickGuiScreen extends Screen {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         AbstractGui.fill(stack, x, y, x + boxWidth, y + boxHeight, ColorUtil.rgba(0, 0, 0, 140));
-        minecraft.fontRenderer.drawString(stack, description, x + 10, y + (boxHeight - minecraft.fontRenderer.FONT_HEIGHT) / 2.0F, 0xFFFFFF);
+        minecraft.font.draw(stack, description, x + 10, y + (boxHeight - minecraft.font.lineHeight) / 2.0F, 0xFFFFFF);
         RenderSystem.disableBlend();
     }
 

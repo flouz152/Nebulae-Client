@@ -17,10 +17,12 @@ public final class ColorUtil {
 
     public static int lerp(int startColor, int endColor, float amount) {
         amount = AnimationUtil.clamp(amount, 0.0F, 1.0F);
-        int r = (int) (Color.red(startColor) + (Color.red(endColor) - Color.red(startColor)) * amount);
-        int g = (int) (Color.green(startColor) + (Color.green(endColor) - Color.green(startColor)) * amount);
-        int b = (int) (Color.blue(startColor) + (Color.blue(endColor) - Color.blue(startColor)) * amount);
-        int a = (int) (Color.alpha(startColor) + (Color.alpha(endColor) - Color.alpha(startColor)) * amount);
+        Color start = new Color(startColor, true);
+        Color end = new Color(endColor, true);
+        int r = (int) (start.getRed() + (end.getRed() - start.getRed()) * amount);
+        int g = (int) (start.getGreen() + (end.getGreen() - start.getGreen()) * amount);
+        int b = (int) (start.getBlue() + (end.getBlue() - start.getBlue()) * amount);
+        int a = (int) (start.getAlpha() + (end.getAlpha() - start.getAlpha()) * amount);
         return new Color(r, g, b, a).getRGB();
     }
 }

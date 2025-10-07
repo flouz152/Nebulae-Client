@@ -21,7 +21,7 @@ public final class AnimationUtil {
     }
 
     private static double getFrameTime() {
-        int fps = net.minecraft.client.Minecraft.getInstance().getDebugFPS();
+        int fps = net.minecraft.client.Minecraft.getInstance().getFps();
         if (fps <= 0) {
             return 1.0D;
         }

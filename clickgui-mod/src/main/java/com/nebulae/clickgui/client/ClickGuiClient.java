@@ -3,9 +3,9 @@ package com.nebulae.clickgui.client;
 import com.nebulae.clickgui.client.gui.ClickGuiScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.client.util.InputMappings;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -21,7 +21,7 @@ public final class ClickGuiClient {
     public static void init() {
         openKey = new KeyBinding(
                 "key.nebulae_clickgui.open",
-                KeyConflictContext.IN_GAME,
+                InputMappings.Type.KEYSYM,
                 GLFW.GLFW_KEY_RIGHT_SHIFT,
                 "key.categories.misc"
         );
@@ -31,12 +31,12 @@ public final class ClickGuiClient {
     @SubscribeEvent
     public static void onKeyInput(InputEvent.KeyInputEvent event) {
         Minecraft minecraft = Minecraft.getInstance();
-        if (minecraft.player == null || minecraft.currentScreen != null) {
+        if (minecraft.player == null || minecraft.screen != null) {
             return;
         }
 
-        if (openKey.isPressed()) {
-            minecraft.displayGuiScreen(new ClickGuiScreen());
+        if (openKey.consumeClick()) {
+            minecraft.setScreen(new ClickGuiScreen());
         }
     }
 }

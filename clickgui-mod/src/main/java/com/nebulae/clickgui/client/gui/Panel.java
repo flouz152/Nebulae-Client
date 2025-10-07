@@ -6,8 +6,7 @@ import com.nebulae.clickgui.util.AnimationUtil;
 import com.nebulae.clickgui.util.ColorUtil;
 import com.nebulae.clickgui.util.RenderUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.gui.Font;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -42,8 +41,8 @@ public class Panel {
         float gap = 5.0F;
         int panelCount = ClickGuiScreen.PANEL_COUNT;
 
-        float screenWidth = minecraft.getMainWindow().getScaledWidth();
-        float screenHeight = minecraft.getMainWindow().getScaledHeight();
+        float screenWidth = minecraft.getWindow().getGuiScaledWidth();
+        float screenHeight = minecraft.getWindow().getGuiScaledHeight();
         float totalWidth = panelCount * width + (panelCount - 1) * gap;
 
         this.x = (screenWidth - totalWidth) / 2.0F + index * (width + gap);
@@ -59,7 +58,7 @@ public class Panel {
         if (contentHeight <= viewHeight) {
             targetScrollOffset = 0.0F;
         } else {
-            targetScrollOffset = MathHelper.clamp(targetScrollOffset, maxScroll, 0.0F);
+            targetScrollOffset = AnimationUtil.clamp(targetScrollOffset, maxScroll, 0.0F);
         }
     }
 
@@ -70,7 +69,7 @@ public class Panel {
     }
 
     private void drawBackground(MatrixStack stack) {
-        FontRenderer font = Minecraft.getInstance().fontRenderer;
+        Font font = Minecraft.getInstance().font;
         int background = ColorUtil.rgba(18, 18, 24, 215);
         int accent = ColorUtil.rgba(58, 105, 255, 220);
 
@@ -78,22 +77,22 @@ public class Panel {
         RenderUtil.drawRoundedRect(stack, x, y + 26.0F, width, height - 26.0F, 6.0F, ColorUtil.rgba(12, 12, 18, 190));
 
         String header = category.getIcon() + "  " + category.getName();
-        float textWidth = font.getStringWidth(header);
-        font.drawString(stack, header, x + width / 2.0F - textWidth / 2.0F, y + 8.0F, 0xFFFFFF);
+        float textWidth = font.width(header);
+        font.draw(stack, header, x + width / 2.0F - textWidth / 2.0F, y + 8.0F, 0xFFFFFF);
 
         if (index == 0) {
-            font.drawString(stack, "Nebulae", x + 8.0F, y + height + 10.0F, accent);
-            font.drawString(stack, "Right Shift - open GUI", x + 8.0F, y + height + 22.0F, 0xAAAAAA);
+            font.draw(stack, "Nebulae", x + 8.0F, y + height + 10.0F, accent);
+            font.draw(stack, "Right Shift - open GUI", x + 8.0F, y + height + 22.0F, 0xAAAAAA);
         } else if (index == 2) {
-            font.drawString(stack, "LShift - show keybind overlay", x + 6.0F, y + height + 10.0F, 0xAAAAAA);
-            font.drawString(stack, "CTRL+F - search modules", x + 6.0F, y + height + 22.0F, 0xAAAAAA);
+            font.draw(stack, "LShift - show keybind overlay", x + 6.0F, y + height + 10.0F, 0xAAAAAA);
+            font.draw(stack, "CTRL+F - search modules", x + 6.0F, y + height + 22.0F, 0xAAAAAA);
         } else if (index == 3) {
             float fieldX = x + width - 98.0F;
             float fieldY = y + height + 8.0F;
             RenderUtil.drawRoundedRect(stack, fieldX, fieldY, 92.0F, 18.0F, 4.0F, ColorUtil.rgba(24, 24, 32, 200));
             String placeholder = searching ? searchQuery + (System.currentTimeMillis() % 1000 > 500 ? "_" : "") : searchQuery.isEmpty() ? "Search..." : searchQuery;
             int color = searchQuery.isEmpty() && !searching ? 0x555555 : 0xFFFFFF;
-            font.drawString(stack, placeholder, fieldX + 6.0F, fieldY + 5.0F, color);
+            font.draw(stack, placeholder, fieldX + 6.0F, fieldY + 5.0F, color);
         }
     }
 
@@ -129,7 +128,7 @@ public class Panel {
             return;
         }
         float amount = (float) (delta * 12.0F);
-        targetScrollOffset = MathHelper.clamp(targetScrollOffset + amount, -1000.0F, 0.0F);
+        targetScrollOffset = AnimationUtil.clamp(targetScrollOffset + amount, -1000.0F, 0.0F);
     }
 
     public void mouseClicked(double mouseX, double mouseY, int button) {
