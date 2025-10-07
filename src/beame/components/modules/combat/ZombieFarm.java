@@ -111,7 +111,7 @@ public class ZombieFarm extends Module {
         }
         if (!autoLeaveTriggered) {
             double radius = autoLeaveDistance.get();
-            List<PlayerEntity> players = mc.world.getPlayers();
+            List<? extends PlayerEntity> players = mc.world.getPlayers();
             for (PlayerEntity player : players) {
                 if (player == mc.player) {
                     continue;
