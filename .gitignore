@@ -1,0 +1,8 @@
+# Ignore build outputs
+out/
+
+# Ignore manually provided TargetESP textures
+labymod-addon/src/main/resources/assets/targetesp/textures/*.png
+src/assets/minecraft/night/image/glow.png
+src/assets/minecraft/night/image/target/Quad.png
+src/assets/minecraft/night/image/target/Quad2.png
