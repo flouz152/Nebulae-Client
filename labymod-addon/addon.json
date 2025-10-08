@@ -1,0 +1,9 @@
+{
+  "uuid": "1bab9745-b60b-4341-aeee-8ca079623358",
+  "name": "Target ESP",
+  "main": "dev.nebulae.targetesp.TargetEspAddon",
+  "version": "1.0.0",
+  "author": "Nebulae",
+  "description": "Реализация TargetESP для LabyMod 3 с несколькими режимами отображения",
+  "category": "visual"
+}
