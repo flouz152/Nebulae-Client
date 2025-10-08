@@ -1,0 +1,44 @@
+{
+	"credit": "Designed by Optimus0812 with BDcraft Cubik PRO 0.95 Beta - http://bdcraft.net",
+	"textures": {
+		"0": "item/nebos (1)",
+		"particle": "item/nebos (1)"
+	},
+	"elements": [
+		{
+			"from": [7.25, 7.25, 6.5],
+			"to": [8.75, 8.75, 9],
+			"faces": {
+				"north": {"uv": [0, 2.97143, 16, 16], "texture": "#0"},
+				"east": {"uv": [0, 2.97143, 16, 16], "texture": "#0"},
+				"south": {"uv": [0, 2.97143, 16, 16], "texture": "#0"},
+				"west": {"uv": [0, 2.97143, 16, 16], "texture": "#0"},
+				"up": {"uv": [0, 2.97143, 16, 16], "texture": "#0"},
+				"down": {"uv": [0, 2.97143, 16, 16], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [0, 180, 0]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [0, 180, 0]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, -180, 0]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, -180, 0]
+		},
+		"ground": {
+			"translation": [0, -5, 0]
+		},
+		"gui": {
+			"rotation": [180, -180, -125]
+		},
+		"fixed": {
+			"rotation": [0, -90, 0]
+		}
+	}
+}

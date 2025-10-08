@@ -1,0 +1,88 @@
+{
+	"credit": "Designed by Optimus0812 with BDcraft Cubik PRO 0.95 Beta - http://bdcraft.net",
+	"textures": {
+		"pumpkin_face_off": "item/pumpkin_face_off",
+		"pumpkin_side": "blocks/pumpkin_side",
+		"pumpkin_top": "blocks/pumpkin_top",
+		"particle": "item/qkkkkw_project"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 16, 1],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#pumpkin_face_off"},
+				"east": {"uv": [15, 0, 16, 16], "texture": "#pumpkin_side"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#pumpkin_side"},
+				"west": {"uv": [0, 0, 1, 16], "texture": "#pumpkin_side"},
+				"up": {"uv": [0, 15, 16, 16], "rotation": 180, "texture": "#pumpkin_top"},
+				"down": {"uv": [16, 16, 0, 15], "rotation": 180, "texture": "#pumpkin_top"}
+			}
+		},
+		{
+			"from": [0, 0, 15],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#pumpkin_face_off"},
+				"east": {"uv": [0, 0, 1, 16], "texture": "#pumpkin_side"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#pumpkin_side"},
+				"west": {"uv": [15, 0, 16, 16], "texture": "#pumpkin_side"},
+				"up": {"uv": [0, 0, 16, 1], "rotation": 180, "texture": "#pumpkin_top"},
+				"down": {"uv": [16, 1, 0, 0], "rotation": 180, "texture": "#pumpkin_top"}
+			}
+		},
+		{
+			"from": [15, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 1, 16], "texture": "#pumpkin_face_off"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#pumpkin_side"},
+				"south": {"uv": [15, 0, 16, 16], "texture": "#pumpkin_side"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#pumpkin_side"},
+				"up": {"uv": [0, 0, 1, 16], "rotation": 180, "texture": "#pumpkin_top"},
+				"down": {"uv": [16, 16, 15, 0], "rotation": 180, "texture": "#pumpkin_top"}
+			}
+		},
+		{
+			"from": [0, 0, 0],
+			"to": [1, 16, 16],
+			"faces": {
+				"north": {"uv": [15, 0, 16, 16], "texture": "#pumpkin_face_off"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#pumpkin_side"},
+				"south": {"uv": [0, 0, 1, 16], "texture": "#pumpkin_side"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#pumpkin_side"},
+				"up": {"uv": [15, 0, 16, 16], "rotation": 180, "texture": "#pumpkin_top"},
+				"down": {"uv": [1, 16, 0, 0], "rotation": 180, "texture": "#pumpkin_top"}
+			}
+		},
+		{
+			"from": [0, 15, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 1], "texture": "#pumpkin_face_off"},
+				"east": {"uv": [0, 0, 16, 1], "texture": "#pumpkin_side"},
+				"south": {"uv": [0, 0, 16, 1], "texture": "#pumpkin_side"},
+				"west": {"uv": [0, 0, 16, 1], "texture": "#pumpkin_side"},
+				"up": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#pumpkin_top"},
+				"down": {"uv": [16, 16, 0, 0], "rotation": 180, "texture": "#pumpkin_top"}
+			}
+		},
+		{
+			"from": [0, 0, 0],
+			"to": [16, 1, 16],
+			"faces": {
+				"north": {"uv": [0, 15, 16, 16], "texture": "#pumpkin_face_off"},
+				"east": {"uv": [0, 15, 16, 16], "texture": "#pumpkin_side"},
+				"south": {"uv": [0, 15, 16, 16], "texture": "#pumpkin_side"},
+				"west": {"uv": [0, 15, 16, 16], "texture": "#pumpkin_side"},
+				"up": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#pumpkin_top"},
+				"down": {"uv": [16, 16, 0, 0], "rotation": 180, "texture": "#pumpkin_top"}
+			}
+		}
+	],
+	"display": {
+		"head": {
+			"scale": [0, 0, 0]
+		}
+	}
+}

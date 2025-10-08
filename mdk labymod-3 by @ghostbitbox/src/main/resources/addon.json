@@ -1,0 +1,6 @@
+{
+  "name": "MDK by @ghostbitbox",
+  "uuid": "%uuid%",
+  "mainClass": "mdk.by.ghostbitbox.TG_ghostbitbox",
+  "transformerClass": "mdk.by.ghostbitbox.launch.Transformer"
+}

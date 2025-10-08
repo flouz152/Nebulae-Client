@@ -1,0 +1,44 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.glowstone_dust - Converted.new": {
+			"animation_length": 3.79167,
+			"bones": {
+				"bone": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": [0, 0, 0.01],
+					"position": {
+						"vector": [0, 0, 0]
+					}
+				},
+				"bone2": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 270]
+						},
+						"3.0": {
+							"vector": [0, 0, 360]
+						}
+					},
+					"position": {
+						"0.0": {
+							"vector": [-0.5, -9.8, 0]
+						},
+						"1.625": {
+							"vector": [-2.61, -4.59, 0]
+						},
+						"2.3333": {
+							"vector": [-2.09, -2.85, 0]
+						},
+						"3.0": {
+							"vector": [0, 0, 0]
+						}
+					}
+				}
+			},
+			"particle_effects": {}
+		}
+	}
+}
