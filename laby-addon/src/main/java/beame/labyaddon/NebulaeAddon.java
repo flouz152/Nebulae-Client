@@ -2,7 +2,6 @@ package beame.labyaddon;
 
 import beame.labyaddon.config.NebulaeAddonConfig;
 import beame.labyaddon.core.ModuleManager;
-import beame.labyaddon.module.player.FTHelperModule;
 import beame.labyaddon.module.render.TargetESPModule;
 import beame.labyaddon.ui.NebulaeAddonSettingsGui;
 import net.labymod.api.LabyAddon;
@@ -20,33 +19,29 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 
 /**
- * LabyMod 3 add-on entry point which exposes the Essence FTHelper and TargetESP modules
- * via a compact configuration screen.
+ * LabyMod 3 add-on entry point which exposes the Essence TargetESP module via a
+ * compact configuration screen.
  */
 @Referenceable
 public class NebulaeAddon extends LabyAddon<NebulaeAddonConfig> {
 
     private final ModuleManager moduleManager = new ModuleManager();
-    private final FTHelperModule ftHelperModule = new FTHelperModule();
     private final TargetESPModule targetEspModule = new TargetESPModule();
     private final ForgeBridge forgeBridge = new ForgeBridge();
 
     @Override
     protected void enable() {
         moduleManager.clear();
-        moduleManager.register(ftHelperModule);
         moduleManager.register(targetEspModule);
         MinecraftForge.EVENT_BUS.register(forgeBridge);
 
         NebulaeAddonConfig config = configuration();
-        ftHelperModule.applyConfig(config);
         targetEspModule.applyConfig(config);
     }
 
     @Override
     protected void disable() {
         NebulaeAddonConfig config = configuration();
-        ftHelperModule.exportConfig(config);
         targetEspModule.exportConfig(config);
         MinecraftForge.EVENT_BUS.unregister(forgeBridge);
     }
@@ -62,7 +57,7 @@ public class NebulaeAddon extends LabyAddon<NebulaeAddonConfig> {
         settings.add(net.labymod.api.client.gui.screen.widget.widgets.settings.ButtonSettingWidget.builder()
                 .label("Открыть меню настроек")
                 .action(() -> Minecraft.getInstance().displayGuiScreen(
-                        new NebulaeAddonSettingsGui(Minecraft.getInstance().currentScreen, configuration(), ftHelperModule, targetEspModule)))
+                        new NebulaeAddonSettingsGui(Minecraft.getInstance().currentScreen, configuration(), targetEspModule)))
                 .build());
     }
 

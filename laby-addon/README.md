@@ -1,11 +1,11 @@
 # Nebulae LabyMod 3 Add-on
 
-This directory contains a LabyMod 3 add-on that ships standalone versions of the
-`FTHelper` and `TargetESP` modules.  The implementation is completely
-self-contained – all required helpers and render logic live inside the add-on so
-it can be packaged independently from the main Essence client.  Players can
-toggle both features and tweak their most important options through a compact
-in-game configuration screen.
+This directory contains a LabyMod 3 add-on that ships a standalone version of
+the `TargetESP` module.  The implementation is completely self-contained – all
+required helpers and render logic live inside the add-on so it can be packaged
+independently from the main Essence client.  Players can toggle the feature and
+tweak its most important options through a compact in-game configuration
+screen.
 
 ## Structure
 
@@ -24,8 +24,6 @@ laby-addon/
                     │   ├── AddonModule.java
                     │   └── ModuleManager.java
                     ├── module
-                    │   ├── player
-                    │   │   └── FTHelperModule.java
                     │   └── render
                     │       └── TargetESPModule.java
                     ├── ui
