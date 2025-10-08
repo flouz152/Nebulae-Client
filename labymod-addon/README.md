@@ -10,7 +10,7 @@
 
 ## Текстуры
 
-Оригинальные файлы `glow.png`, `quad.png` и `quad_new.png` не входят в репозиторий. Скопируй их из установленного клиента Nebulae (папка `assets/targetesp/textures`) и помести в `labymod-addon/src/main/resources/assets/targetesp/textures` перед сборкой аддона.
+Оригинальные файлы `glow.png`, `quad.png` и `quad_new.png` не входят в репозиторий. Скопируй их из установленного клиента Nebulae (папка `assets/targetesp/textures`) и помести в `labymod-addon/src/main/resources/assets/targetesp/textures` перед сборкой аддона. Git настроен игнорировать эти PNG, поэтому они не попадут в коммиты автоматически.
 
 ## Сборка
 
