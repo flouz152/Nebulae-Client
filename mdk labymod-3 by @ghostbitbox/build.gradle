@@ -78,6 +78,7 @@ dependencies {
     annotationProcessor("org.spongepowered:mixin:0.8.2:processor")
     minecraft 'com.github.ImpactDevelopment:Vanilla:1.16.5'
     compile(files('libs/lm_api_mc1.16.5.jar'))
+    compile("org.joml:joml:1.10.5") { transitive = false }
     compile("org.ow2.asm:asm-analysis:6.2") { transitive = false }
     compile("org.ow2.asm:asm-util:6.2") { transitive = false }
     compile("org.ow2.asm:asm-commons:6.2") { transitive = false }
@@ -100,6 +101,10 @@ task downloadAPI(type: Download) {
 
     src "https://dl.labymod.net/latest/api/files/lm_api_mc1.16.5.jar"
     dest 'libs/'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    dependsOn downloadAPI
 }
 
 if (project.tasks.findByName('downloadAssets')) {
