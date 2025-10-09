@@ -1,8 +1,0 @@
-{
-    "variants": {
-        "facing=north":[ { "model": "dropper1" },{ "model": "dropper2" },{ "model": "dropper3" }],
-        "facing=south":[ { "model": "dropper1", "y": 180 },{ "model": "dropper2", "y": 180 },{ "model": "dropper3", "y": 180 }],
-        "facing=west":[  { "model": "dropper1", "y": 270 },{ "model": "dropper2", "y": 270 },{ "model": "dropper3", "y": 270 }],
-        "facing=east":[  { "model": "dropper1", "y": 90 },{ "model": "dropper2", "y": 90 },{ "model": "dropper3", "y": 90 }]
-    }
-}
