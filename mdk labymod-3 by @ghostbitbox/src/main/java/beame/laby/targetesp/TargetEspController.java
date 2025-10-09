@@ -3,10 +3,10 @@ package beame.laby.targetesp;
 import beame.laby.targetesp.util.TargetTracker;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.labymod.api.event.Subscribe;
-import net.labymod.api.event.events.client.entity.player.AttackEvent;
-import net.labymod.api.event.events.client.lifecycle.GameTickEvent;
-import net.labymod.api.event.events.render.game.OverlayRenderEvent;
-import net.labymod.api.event.events.render.world.WorldRenderEvent;
+import net.labymod.api.event.events.client.TickEvent;
+import net.labymod.api.event.events.client.gui.RenderGameOverlayEvent;
+import net.labymod.api.event.events.client.player.AttackEntityEvent;
+import net.labymod.api.event.events.client.renderer.RenderWorldEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 
@@ -21,18 +21,21 @@ public class TargetEspController {
     }
 
     @Subscribe
-    public void onAttack(AttackEvent event) {
-        if (!addon.configuration().enabled().get()) {
+    public void onAttack(AttackEntityEvent event) {
+        if (!addon.configuration().isEnabled()) {
             return;
         }
-        if (event.getTarget() != null) {
-            tracker.setTarget(event.getTarget());
+        if (event.getEntity() != null) {
+            tracker.setTarget(event.getEntity());
         }
     }
 
     @Subscribe
-    public void onTick(GameTickEvent event) {
-        if (!addon.configuration().enabled().get()) {
+    public void onTick(TickEvent event) {
+        if (event.getPhase() != TickEvent.Phase.PRE) {
+            return;
+        }
+        if (!addon.configuration().isEnabled()) {
             tracker.clear();
             return;
         }
@@ -41,22 +44,29 @@ public class TargetEspController {
     }
 
     @Subscribe
-    public void onOverlay(OverlayRenderEvent event) {
+    public void onOverlay(RenderGameOverlayEvent event) {
+        if (event.getPhase() != RenderGameOverlayEvent.Phase.POST) {
+            return;
+        }
         Entity target = tracker.getTarget();
         if (target == null) {
             return;
         }
         MatrixStack matrices = event.getMatrixStack();
-        renderer.drawHud(matrices, target, addon.configuration().mode().get(), tracker.getVisibility(), event.getPartialTicks());
+        renderer.drawHud(matrices, target, addon.configuration().getMode(), tracker.getVisibility(), event.getPartialTicks());
     }
 
     @Subscribe
-    public void onWorldRender(WorldRenderEvent event) {
+    public void onWorldRender(RenderWorldEvent event) {
         Entity target = tracker.getTarget();
         if (target == null) {
             return;
         }
         MatrixStack matrices = event.getMatrixStack();
-        renderer.drawWorld(matrices, target, addon.configuration().mode().get(), tracker.getVisibility(), event.getPartialTicks());
+        renderer.drawWorld(matrices, target, addon.configuration().getMode(), tracker.getVisibility(), event.getPartialTicks());
+    }
+
+    public void shutdown() {
+        tracker.clear();
     }
 }
