@@ -30,14 +30,16 @@ public final class ProjectionUtil {
         Vector3f projected = new Vector3f((float) (cameraPosition.x - x), (float) (cameraPosition.y - y), (float) (cameraPosition.z - z));
         projected.transform(cameraRotation);
 
+        float partialTicks = mc.getRenderPartialTicks();
+
         if (mc.gameSettings.viewBobbing) {
             Entity renderViewEntity = mc.getRenderViewEntity();
             if (renderViewEntity instanceof PlayerEntity) {
-                applyViewBobbing(mc, (PlayerEntity) renderViewEntity, projected);
+                applyViewBobbing(mc, (PlayerEntity) renderViewEntity, projected, partialTicks);
             }
         }
 
-        double fov = resolveFov(mc);
+        double fov = resolveFov(mc, partialTicks);
         float halfHeight = mc.getMainWindow().getScaledHeight() / 2.0f;
         float scaleFactor = (float) (halfHeight / (projected.getZ() * Math.tan(Math.toRadians(fov / 2.0f))));
         if (projected.getZ() < 0.0f) {
@@ -48,10 +50,10 @@ public final class ProjectionUtil {
         return null;
     }
 
-    private static double resolveFov(Minecraft mc) {
+    private static double resolveFov(Minecraft mc, float partialTicks) {
         if (GET_FOV_MODIFIER != null) {
             try {
-                return (double) GET_FOV_MODIFIER.invoke(mc.gameRenderer, mc.getRenderManager().info, mc.getRenderPartialTicks(), true);
+                return (double) GET_FOV_MODIFIER.invoke(mc.gameRenderer, mc.getRenderManager().info, partialTicks, true);
             } catch (IllegalAccessException | InvocationTargetException ignored) {
                 // fall back below when reflection fails at runtime
             }
@@ -59,11 +61,11 @@ public final class ProjectionUtil {
         return mc.gameSettings.fov;
     }
 
-    private static void applyViewBobbing(Minecraft mc, PlayerEntity player, Vector3f projected) {
+    private static void applyViewBobbing(Minecraft mc, PlayerEntity player, Vector3f projected, float partialTicks) {
         float walked = player.distanceWalkedModified;
         float deltaWalked = walked - player.prevDistanceWalkedModified;
-        float walkTicks = -(walked + deltaWalked * mc.getRenderPartialTicks());
-        float cameraYaw = MathHelper.lerp(mc.getRenderPartialTicks(), player.prevCameraYaw, player.cameraYaw);
+        float walkTicks = -(walked + deltaWalked * partialTicks);
+        float cameraYaw = MathHelper.lerp(partialTicks, player.prevCameraYaw, player.cameraYaw);
 
         Quaternion pitch = new Quaternion(Vector3f.XP, Math.abs(MathHelper.cos(walkTicks * (float) Math.PI - 0.2F) * cameraYaw) * 5.0F, true);
         pitch.conjugate();

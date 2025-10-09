@@ -114,13 +114,7 @@ public class TargetEspRenderer {
                 double sin = Math.sin(angle) * GHOST_RADIUS;
                 double cos = Math.cos(angle) * GHOST_RADIUS;
 
-                if (pass == 0) {
-                    matrices.translate(sin, cos, -cos);
-                } else if (pass == 1) {
-                    matrices.translate(-sin, sin, -cos);
-                } else {
-                    matrices.translate(cos, -sin, -sin);
-                }
+                offsetGhostOrbit(matrices, pass, sin, cos, true);
 
                 float size = GHOST_WIDTH;
                 matrices.translate(-size / 2.0f, -size / 2.0f, 0.0f);
@@ -143,13 +137,7 @@ public class TargetEspRenderer {
                 matrices.rotate(rotation);
                 matrices.translate(size / 2.0f, size / 2.0f, 0.0f);
 
-                if (pass == 0) {
-                    matrices.translate(-sin, -cos, cos);
-                } else if (pass == 1) {
-                    matrices.translate(sin, -sin, cos);
-                } else {
-                    matrices.translate(-cos, sin, sin);
-                }
+                offsetGhostOrbit(matrices, pass, sin, cos, false);
             }
         }
 
@@ -160,6 +148,32 @@ public class TargetEspRenderer {
         RenderSystem.depthMask(true);
         RenderSystem.popMatrix();
         matrices.pop();
+    }
+
+    private void offsetGhostOrbit(MatrixStack matrices, int pass, double sin, double cos, boolean forward) {
+        double translateX;
+        double translateY;
+        double translateZ;
+
+        switch (pass) {
+            case 0:
+                translateX = forward ? sin : -sin;
+                translateY = forward ? cos : -cos;
+                translateZ = forward ? -cos : cos;
+                break;
+            case 1:
+                translateX = forward ? -sin : sin;
+                translateY = forward ? sin : -sin;
+                translateZ = forward ? -cos : cos;
+                break;
+            default:
+                translateX = forward ? cos : -cos;
+                translateY = forward ? -sin : sin;
+                translateZ = forward ? -sin : sin;
+                break;
+        }
+
+        matrices.translate(translateX, translateY, translateZ);
     }
 
     private void drawCircle(MatrixStack matrices, Entity target, float visibility, float partialTicks) {
