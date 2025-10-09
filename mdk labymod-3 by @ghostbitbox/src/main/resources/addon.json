@@ -3,6 +3,7 @@
   "displayName": "Target ESP",
   "author": "Nebulae",
   "version": "1.0.0",
+  "uuid": "f5a1f2a7-0d8c-4a6f-94a3-2d1f4c3a5d2e",
   "mainClass": "beame.laby.targetesp.TargetEspAddon",
   "description": "Target ESP overlay that mirrors the original mod with configurable display modes.",
   "category": "RENDER"
