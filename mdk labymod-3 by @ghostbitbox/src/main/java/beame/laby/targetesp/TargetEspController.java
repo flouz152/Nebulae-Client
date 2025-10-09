@@ -2,13 +2,13 @@ package beame.laby.targetesp;
 
 import beame.laby.targetesp.util.TargetTracker;
 import com.mojang.blaze3d.matrix.MatrixStack;
-import net.labymod.api.event.Subscribe;
-import net.labymod.api.event.events.client.entity.player.AttackEvent;
-import net.labymod.api.event.events.client.lifecycle.GameTickEvent;
-import net.labymod.api.event.events.render.game.OverlayRenderEvent;
-import net.labymod.api.event.events.render.world.WorldRenderEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class TargetEspController {
 
@@ -20,19 +20,26 @@ public class TargetEspController {
         this.addon = addon;
     }
 
-    @Subscribe
-    public void onAttack(AttackEvent event) {
-        if (!addon.configuration().enabled().get()) {
+    @SubscribeEvent
+    public void onAttack(AttackEntityEvent event) {
+        if (event.getEntityPlayer() == null || !event.getEntityPlayer().world.isRemote) {
             return;
         }
-        if (event.getTarget() != null) {
-            tracker.setTarget(event.getTarget());
+        if (!addon.configuration().isEnabled()) {
+            return;
+        }
+        Entity target = event.getTarget();
+        if (target != null) {
+            tracker.setTarget(target);
         }
     }
 
-    @Subscribe
-    public void onTick(GameTickEvent event) {
-        if (!addon.configuration().enabled().get()) {
+    @SubscribeEvent
+    public void onClientTick(TickEvent.ClientTickEvent event) {
+        if (event.phase != TickEvent.Phase.END) {
+            return;
+        }
+        if (!addon.configuration().isEnabled()) {
             tracker.clear();
             return;
         }
@@ -40,23 +47,30 @@ public class TargetEspController {
         tracker.tick(player);
     }
 
-    @Subscribe
-    public void onOverlay(OverlayRenderEvent event) {
+    @SubscribeEvent
+    public void onOverlay(RenderGameOverlayEvent.Post event) {
+        if (event.getType() != RenderGameOverlayEvent.ElementType.ALL) {
+            return;
+        }
         Entity target = tracker.getTarget();
-        if (target == null) {
+        if (target == null || !addon.configuration().isEnabled()) {
             return;
         }
         MatrixStack matrices = event.getMatrixStack();
-        renderer.drawHud(matrices, target, addon.configuration().mode().get(), tracker.getVisibility(), event.getPartialTicks());
+        renderer.drawHud(matrices, target, addon.configuration().getMode(), tracker.getVisibility(), event.getPartialTicks());
     }
 
-    @Subscribe
-    public void onWorldRender(WorldRenderEvent event) {
+    @SubscribeEvent
+    public void onWorldRender(RenderWorldLastEvent event) {
         Entity target = tracker.getTarget();
-        if (target == null) {
+        if (target == null || !addon.configuration().isEnabled()) {
             return;
         }
         MatrixStack matrices = event.getMatrixStack();
-        renderer.drawWorld(matrices, target, addon.configuration().mode().get(), tracker.getVisibility(), event.getPartialTicks());
+        renderer.drawWorld(matrices, target, addon.configuration().getMode(), tracker.getVisibility(), event.getPartialTicks());
+    }
+
+    public void reset() {
+        tracker.clear();
     }
 }

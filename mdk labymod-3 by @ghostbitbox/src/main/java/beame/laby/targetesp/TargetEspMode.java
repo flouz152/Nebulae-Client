@@ -15,4 +15,22 @@ public enum TargetEspMode {
     public String getDisplayName() {
         return displayName;
     }
+
+    public String getConfigKey() {
+        return name();
+    }
+
+    public static TargetEspMode fromConfigValue(String value) {
+        for (TargetEspMode mode : values()) {
+            if (mode.name().equalsIgnoreCase(value) || mode.displayName.equalsIgnoreCase(value)) {
+                return mode;
+            }
+        }
+        return GHOSTS;
+    }
+
+    @Override
+    public String toString() {
+        return displayName;
+    }
 }
