@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
+        maven { url = 'https://maven.minecraftforge.net' }
         maven { url = 'https://repo.spongepowered.org/maven' }
         maven {
             name = 'impactdevelopment-repo'
@@ -13,10 +13,6 @@ buildscript {
         classpath group: 'com.github.ImpactDevelopment', name: 'ForgeGradle', version: '3.0.115'
         classpath group: 'com.github.ImpactDevelopment', name: 'MixinGradle', version: '0.6.2'
     }
-}
-
-plugins {
-    id 'de.undercouch.download' version '4.0.0'
 }
 
 apply plugin: 'net.minecraftforge.gradle'
@@ -63,6 +59,7 @@ minecraft {
 
 repositories {
     mavenCentral()
+    maven { url = 'https://maven.minecraftforge.net' }
     maven {
         name = "spongepowered"
         url = "https://repo.spongepowered.org/maven"
@@ -77,7 +74,8 @@ repositories {
 dependencies {
     annotationProcessor("org.spongepowered:mixin:0.8.2:processor")
     minecraft 'com.github.ImpactDevelopment:Vanilla:1.16.5'
-    compile(files('libs/lm_api_mc1.16.5.jar'))
+    compile(files('lib/lm_api_mc1.16.5.jar'))
+    compile("org.joml:joml:1.10.5") { transitive = false }
     compile("org.ow2.asm:asm-analysis:6.2") { transitive = false }
     compile("org.ow2.asm:asm-util:6.2") { transitive = false }
     compile("org.ow2.asm:asm-commons:6.2") { transitive = false }
@@ -88,19 +86,6 @@ dependencies {
 
 jar {
     exclude("**/launch")
-}
-
-task downloadAPI(type: Download) {
-    group("labymod")
-
-    File libraryDirectory = new File("libs/")
-
-    if (!libraryDirectory.exists()) {
-        libraryDirectory.mkdirs()
-    }
-
-    src "https://dl.labymod.net/latest/api/files/lm_api_mc1.16.5.jar"
-    dest 'libs/'
 }
 
 if (project.tasks.findByName('downloadAssets')) {

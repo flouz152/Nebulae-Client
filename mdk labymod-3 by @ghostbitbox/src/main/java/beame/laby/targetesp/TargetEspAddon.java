@@ -1,7 +1,9 @@
 package beame.laby.targetesp;
 
 import net.labymod.api.LabyModAddon;
-import net.labymod.api.event.EventService;
+import net.labymod.settings.elements.SettingsElement;
+
+import java.util.List;
 
 public class TargetEspAddon extends LabyModAddon {
 
@@ -10,25 +12,33 @@ public class TargetEspAddon extends LabyModAddon {
 
     @Override
     public void onEnable() {
-        EventService events = getApi().getEventService();
         controller = new TargetEspController(this);
-        events.registerListener(controller);
+        getApi().registerForgeListener(controller);
     }
 
     @Override
     public void onDisable() {
         if (controller != null) {
-            getApi().getEventService().unregisterListener(controller);
+            getApi().unregisterForgeListener(controller);
+            controller.reset();
             controller = null;
         }
     }
 
     @Override
     public void loadConfig() {
-        this.config = new TargetEspConfig();
+        configuration().load();
+    }
+
+    @Override
+    protected void fillSettings(List<SettingsElement> settings) {
+        configuration().fillSettings(settings);
     }
 
     public TargetEspConfig configuration() {
+        if (config == null) {
+            config = new TargetEspConfig(this);
+        }
         return config;
     }
 }
