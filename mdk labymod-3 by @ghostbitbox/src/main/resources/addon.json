@@ -1,6 +1,9 @@
 {
-  "name": "MDK by @ghostbitbox",
-  "uuid": "%uuid%",
-  "mainClass": "mdk.by.ghostbitbox.TG_ghostbitbox",
-  "transformerClass": "mdk.by.ghostbitbox.launch.Transformer"
+  "name": "TargetESP",
+  "displayName": "Target ESP",
+  "author": "Nebulae",
+  "version": "1.0.0",
+  "mainClass": "beame.laby.targetesp.TargetEspAddon",
+  "description": "Target ESP overlay that mirrors the original mod with configurable display modes.",
+  "category": "RENDER"
 }
