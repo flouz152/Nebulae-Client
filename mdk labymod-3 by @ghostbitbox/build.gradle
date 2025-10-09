@@ -28,7 +28,7 @@ version = '1.0.0'
 group = 'mdk.by.ghostbitbox'
 archivesBaseName = 'MDK by @ghostbitbox'
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '17'
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 def mcpVersion = [channel: 'snapshot', version: '20201028-1.16.3']
 

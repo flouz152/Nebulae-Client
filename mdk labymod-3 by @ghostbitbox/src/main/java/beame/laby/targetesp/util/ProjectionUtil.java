@@ -25,8 +25,8 @@ public final class ProjectionUtil {
 
         if (mc.gameSettings.viewBobbing) {
             Entity renderViewEntity = mc.getRenderViewEntity();
-            if (renderViewEntity instanceof PlayerEntity player) {
-                applyViewBobbing(mc, player, projected);
+            if (renderViewEntity instanceof PlayerEntity) {
+                applyViewBobbing(mc, (PlayerEntity) renderViewEntity, projected);
             }
         }
 

@@ -114,10 +114,12 @@ public class TargetEspRenderer {
                 double sin = Math.sin(angle) * GHOST_RADIUS;
                 double cos = Math.cos(angle) * GHOST_RADIUS;
 
-                switch (pass) {
-                    case 0 -> matrices.translate(sin, cos, -cos);
-                    case 1 -> matrices.translate(-sin, sin, -cos);
-                    default -> matrices.translate(cos, -sin, -sin);
+                if (pass == 0) {
+                    matrices.translate(sin, cos, -cos);
+                } else if (pass == 1) {
+                    matrices.translate(-sin, sin, -cos);
+                } else {
+                    matrices.translate(cos, -sin, -sin);
                 }
 
                 float size = GHOST_WIDTH;
@@ -141,10 +143,12 @@ public class TargetEspRenderer {
                 matrices.rotate(rotation);
                 matrices.translate(size / 2.0f, size / 2.0f, 0.0f);
 
-                switch (pass) {
-                    case 0 -> matrices.translate(-sin, -cos, cos);
-                    case 1 -> matrices.translate(sin, -sin, cos);
-                    default -> matrices.translate(-cos, sin, sin);
+                if (pass == 0) {
+                    matrices.translate(-sin, -cos, cos);
+                } else if (pass == 1) {
+                    matrices.translate(sin, -sin, cos);
+                } else {
+                    matrices.translate(-cos, sin, sin);
                 }
             }
         }
@@ -231,7 +235,8 @@ public class TargetEspRenderer {
 
     private int resolveTargetColor(Entity entity) {
         int base = TargetColorPalette.primary();
-        if (entity instanceof LivingEntity living) {
+        if (entity instanceof LivingEntity) {
+            LivingEntity living = (LivingEntity) entity;
             if (living.hurtTime > 0) {
                 return ColorUtil.rgba(220, 80, 80, 255);
             }
