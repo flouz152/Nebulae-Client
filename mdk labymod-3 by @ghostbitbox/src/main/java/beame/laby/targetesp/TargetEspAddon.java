@@ -9,52 +9,51 @@ import net.labymod.settings.elements.ControlElement;
 import net.labymod.settings.elements.DropDownElement;
 import net.labymod.settings.elements.SettingsElement;
 
+import java.lang.reflect.Method;
 import java.util.List;
 
 public class TargetEspAddon extends LabyModAddon {
 
     private final TargetEspConfig config = new TargetEspConfig();
     private TargetEspController controller;
-    private EventService registeredEventService;
+    private EventService eventService;
 
     @Override
     public void onEnable() {
-        controller = new TargetEspController(this);
-        EventService eventService = resolveEventService();
-        registeredEventService = eventService;
-        try {
-            eventService.registerListener(controller);
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
+        if (controller == null) {
+            controller = new TargetEspController(this);
+        }
+
+        eventService = obtainEventService();
+
+        if (eventService != null) {
+            try {
+                eventService.registerListener(controller);
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
+            }
         }
     }
 
     @Override
     public void onDisable() {
+        if (controller != null && eventService != null) {
+            tryUnregisterListener(eventService, controller);
+        }
+
         if (controller != null) {
-            if (registeredEventService != null) {
-                try {
-                    registeredEventService.getClass()
-                            .getMethod("unregisterListener", Object.class)
-                            .invoke(registeredEventService, controller);
-                } catch (NoSuchMethodException ignored) {
-                    // Older API builds do not expose an unregister hook, so guard the call.
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
-            }
             controller.shutdown();
             controller = null;
         }
-        registeredEventService = null;
+
+        eventService = null;
     }
 
     @Override
     public void loadConfig() {
         JsonObject json = getConfig();
         config.load(json);
-        config.save(json);
-        saveConfig();
+        persistConfig();
     }
 
     @Override
@@ -94,15 +93,34 @@ public class TargetEspAddon extends LabyModAddon {
         }
     }
 
-    private EventService resolveEventService() {
+    private EventService obtainEventService() {
         try {
-            EventService apiService = getApi() != null ? getApi().getEventService() : null;
-            if (apiService != null) {
-                return apiService;
+            if (getApi() != null) {
+                EventService apiService = getApi().getEventService();
+                if (apiService != null) {
+                    return apiService;
+                }
             }
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
-        return EventService.getInstance();
+
+        try {
+            return EventService.getInstance();
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+            return null;
+        }
+    }
+
+    private void tryUnregisterListener(EventService service, Object listener) {
+        try {
+            Method unregister = service.getClass().getMethod("unregisterListener", Object.class);
+            unregister.invoke(service, listener);
+        } catch (NoSuchMethodException ignored) {
+            // Older API builds do not expose an unregister hook, so we simply skip it.
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
 }
