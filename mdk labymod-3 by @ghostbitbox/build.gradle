@@ -83,6 +83,7 @@ dependencies {
     compile("org.ow2.asm:asm-commons:6.2") { transitive = false }
     compile("org.spongepowered:mixin:0.8.2") { transitive = false }
     compile("net.minecraft:launchwrapper:1.12") { transitive = false }
+    compile("org.joml:joml:1.10.5") { transitive = false }
 }
 
 jar {
