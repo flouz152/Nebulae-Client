@@ -1,0 +1,12 @@
+        HashMap<Attribute, Map.Entry<Float, AttributeModifier.Operation>> pandora3 = new HashMap<>();
+        pandora3.putAll(Map.of(
+            Attributes.MOVEMENT_SPEED, Map.entry(0.15F, AttributeModifier.Operation.MULTIPLY_BASE),
+            Attributes.ARMOR, Map.entry(-0.15F, AttributeModifier.Operation.MULTIPLY_BASE),
+            Attributes.ATTACK_DAMAGE, Map.entry(0.25F, AttributeModifier.Operation.MULTIPLY_BASE)
+        ));
+
+                /* pandora 1 */ //new AutoBuyItemClass("Сфера Пандоры 1", 0, Items.PLAYER_HEAD, pandora1, "e3RleHR1cmVzOntTS0lOOnt1cmw6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGU1MWU2NWViNDA1Mjc3MjM4MmM5ZTUwN2E1NGJkZWQ0M2UzOWY3NTViNWRkZjU1YjNmMzk0NDNjZWQ0NjdmNCJ9fX0="),
+                /* pandora 2 */ //new AutoBuyItemClass("Сфера Пандоры 2", 0, Items.PLAYER_HEAD, pandora2, "e3RleHR1cmVzOntTS0lOOnt1cmw6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGU1MWU2NWViNDA1Mjc3MjM4MmM5ZTUwN2E1NGJkZWQ0M2UzOWY3NTViNWRkZjU1YjNmMzk0NDNjZWQ0NjdmNCJ9fX0="),
+                /* pandora 3 */ new AutoBuyItemClass("Сфера Пандора", 0, Items.PLAYER_HEAD, pandora3, "attribute-item-spandori", "e3RleHR1cmVzOntTS0lOOnt1cmw6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGU1MWU2NWViNDA1Mjc3MjM4MmM5ZTUwN2E1NGJkZWQ0M2UzOWY3NTViNWRkZjU1YjNmMzk0NDNjZWQ0NjdmNCJ9fX0="),
+
+                /* titan 1 */ //new AutoBuyItemClass("Сфера Титана 1", 0, Items.PLAYER_HEAD, titan1, "ewogICJ0aW1lc3RhbXAiIDogMTcxNzM2NjY0NDcyNiwKICAicHJvZmlsZUlkIiA6ICJmMGZiOGE4NjIwNDY0MWZiOGZhYzJmNWZhMDQ0ZjNjMiIsCiAgInByb2ZpbGVOYW1lIiA6ICJBbnRob255MTAwNDA5IiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2EwMzdiYmJlYjYyZTEwMjBkZjlhMDZjNGVkZDYwMzMwZTcwNjMwZDA5MGYwOTRkODc3NmMyYmQxMzVkZWMyMiIsCiAgICAgICJtZXRhZGF0YSIgOiB7CiAgICAgICAgIm1vZGVsIiA6ICJzbGltIgogICAgICB9CiAgICB9CiAgfQp9"), 

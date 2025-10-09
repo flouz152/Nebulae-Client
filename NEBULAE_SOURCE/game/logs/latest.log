@@ -1,0 +1,1234 @@
+[00:03:41] [main/INFO]: [OptiFine] (Reflector) Field not found: World.tileEntitiesToBeRemoved
+[00:03:41] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.eventbus.api.Event$Result
+[00:03:41] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraftforge.common.extensions.IForgeBlockState.hasTileEntity
+[00:03:41] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.extensions.IForgeEntity
+[00:03:41] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.CrashReportExtender
+[00:03:42] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.tags.ItemTags.createOptional
+[00:03:48] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.ForgeHooksClient
+[00:03:48] [main/ERROR]: Can't find the resource index file: assets\indexes\1.16.json
+[00:03:48] [main/INFO]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[00:04:06] [main/ERROR]: Failed to verify authentication
+com.mojang.authlib.exceptions.AuthenticationUnavailableException: Cannot contact authentication server
+	at com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService.makeRequest(YggdrasilAuthenticationService.java:125) ~[authlib-2.1.28.jar:?]
+	at com.mojang.authlib.yggdrasil.YggdrasilSocialInteractionsService.checkPrivileges(YggdrasilSocialInteractionsService.java:94) ~[authlib-2.1.28.jar:?]
+	at com.mojang.authlib.yggdrasil.YggdrasilSocialInteractionsService.<init>(YggdrasilSocialInteractionsService.java:40) ~[authlib-2.1.28.jar:?]
+	at com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService.createSocialInteractionsService(YggdrasilAuthenticationService.java:152) ~[authlib-2.1.28.jar:?]
+	at net.minecraft.client.Minecraft.func_244735_a(Minecraft.java:617) [essence/:?]
+	at net.minecraft.client.Minecraft.<init>(Minecraft.java:421) [essence/:?]
+	at net.minecraft.client.main.Main.main(Main.java:131) [essence/:?]
+	at Start.main(Start.java:9) [essence/:?]
+Caused by: java.net.SocketTimeoutException: Connect timed out
+	at sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:539) ~[?:?]
+	at sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:585) ~[?:?]
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[?:?]
+	at java.net.Socket.connect(Socket.java:666) ~[?:?]
+	at sun.security.ssl.SSLSocketImpl.connect(SSLSocketImpl.java:304) ~[?:?]
+	at sun.net.NetworkClient.doConnect(NetworkClient.java:178) ~[?:?]
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:531) ~[?:?]
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:636) ~[?:?]
+	at sun.net.www.protocol.https.HttpsClient.<init>(HttpsClient.java:264) ~[?:?]
+	at sun.net.www.protocol.https.HttpsClient.New(HttpsClient.java:378) ~[?:?]
+	at sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.getNewHttpClient(AbstractDelegateHttpsURLConnection.java:193) ~[?:?]
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1286) ~[?:?]
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:1127) ~[?:?]
+	at sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.connect(AbstractDelegateHttpsURLConnection.java:179) ~[?:?]
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1661) ~[?:?]
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1585) ~[?:?]
+	at sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(HttpsURLConnectionImpl.java:224) ~[?:?]
+	at com.mojang.authlib.HttpAuthenticationService.performGetRequest(HttpAuthenticationService.java:140) ~[authlib-2.1.28.jar:?]
+	at com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService.makeRequest(YggdrasilAuthenticationService.java:104) ~[authlib-2.1.28.jar:?]
+	... 7 more
+[00:04:06] [main/INFO]: Setting user: Player671
+[00:04:08] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.settings.KeyConflictContext
+[00:04:08] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.settings.KeyModifier
+[00:04:08] [main/INFO]: Backend library: LWJGL version 3.2.2 build 10
+[00:04:08] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraftforge.fml.loading.progress.EarlyProgressVisualization.handOffWindow
+[00:04:08] [main/INFO]: [STDERR]: [LWJGL] [ThreadLocalUtil] Unsupported JNI version detected, this may result in a crash. Please inform LWJGL developers.
+[00:04:09] [main/INFO]: [OptiFine] (Reflector) Class not present: optifine.OptiFineResourceLocator
+[00:04:09] [main/ERROR]: Couldn't set icon
+java.io.FileNotFoundException: icons/icon_16x16.png
+	at net.minecraft.resources.VanillaPack.getResourceStream(VanillaPack.java:117) ~[essence/:?]
+	at net.minecraft.client.Minecraft.<init>(Minecraft.java:463) [essence/:?]
+	at net.minecraft.client.main.Main.main(Main.java:131) [essence/:?]
+	at Start.main(Start.java:9) [essence/:?]
+[00:04:09] [main/INFO]: [OptiFine] 
+[00:04:09] [main/INFO]: [OptiFine] OptiFine_1.16.5_HD_U_G8
+[00:04:09] [main/INFO]: [OptiFine] Build: null
+[00:04:09] [main/INFO]: [OptiFine] OS: Windows 10 (amd64) version 10.0
+[00:04:09] [main/INFO]: [OptiFine] Java: 19.0.2, Eclipse Adoptium
+[00:04:09] [main/INFO]: [OptiFine] VM: OpenJDK 64-Bit Server VM (mixed mode, sharing), Eclipse Adoptium
+[00:04:09] [main/INFO]: [OptiFine] LWJGL: 3.3.0 Win32 WGL EGL OSMesa VisualC DLL
+[00:04:09] [main/INFO]: [OptiFine] OpenGL: AMD Radeon(TM) RX 6400, version 4.6.0 Compatibility Profile Context 24.12.1.241127, ATI Technologies Inc.
+[00:04:09] [main/INFO]: [OptiFine] OpenGL Version: 4.6.0
+[00:04:09] [main/INFO]: [OptiFine] OpenGL Fancy fog: Not available (GL_NV_fog_distance)
+[00:04:09] [main/INFO]: [OptiFine] Maximum texture size: 16384x16384
+[00:04:09] [VersionCheck/INFO]: [OptiFine] Checking for new version
+[00:04:09] [main/INFO]: [Shaders] OpenGL Version: 4.6.0 Compatibility Profile Context 24.12.1.241127
+[00:04:09] [main/INFO]: [Shaders] Vendor:  ATI Technologies Inc.
+[00:04:09] [main/INFO]: [Shaders] Renderer: AMD Radeon(TM) RX 6400
+[00:04:09] [main/INFO]: [Shaders] Capabilities:  2.0  2.1  3.0  3.2  4.0 
+[00:04:09] [main/INFO]: [Shaders] GL_MAX_DRAW_BUFFERS: 8
+[00:04:09] [main/INFO]: [Shaders] GL_MAX_COLOR_ATTACHMENTS_EXT: 8
+[00:04:09] [main/INFO]: [Shaders] GL_MAX_TEXTURE_IMAGE_UNITS: 32
+[00:04:09] [main/INFO]: [Shaders] Load shaders configuration.
+[00:04:09] [main/INFO]: [Shaders] Save shaders configuration.
+[00:04:09] [main/INFO]: [Shaders] No shaderpack loaded.
+[00:04:09] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.common.Loader
+[00:04:10] [main/WARN]: [OptiFine] java.lang.ClassNotFoundException: sun.misc.SharedSecrets
+[00:04:10] [main/WARN]: [OptiFine] java.lang.ClassNotFoundException: jdk.internal.misc.SharedSecrets
+[00:04:10] [main/WARN]: [OptiFine] java.lang.ClassNotFoundException: sun.misc.VM
+[00:04:10] [main/WARN]: [OptiFine] java.lang.reflect.InaccessibleObjectException: Unable to make public static long jdk.internal.misc.VM.maxDirectMemory() accessible: module java.base does not "exports jdk.internal.misc" to unnamed module @11758f2a
+[00:04:10] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.ItemModelMesherForge
+[00:04:10] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.model.pipeline.ForgeBlockModelRenderer
+[00:04:10] [main/WARN]: ERROR : Couldn't load Narrator library : Unable to load library 'SAPIWrapper_x64': Can't obtain InputStream for win32-x86-64/SAPIWrapper_x64.dll
+ERROR : Couldn't load Narrator library : Unable to load library 'SAPIWrapper_x86': Can't obtain InputStream for win32-x86-64/SAPIWrapper_x86.dll
+
+[00:04:11] [main/INFO]: [CHAT] §7[Baritone§7] Baritone settings file not found, resetting.
+[00:04:12] [main/INFO]: Reloading ResourceManager: Default
+[00:04:12] [main/INFO]: [OptiFine] *** Reloading textures ***
+[00:04:12] [main/INFO]: [OptiFine] Resource packs: Default
+[00:04:12] [Worker-Main-8/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.model.ModelLoaderRegistry
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.client.renderer.RenderTypeLookup.canRenderInLayer
+[00:04:12] [main/INFO]: [OptiFine] *** Reflector Forge ***
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: mods.betterfoliage.client.BetterFoliageClient
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.BrandingControl
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.capabilities.ICapabilityProvider
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.capabilities.CapabilityProvider
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.client.ClientModLoader
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.event.world.ChunkDataEvent$Save
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.event.world.ChunkEvent$Load
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.event.world.ChunkEvent$Unload
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.client.ClientHooks
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.GuiScreenEvent$DrawScreenEvent$Pre
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.GuiScreenEvent$DrawScreenEvent$Post
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.event.entity.EntityLeaveWorldEvent
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.EntityViewRenderEvent$CameraSetup
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.EntityViewRenderEvent$FogColors
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.EntityViewRenderEvent$RenderFogEvent
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.event.entity.EntityJoinWorldEvent
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraftforge.eventbus.api.Event.isCanceled
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraftforge.eventbus.api.Event.getResult
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.eventbus.api.IEventBus
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.extensions.IForgeBlock
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.client.renderer.BlockModelShapes.getTexture
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraftforge.common.extensions.IForgeBlockState.addDestroyEffects
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraftforge.common.extensions.IForgeBlockState.addHitEffects
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraftforge.common.extensions.IForgeBlockState.getLightValue
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraftforge.common.extensions.IForgeBlockState.getSoundType
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraftforge.common.extensions.IForgeBlockState.getStateAtViewpoint
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraftforge.common.extensions.IForgeBlockState.isAir
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraftforge.common.extensions.IForgeBlockState.shouldDisplayFluidOverlay
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.extensions.IForgeFluid
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fluids.FluidAttributes
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.entity.EntityType.getTags
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.event.ForgeEventFactory
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.fluid.Fluid.getTags
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.ForgeHooks
+[00:04:12] [Worker-Main-9/INFO]: [OptiFine] Multitexture: false
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.ForgeConfig
+[00:04:12] [Worker-Main-14/INFO]: [OptiFine] Multitexture: false
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.ForgeConfig$Client
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.ForgeConfigSpec
+[00:04:12] [Worker-Main-13/INFO]: [OptiFine] Multitexture: false
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.ForgeConfigSpec$ConfigValue
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.world.chunk.IChunk.getWorldForge
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.extensions.IForgeItem
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.extensions.IForgeItemStack
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.ForgeI18n
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.client.settings.KeyBinding.setKeyConflictContext
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.client.settings.KeyBinding.setKeyModifierAndCode
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.client.settings.KeyBinding.getKeyModifier
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.extensions.IForgeEffectInstance
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.registries.ForgeRegistryEntry
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.client.renderer.RenderTypeLookup.canRenderInLayer
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Constructor not present: net.minecraft.world.server.Ticket, params: class net.minecraft.world.server.TicketType, int, class java.lang.Object, boolean
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.world.server.Ticket.isForceTicks
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.extensions.IForgeTileEntity
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.client.world.DimensionRenderInfo.getCloudRenderHandler
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.client.world.DimensionRenderInfo.getSkyRenderHandler
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.client.world.DimensionRenderInfo.getWeatherParticleRenderHandler
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Method not present: net.minecraft.client.world.DimensionRenderInfo.getWeatherRenderHandler
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.IRenderHandler
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.model.pipeline.LightUtil
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.common.MinecraftForge
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.MinecraftForgeClient
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.common.ModContainer
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.client.gui.screen.ModListScreen
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.gui.NotificationModUpdateScreen
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.entity.PartEntity
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.event.entity.PlaySoundAtEntityEvent
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.RenderBlockOverlayEvent$OverlayType
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.client.registry.RenderingRegistry
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.RenderGameOverlayEvent$BossInfo
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.RenderItemInFrameEvent
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.RenderLivingEvent$Pre
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.RenderLivingEvent$Post
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.RenderNameplateEvent
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.client.event.ScreenshotEvent
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.fml.server.ServerLifecycleHooks
+[00:04:12] [main/INFO]: [OptiFine] (Reflector) Class not present: net.minecraftforge.event.world.WorldEvent$Load
+[00:04:12] [main/INFO]: [OptiFine] *** Reflector Vanilla ***
+[00:04:12] [Worker-Main-11/ERROR]: Using missing texture, unable to load minecraft:textures/mob_effect/Essence_vision.png : java.io.FileNotFoundException: minecraft:textures/mob_effect/Essence_vision.png
+[00:04:16] [Worker-Main-8/INFO]: [OptiFine] Multitexture: false
+[00:04:16] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/00_glass_white/glass_pane_white.properties
+[00:04:16] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/00_glass_white/glass_white.properties
+[00:04:16] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/01_glass_orange/glass_orange.properties
+[00:04:16] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/01_glass_orange/glass_pane_orange.properties
+[00:04:16] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/02_glass_magenta/glass_magenta.properties
+[00:04:16] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/02_glass_magenta/glass_pane_magenta.properties
+[00:04:16] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/03_glass_light_blue/glass_light_blue.properties
+[00:04:16] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/03_glass_light_blue/glass_pane_light_blue.properties
+[00:04:16] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/04_glass_yellow/glass_pane_yellow.properties
+[00:04:16] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/04_glass_yellow/glass_yellow.properties
+[00:04:16] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/05_glass_lime/glass_lime.properties
+[00:04:16] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/05_glass_lime/glass_pane_lime.properties
+[00:04:16] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/06_glass_pink/glass_pane_pink.properties
+[00:04:16] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/06_glass_pink/glass_pink.properties
+[00:04:16] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/07_glass_gray/glass_gray.properties
+[00:04:17] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/07_glass_gray/glass_pane_gray.properties
+[00:04:17] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/08_glass_light_gray/glass_light_gray.properties
+[00:04:17] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/08_glass_light_gray/glass_pane_light_gray.properties
+[00:04:17] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/09_glass_cyan/glass_cyan.properties
+[00:04:17] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/09_glass_cyan/glass_pane_cyan.properties
+[00:04:17] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/10_glass_purple/glass_pane_purple.properties
+[00:04:17] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/10_glass_purple/glass_purple.properties
+[00:04:17] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/11_glass_blue/glass_blue.properties
+[00:04:17] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/11_glass_blue/glass_pane_blue.properties
+[00:04:17] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/12_glass_brown/glass_brown.properties
+[00:04:17] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/12_glass_brown/glass_pane_brown.properties
+[00:04:17] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/13_glass_green/glass_green.properties
+[00:04:17] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/13_glass_green/glass_pane_green.properties
+[00:04:17] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/14_glass_red/glass_pane_red.properties
+[00:04:17] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/14_glass_red/glass_red.properties
+[00:04:17] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/15_glass_black/glass_black.properties
+[00:04:17] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/15_glass_black/glass_pane_black.properties
+[00:04:17] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/20_glass/glass.properties
+[00:04:17] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/20_glass/glass_pane.properties
+[00:04:17] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/30_bookshelf/bookshelf.properties
+[00:04:17] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/40_sandstone/sandstone.properties
+[00:04:17] [Worker-Main-8/INFO]: [OptiFine] ConnectedTextures: optifine/ctm/default/41_red_sandstone/red_sandstone.properties
+[00:04:17] [Worker-Main-8/INFO]: [OptiFine] Multipass connected textures: false
+[00:04:17] [Worker-Main-8/INFO]: [OptiFine] BetterGrass: Parsing default configuration optifine/bettergrass.properties
+[00:04:18] [Worker-Main-8/INFO]: [OptiFine] Multitexture: false
+[00:04:18] [Worker-Main-8/INFO]: [OptiFine] Multitexture: false
+[00:04:18] [Worker-Main-8/INFO]: [OptiFine] Multitexture: false
+[00:04:18] [Worker-Main-8/INFO]: [OptiFine] Multitexture: false
+[00:04:18] [Worker-Main-8/INFO]: [OptiFine] Multitexture: false
+[00:04:18] [Worker-Main-8/INFO]: [OptiFine] Multitexture: false
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ambient.cave
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ambient.basalt_deltas.additions
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ambient.basalt_deltas.loop
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ambient.basalt_deltas.mood
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ambient.crimson_forest.additions
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ambient.crimson_forest.loop
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ambient.crimson_forest.mood
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ambient.nether_wastes.additions
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ambient.nether_wastes.loop
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ambient.nether_wastes.mood
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ambient.soul_sand_valley.additions
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ambient.soul_sand_valley.loop
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ambient.soul_sand_valley.mood
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ambient.warped_forest.additions
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ambient.warped_forest.loop
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ambient.warped_forest.mood
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ambient.underwater.enter
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ambient.underwater.exit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ambient.underwater.loop
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ambient.underwater.loop.additions
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ambient.underwater.loop.additions.rare
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ambient.underwater.loop.additions.ultra_rare
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.ancient_debris.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.ancient_debris.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.ancient_debris.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.ancient_debris.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.ancient_debris.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.anvil.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.anvil.destroy
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.anvil.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.anvil.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.anvil.land
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.anvil.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.anvil.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.anvil.use
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.armor.equip_chain
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.armor.equip_diamond
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.armor.equip_elytra
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.armor.equip_generic
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.armor.equip_gold
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.armor.equip_iron
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.armor.equip_leather
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.armor.equip_netherite
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.armor.equip_turtle
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.armor_stand.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.armor_stand.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.armor_stand.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.armor_stand.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.arrow.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.arrow.hit_player
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.arrow.shoot
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.axe.strip
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.bamboo.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.bamboo.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.bamboo.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.bamboo.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.bamboo.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.bamboo_sapling.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.bamboo_sapling.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.bamboo_sapling.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.barrel.close
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.barrel.open
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.basalt.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.basalt.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.basalt.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.basalt.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.basalt.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.bat.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.bat.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.bat.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.bat.loop
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.bat.takeoff
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.beacon.activate
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.beacon.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.beacon.deactivate
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.beacon.power_select
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.bee.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.bee.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.bee.loop_aggressive
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.bee.loop
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.bee.sting
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.bee.pollinate
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.beehive.drip
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.beehive.enter
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.beehive.exit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.beehive.shear
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.beehive.work
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.bell.use
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.bell.resonate
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.blaze.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.blaze.burn
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.blaze.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.blaze.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.blaze.shoot
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.boat.paddle_land
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.boat.paddle_water
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.bone_block.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.bone_block.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.bone_block.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.bone_block.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.bone_block.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.book.page_turn
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.book.put
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.blastfurnace.fire_crackle
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.bottle.empty
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.bottle.fill
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.bottle.fill_dragonbreath
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.brewing_stand.brew
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.bubble_column.bubble_pop
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.bubble_column.upwards_ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.bubble_column.upwards_inside
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.bubble_column.whirlpool_ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.bubble_column.whirlpool_inside
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.bucket.empty
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.bucket.empty_fish
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.bucket.empty_lava
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.bucket.fill
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.bucket.fill_fish
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.bucket.fill_lava
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.campfire.crackle
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.cat.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.cat.stray_ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.cat.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.cat.eat
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.cat.hiss
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.cat.beg_for_food
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.cat.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.cat.purr
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.cat.purreow
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.chain.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.chain.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.chain.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.chain.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.chain.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.chest.close
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.chest.locked
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.chest.open
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.chicken.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.chicken.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.chicken.egg
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.chicken.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.chicken.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.chorus_flower.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.chorus_flower.grow
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.chorus_fruit.teleport
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.cod.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.cod.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.cod.flop
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.cod.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.comparator.click
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.composter.empty
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.composter.fill
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.composter.fill_success
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.composter.ready
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.conduit.activate
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.conduit.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.conduit.ambient.short
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.conduit.attack.target
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.conduit.deactivate
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.coral_block.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.coral_block.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.coral_block.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.coral_block.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.coral_block.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.cow.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.cow.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.cow.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.cow.milk
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.cow.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.creeper.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.creeper.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.creeper.primed
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.crop.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.crop.plant
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.crossbow.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.crossbow.loading_end
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.crossbow.loading_middle
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.crossbow.loading_start
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.crossbow.quick_charge_1
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.crossbow.quick_charge_2
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.crossbow.quick_charge_3
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.crossbow.shoot
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.dispenser.dispense
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.dispenser.fail
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.dispenser.launch
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.dolphin.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.dolphin.ambient_water
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.dolphin.attack
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.dolphin.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.dolphin.eat
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.dolphin.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.dolphin.jump
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.dolphin.play
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.dolphin.splash
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.dolphin.swim
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.donkey.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.donkey.angry
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.donkey.chest
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.donkey.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.donkey.eat
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.donkey.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.drowned.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.drowned.ambient_water
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.drowned.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.drowned.death_water
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.drowned.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.drowned.hurt_water
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.drowned.shoot
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.drowned.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.drowned.swim
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.egg.throw
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.elder_guardian.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.elder_guardian.ambient_land
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.elder_guardian.curse
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.elder_guardian.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.elder_guardian.death_land
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.elder_guardian.flop
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.elder_guardian.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.elder_guardian.hurt_land
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.elytra.flying
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.enchantment_table.use
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.ender_chest.close
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.ender_chest.open
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.ender_dragon.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.ender_dragon.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.dragon_fireball.explode
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.ender_dragon.flap
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.ender_dragon.growl
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.ender_dragon.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.ender_dragon.shoot
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.ender_eye.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.ender_eye.launch
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.enderman.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.enderman.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.enderman.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.enderman.scream
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.enderman.stare
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.enderman.teleport
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.endermite.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.endermite.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.endermite.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.endermite.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.ender_pearl.throw
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.end_gateway.spawn
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.end_portal_frame.fill
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.end_portal.spawn
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.evoker.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.evoker.cast_spell
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.evoker.celebrate
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.evoker.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.evoker_fangs.attack
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.evoker.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.evoker.prepare_attack
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.evoker.prepare_summon
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.evoker.prepare_wololo
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.experience_bottle.throw
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.experience_orb.pickup
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.fence_gate.close
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.fence_gate.open
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.firecharge.use
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.firework_rocket.blast
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.firework_rocket.blast_far
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.firework_rocket.large_blast
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.firework_rocket.large_blast_far
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.firework_rocket.launch
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.firework_rocket.shoot
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.firework_rocket.twinkle
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.firework_rocket.twinkle_far
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.fire.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.fire.extinguish
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.fish.swim
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.fishing_bobber.retrieve
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.fishing_bobber.splash
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.fishing_bobber.throw
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.flintandsteel.use
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.fox.aggro
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.fox.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.fox.bite
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.fox.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.fox.eat
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.fox.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.fox.screech
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.fox.sleep
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.fox.sniff
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.fox.spit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.fox.teleport
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.roots.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.roots.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.roots.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.roots.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.roots.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.furnace.fire_crackle
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.generic.big_fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.generic.burn
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.generic.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.generic.drink
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.generic.eat
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.generic.explode
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.generic.extinguish_fire
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.generic.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.generic.small_fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.generic.splash
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.generic.swim
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.ghast.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.ghast.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.ghast.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.ghast.scream
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.ghast.shoot
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.ghast.warn
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.gilded_blackstone.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.gilded_blackstone.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.gilded_blackstone.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.gilded_blackstone.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.gilded_blackstone.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.glass.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.glass.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.glass.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.glass.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.glass.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.grass.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.grass.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.grass.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.grass.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.grass.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.gravel.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.gravel.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.gravel.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.gravel.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.gravel.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.grindstone.use
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.guardian.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.guardian.ambient_land
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.guardian.attack
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.guardian.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.guardian.death_land
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.guardian.flop
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.guardian.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.guardian.hurt_land
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.hoe.till
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.hoglin.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.hoglin.angry
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.hoglin.attack
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.hoglin.converted_to_zombified
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.hoglin.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.hoglin.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.hoglin.retreat
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.hoglin.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.honey_block.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.honey_block.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.honey_block.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.honey_block.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.honey_block.slide
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.honey_block.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.honey_bottle.drink
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.horse.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.horse.angry
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.horse.armor
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.horse.breathe
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.horse.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.horse.eat
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.horse.gallop
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.horse.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.horse.jump
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.horse.land
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.horse.saddle
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.horse.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.horse.step_wood
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.hostile.big_fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.hostile.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.hostile.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.hostile.small_fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.hostile.splash
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.hostile.swim
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.husk.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.husk.converted_to_zombie
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.husk.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.husk.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.husk.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.illusioner.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.illusioner.cast_spell
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.illusioner.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.illusioner.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.illusioner.mirror_move
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.illusioner.prepare_blindness
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.illusioner.prepare_mirror
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.iron_door.close
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.iron_door.open
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.iron_golem.attack
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.iron_golem.damage
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.iron_golem.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.iron_golem.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.iron_golem.repair
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.iron_golem.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.iron_trapdoor.close
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.iron_trapdoor.open
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.item_frame.add_item
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.item_frame.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.item_frame.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.item_frame.remove_item
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.item_frame.rotate_item
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.item.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.item.pickup
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.ladder.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.ladder.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.ladder.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.ladder.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.ladder.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.lantern.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.lantern.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.lantern.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.lantern.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.lantern.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.lava.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.lava.extinguish
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.lava.pop
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.leash_knot.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.leash_knot.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.lever.click
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.lightning_bolt.impact
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.lightning_bolt.thunder
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.lingering_potion.throw
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.llama.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.llama.angry
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.llama.chest
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.llama.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.llama.eat
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.llama.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.llama.spit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.llama.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.llama.swag
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.magma_cube.death_small
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.lodestone.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.lodestone.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.lodestone.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.lodestone.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.lodestone.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.lodestone_compass.lock
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.magma_cube.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.magma_cube.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.magma_cube.hurt_small
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.magma_cube.jump
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.magma_cube.squish
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.magma_cube.squish_small
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.metal.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.metal.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.metal.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.metal.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.metal_pressure_plate.click_off
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.metal_pressure_plate.click_on
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.metal.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.minecart.inside
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.minecart.riding
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.mooshroom.convert
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.mooshroom.eat
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.mooshroom.milk
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.mooshroom.suspicious_milk
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.mooshroom.shear
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.mule.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.mule.angry
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.mule.chest
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.mule.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.mule.eat
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.mule.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:music.creative
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:music.credits
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:music_disc.11
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:music_disc.13
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:music_disc.blocks
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:music_disc.cat
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:music_disc.chirp
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:music_disc.far
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:music_disc.mall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:music_disc.mellohi
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:music_disc.pigstep
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:music_disc.stal
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:music_disc.strad
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:music_disc.wait
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:music_disc.ward
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:music.dragon
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:music.end
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:music.game
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:music.menu
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:music.nether.basalt_deltas
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:music.nether.nether_wastes
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:music.nether.soul_sand_valley
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:music.nether.crimson_forest
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:music.nether.warped_forest
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:music.under_water
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.nether_bricks.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.nether_bricks.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.nether_bricks.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.nether_bricks.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.nether_bricks.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.nether_wart.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.nether_wart.plant
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.stem.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.stem.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.stem.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.stem.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.stem.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.nylium.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.nylium.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.nylium.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.nylium.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.nylium.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.nether_sprouts.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.nether_sprouts.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.nether_sprouts.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.nether_sprouts.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.nether_sprouts.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.fungus.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.fungus.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.fungus.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.fungus.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.fungus.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.weeping_vines.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.weeping_vines.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.weeping_vines.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.weeping_vines.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.weeping_vines.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.wart_block.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.wart_block.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.wart_block.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.wart_block.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.wart_block.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.netherite_block.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.netherite_block.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.netherite_block.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.netherite_block.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.netherite_block.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.netherrack.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.netherrack.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.netherrack.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.netherrack.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.netherrack.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.note_block.basedrum
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.note_block.bass
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.note_block.bell
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.note_block.chime
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.note_block.flute
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.note_block.guitar
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.note_block.harp
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.note_block.hat
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.note_block.pling
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.note_block.snare
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.note_block.xylophone
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.note_block.iron_xylophone
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.note_block.cow_bell
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.note_block.didgeridoo
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.note_block.bit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.note_block.banjo
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.ocelot.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.ocelot.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.ocelot.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.painting.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.painting.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.panda.pre_sneeze
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.panda.sneeze
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.panda.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.panda.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.panda.eat
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.panda.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.panda.cant_breed
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.panda.aggressive_ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.panda.worried_ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.panda.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.panda.bite
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.eat
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.fly
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.blaze
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.creeper
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.drowned
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.elder_guardian
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.ender_dragon
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.endermite
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.evoker
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.ghast
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.guardian
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.hoglin
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.husk
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.illusioner
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.magma_cube
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.phantom
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.piglin
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.piglin_brute
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.pillager
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.ravager
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.shulker
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.silverfish
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.skeleton
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.slime
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.spider
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.stray
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.vex
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.vindicator
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.witch
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.wither
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.wither_skeleton
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.zoglin
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.zombie
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.imitate.zombie_villager
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.parrot.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.phantom.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.phantom.bite
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.phantom.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.phantom.flap
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.phantom.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.phantom.swoop
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.pig.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.pig.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.pig.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.pig.saddle
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.pig.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.piglin.admiring_item
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.piglin.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.piglin.angry
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.piglin.celebrate
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.piglin.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.piglin.jealous
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.piglin.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.piglin.retreat
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.piglin.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.piglin.converted_to_zombified
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.piglin_brute.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.piglin_brute.angry
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.piglin_brute.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.piglin_brute.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.piglin_brute.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.piglin_brute.converted_to_zombified
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.pillager.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.pillager.celebrate
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.pillager.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.pillager.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.piston.contract
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.piston.extend
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.player.attack.crit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.player.attack.knockback
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.player.attack.nodamage
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.player.attack.strong
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.player.attack.sweep
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.player.attack.weak
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.player.big_fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.player.breath
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.player.burp
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.player.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.player.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.player.hurt_drown
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.player.hurt_on_fire
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.player.hurt_sweet_berry_bush
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.player.levelup
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.player.small_fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.player.splash
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.player.splash.high_speed
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.player.swim
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.polar_bear.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.polar_bear.ambient_baby
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.polar_bear.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.polar_bear.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.polar_bear.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.polar_bear.warning
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.portal.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.portal.travel
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.portal.trigger
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.puffer_fish.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.puffer_fish.blow_out
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.puffer_fish.blow_up
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.puffer_fish.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.puffer_fish.flop
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.puffer_fish.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.puffer_fish.sting
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.pumpkin.carve
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.rabbit.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.rabbit.attack
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.rabbit.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.rabbit.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.rabbit.jump
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:event.raid.horn
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.ravager.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.ravager.attack
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.ravager.celebrate
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.ravager.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.ravager.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.ravager.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.ravager.stunned
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.ravager.roar
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.nether_gold_ore.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.nether_gold_ore.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.nether_gold_ore.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.nether_gold_ore.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.nether_gold_ore.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.nether_ore.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.nether_ore.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.nether_ore.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.nether_ore.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.nether_ore.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.redstone_torch.burnout
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.respawn_anchor.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.respawn_anchor.charge
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.respawn_anchor.deplete
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.respawn_anchor.set_spawn
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.salmon.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.salmon.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.salmon.flop
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.salmon.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.sand.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.sand.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.sand.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.sand.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.sand.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.scaffolding.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.scaffolding.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.scaffolding.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.scaffolding.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.scaffolding.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.sheep.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.sheep.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.sheep.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.sheep.shear
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.sheep.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.shield.block
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.shield.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.shroomlight.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.shroomlight.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.shroomlight.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.shroomlight.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.shroomlight.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.shovel.flatten
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.shulker.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.shulker_box.close
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.shulker_box.open
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.shulker_bullet.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.shulker_bullet.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.shulker.close
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.shulker.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.shulker.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.shulker.hurt_closed
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.shulker.open
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.shulker.shoot
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.shulker.teleport
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.silverfish.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.silverfish.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.silverfish.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.silverfish.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.skeleton.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.skeleton.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.skeleton_horse.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.skeleton_horse.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.skeleton_horse.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.skeleton_horse.swim
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.skeleton_horse.ambient_water
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.skeleton_horse.gallop_water
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.skeleton_horse.jump_water
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.skeleton_horse.step_water
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.skeleton.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.skeleton.shoot
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.skeleton.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.slime.attack
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.slime.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.slime.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.slime.jump
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.slime.squish
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.slime_block.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.slime_block.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.slime_block.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.slime_block.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.slime_block.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.soul_sand.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.soul_sand.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.soul_sand.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.soul_sand.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.soul_sand.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.soul_soil.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.soul_soil.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.soul_soil.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.soul_soil.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.soul_soil.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:particle.soul_escape
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.strider.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.strider.happy
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.strider.retreat
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.strider.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.strider.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.strider.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.strider.step_lava
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.strider.eat
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.strider.saddle
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.slime.death_small
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.slime.hurt_small
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.slime.jump_small
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.slime.squish_small
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.smithing_table.use
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.smoker.smoke
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.snowball.throw
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.snow.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.snow.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.snow_golem.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.snow_golem.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.snow_golem.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.snow_golem.shoot
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.snow_golem.shear
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.snow.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.snow.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.snow.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.spider.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.spider.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.spider.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.spider.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.splash_potion.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.splash_potion.throw
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.squid.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.squid.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.squid.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.squid.squirt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.stone.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.stone_button.click_off
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.stone_button.click_on
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.stone.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.stone.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.stone.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.stone_pressure_plate.click_off
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.stone_pressure_plate.click_on
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.stone.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.stray.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.stray.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.stray.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.stray.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.sweet_berry_bush.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.sweet_berry_bush.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.sweet_berries.pick_from_bush
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:enchant.thorns.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.tnt.primed
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.totem.use
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.trident.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.trident.hit_ground
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.trident.return
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.trident.riptide_1
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.trident.riptide_2
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.trident.riptide_3
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.trident.throw
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:item.trident.thunder
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.tripwire.attach
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.tripwire.click_off
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.tripwire.click_on
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.tripwire.detach
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.tropical_fish.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.tropical_fish.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.tropical_fish.flop
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.tropical_fish.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.turtle.ambient_land
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.turtle.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.turtle.death_baby
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.turtle.egg_break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.turtle.egg_crack
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.turtle.egg_hatch
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.turtle.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.turtle.hurt_baby
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.turtle.lay_egg
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.turtle.shamble
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.turtle.shamble_baby
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.turtle.swim
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ui.button.click
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ui.loom.select_pattern
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ui.loom.take_result
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ui.cartography_table.take_result
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ui.stonecutter.take_result
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ui.stonecutter.select_recipe
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ui.toast.challenge_complete
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ui.toast.in
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:ui.toast.out
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.vex.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.vex.charge
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.vex.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.vex.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.villager.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.villager.celebrate
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.villager.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.villager.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.villager.no
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.villager.trade
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.villager.yes
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.villager.work_armorer
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.villager.work_butcher
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.villager.work_cartographer
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.villager.work_cleric
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.villager.work_farmer
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.villager.work_fisherman
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.villager.work_fletcher
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.villager.work_leatherworker
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.villager.work_librarian
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.villager.work_mason
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.villager.work_shepherd
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.villager.work_toolsmith
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.villager.work_weaponsmith
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.vindicator.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.vindicator.celebrate
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.vindicator.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.vindicator.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.vine.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.lily_pad.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.wandering_trader.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.wandering_trader.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.wandering_trader.disappeared
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.wandering_trader.drink_milk
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.wandering_trader.drink_potion
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.wandering_trader.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.wandering_trader.no
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.wandering_trader.reappeared
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.wandering_trader.trade
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.wandering_trader.yes
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.water.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:weather.rain
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:weather.rain.above
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.wet_grass.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.wet_grass.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.wet_grass.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.wet_grass.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.wet_grass.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.witch.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.witch.celebrate
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.witch.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.witch.drink
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.witch.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.witch.throw
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.wither.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.wither.break_block
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.wither.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.wither.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.wither.shoot
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.wither_skeleton.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.wither_skeleton.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.wither_skeleton.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.wither_skeleton.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.wither.spawn
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.wolf.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.wolf.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.wolf.growl
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.wolf.howl
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.wolf.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.wolf.pant
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.wolf.shake
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.wolf.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.wolf.whine
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.wooden_door.close
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.wooden_door.open
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.wooden_trapdoor.close
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.wooden_trapdoor.open
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.wood.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.wooden_button.click_off
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.wooden_button.click_on
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.wood.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.wood.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.wood.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.wooden_pressure_plate.click_off
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.wooden_pressure_plate.click_on
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.wood.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.wool.break
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.wool.fall
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.wool.hit
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.wool.place
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:block.wool.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.zoglin.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.zoglin.angry
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.zoglin.attack
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.zoglin.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.zoglin.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.zoglin.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.zombie.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.zombie.attack_wooden_door
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.zombie.attack_iron_door
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.zombie.break_wooden_door
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.zombie.converted_to_drowned
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.zombie.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.zombie.destroy_egg
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.zombie_horse.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.zombie_horse.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.zombie_horse.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.zombie.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.zombie.infect
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.zombified_piglin.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.zombified_piglin.angry
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.zombified_piglin.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.zombified_piglin.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.zombie.step
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.zombie_villager.ambient
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.zombie_villager.converted
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.zombie_villager.cure
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.zombie_villager.death
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.zombie_villager.hurt
+[00:04:18] [main/WARN]: Missing sound for event: minecraft:entity.zombie_villager.step
+[00:04:18] [main/INFO]: OpenAL initialized.
+[00:04:18] [main/INFO]: Sound engine started
+[00:04:18] [main/INFO]: Created: 1024x512x1 minecraft:textures/atlas/blocks.png-atlas
+[00:04:18] [main/INFO]: [OptiFine] Animated sprites: 43
+[00:04:18] [main/INFO]: Created: 256x128x1 minecraft:textures/atlas/signs.png-atlas
+[00:04:18] [main/INFO]: [OptiFine] Animated sprites: 0
+[00:04:18] [main/INFO]: Created: 512x512x1 minecraft:textures/atlas/banner_patterns.png-atlas
+[00:04:18] [main/INFO]: [OptiFine] Animated sprites: 0
+[00:04:18] [main/INFO]: Created: 512x512x1 minecraft:textures/atlas/shield_patterns.png-atlas
+[00:04:18] [main/INFO]: [OptiFine] Animated sprites: 0
+[00:04:18] [main/INFO]: Created: 256x256x1 minecraft:textures/atlas/chest.png-atlas
+[00:04:18] [main/INFO]: [OptiFine] Animated sprites: 0
+[00:04:18] [main/INFO]: Created: 512x256x1 minecraft:textures/atlas/beds.png-atlas
+[00:04:18] [main/INFO]: [OptiFine] Animated sprites: 0
+[00:04:18] [main/INFO]: Created: 512x256x1 minecraft:textures/atlas/shulker_boxes.png-atlas
+[00:04:18] [main/INFO]: [OptiFine] Animated sprites: 0
+[00:04:19] [main/INFO]: Created: 256x256x0 minecraft:textures/atlas/particles.png-atlas
+[00:04:19] [main/INFO]: [OptiFine] Animated sprites: 0
+[00:04:19] [main/INFO]: Created: 256x256x0 minecraft:textures/atlas/paintings.png-atlas
+[00:04:19] [main/INFO]: [OptiFine] Animated sprites: 0
+[00:04:19] [main/INFO]: Created: 128x128x0 minecraft:textures/atlas/mob_effects.png-atlas
+[00:04:19] [main/INFO]: [OptiFine] Animated sprites: 0
+[00:04:19] [main/INFO]: [OptiFine] *** Reloading custom textures ***
+[00:04:19] [main/INFO]: [OptiFine] Disable Forge light pipeline
+[00:04:39] [VersionCheck/INFO]: [OptiFine] java.net.SocketException: Connection reset

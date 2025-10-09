@@ -1,0 +1,14 @@
+package com.mojang.mcp;
+import javax.annotation.Nonnull;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+import javax.annotation.meta.TypeQualifierDefault;
+
+@Documented
+@Nonnull
+@TypeQualifierDefault(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface MethodsReturnNonnullByDefault {}// leaked by itskekoff; discord.gg/sk3d rf5N4f9k

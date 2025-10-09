@@ -1,0 +1,19 @@
+package net.optifine.shaders;
+
+import net.minecraft.client.renderer.vertex.VertexFormatElement;
+
+public class SVertexAttrib
+{
+// leaked by itskekoff; discord.gg/sk3d YltXRhcP
+    public int index;
+    public int count;
+    public VertexFormatElement.Type type;
+    public int offset;
+
+    public SVertexAttrib(int index, int count, VertexFormatElement.Type type)
+    {
+        this.index = index;
+        this.count = count;
+        this.type = type;
+    }
+}
