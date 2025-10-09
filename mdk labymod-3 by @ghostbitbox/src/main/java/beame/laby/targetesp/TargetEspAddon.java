@@ -15,24 +15,38 @@ public class TargetEspAddon extends LabyModAddon {
 
     private final TargetEspConfig config = new TargetEspConfig();
     private TargetEspController controller;
+    private EventService registeredEventService;
 
     @Override
     public void onEnable() {
         controller = new TargetEspController(this);
-        EventService eventService = getApi().getEventService();
-        if (eventService != null) {
+        EventService eventService = resolveEventService();
+        registeredEventService = eventService;
+        try {
             eventService.registerListener(controller);
-        } else {
-            EventService.getInstance().registerListener(controller);
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
         }
     }
 
     @Override
     public void onDisable() {
         if (controller != null) {
+            if (registeredEventService != null) {
+                try {
+                    registeredEventService.getClass()
+                            .getMethod("unregisterListener", Object.class)
+                            .invoke(registeredEventService, controller);
+                } catch (NoSuchMethodException ignored) {
+                    // Older API builds do not expose an unregister hook, so guard the call.
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
             controller.shutdown();
             controller = null;
         }
+        registeredEventService = null;
     }
 
     @Override
@@ -73,7 +87,22 @@ public class TargetEspAddon extends LabyModAddon {
     }
 
     private void persistConfig() {
-        config.save(getConfig());
-        saveConfig();
+        JsonObject json = getConfig();
+        if (json != null) {
+            config.save(json);
+            saveConfig();
+        }
+    }
+
+    private EventService resolveEventService() {
+        try {
+            EventService apiService = getApi() != null ? getApi().getEventService() : null;
+            if (apiService != null) {
+                return apiService;
+            }
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
+        return EventService.getInstance();
     }
 }
