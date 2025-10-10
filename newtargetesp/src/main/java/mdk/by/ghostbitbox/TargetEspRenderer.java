@@ -6,7 +6,6 @@ import mdk.by.ghostbitbox.util.ColorUtil;
 import mdk.by.ghostbitbox.util.HudRenderUtil;
 import mdk.by.ghostbitbox.util.MathUtil;
 import mdk.by.ghostbitbox.util.ProjectionUtil;
-import mdk.by.ghostbitbox.util.TargetColorPalette;
 import mdk.by.ghostbitbox.util.animation.AnimationMath;
 import mdk.by.ghostbitbox.util.animation.DecelerateAnimation;
 import mdk.by.ghostbitbox.util.animation.Direction;
@@ -38,14 +37,6 @@ public class TargetEspRenderer {
     private static final ResourceLocation QUAD = new ResourceLocation("night/image/target/Quad.png");
     private static final ResourceLocation QUAD_NEW = new ResourceLocation("night/image/target/Quad2.png");
 
-    private static final float GHOST_SPEED = 33.0f;
-    private static final int GHOST_LENGTH = 24;
-    private static final float GHOST_WIDTH = 0.4f;
-    private static final double GHOST_RADIUS = 0.699999988079071d;
-    private static final double GHOST_DISTANCE = 12.0d;
-    private static final float GHOST_ANGLE_STEP = 0.18f;
-    private static final double CIRCLE_DURATION = 2000.0d;
-
     private static final long START_TIME = System.currentTimeMillis();
 
     private final Tessellator tessellator = Tessellator.getInstance();
@@ -54,9 +45,43 @@ public class TargetEspRenderer {
     private final DecelerateAnimation alpha = new DecelerateAnimation(600, 255.0d);
     private float alphaState;
 
+    private int baseColor = ColorUtil.rgba(120, 190, 255, 255);
+    private int hurtColor = ColorUtil.rgba(220, 80, 80, 255);
+    private boolean hurtTint = true;
+    private float ghostSpeed = 33.0f;
+    private int ghostLength = 24;
+    private float ghostWidth = 0.4f;
+    private float ghostAngleStep = 0.18f;
+    private float ghostRadius = 0.7f;
+    private float ghostSpacing = 12.0f;
+    private double circleDuration = 2000.0d;
+    private float circleRadiusMultiplier = 0.8f;
+    private float hudSizeFirstPerson = 90.0f;
+    private float hudSizeThirdPerson = 60.0f;
+
     public void updateState(boolean hasTarget) {
         alphaState = MathHelper.clamp(AnimationMath.fast(alphaState, hasTarget ? 1.0f : 0.0f, 8.0f), 0.0f, 1.0f);
         alpha.setDirection(hasTarget ? Direction.FORWARDS : Direction.BACKWARDS);
+    }
+
+    public void applyConfiguration(TargetEspConfig config) {
+        if (config == null) {
+            return;
+        }
+
+        baseColor = config.getBaseColor();
+        hurtColor = config.getHurtColor();
+        hurtTint = config.isHurtTintEnabled();
+        ghostSpeed = Math.max(0.1f, config.getGhostSpeed());
+        ghostLength = Math.max(1, config.getGhostLength());
+        ghostWidth = Math.max(0.05f, config.getGhostWidth());
+        ghostAngleStep = Math.max(0.01f, config.getGhostAngle());
+        ghostRadius = Math.max(0.1f, config.getGhostRadius());
+        ghostSpacing = Math.max(1.0f, config.getGhostSpacing());
+        circleDuration = Math.max(100.0d, config.getCircleDuration());
+        circleRadiusMultiplier = Math.max(0.1f, config.getCircleRadius());
+        hudSizeFirstPerson = Math.max(10.0f, config.getHudSizeFirstPerson());
+        hudSizeThirdPerson = Math.max(10.0f, config.getHudSizeThirdPerson());
     }
 
     public void drawHud(MatrixStack stack, Entity target, TargetEspMode mode, float visibility, float partialTicks) {
@@ -95,7 +120,7 @@ public class TargetEspRenderer {
             return;
         }
 
-        float size = MC.gameSettings.getPointOfView() == PointOfView.FIRST_PERSON ? 90.0f : 60.0f;
+        float size = MC.gameSettings.getPointOfView() == PointOfView.FIRST_PERSON ? hudSizeFirstPerson : hudSizeThirdPerson;
         Vector2f pos = new Vector2f((float) screen.x, (float) screen.y);
         float rotation = (float) (Math.sin(System.currentTimeMillis() / 1000.0d) * 120.0d);
         ResourceLocation texture = mode == TargetEspMode.SQUARE ? QUAD : QUAD_NEW;
@@ -136,26 +161,28 @@ public class TargetEspRenderer {
 
         int baseColor = resolveTargetColor(target);
         float visibilityFactor = MathHelper.clamp(visibility, 0.0f, 1.0f);
+        int length = Math.max(1, ghostLength);
+        float alphaStep = 255.0f / length;
 
-        for (int i = 0; i < GHOST_LENGTH; ++i) {
+        for (int i = 0; i < length; ++i) {
             double angle = computeGhostAngle(i);
-            double sin = Math.sin(angle) * GHOST_RADIUS;
-            double cos = Math.cos(angle) * GHOST_RADIUS;
-            renderGhost(stack, camera, baseColor, visibilityFactor, i, sin, cos, -cos);
+            double sin = Math.sin(angle) * ghostRadius;
+            double cos = Math.cos(angle) * ghostRadius;
+            renderGhost(stack, camera, baseColor, visibilityFactor, i, sin, cos, -cos, ghostWidth, alphaStep);
         }
 
-        for (int i = 0; i < GHOST_LENGTH; ++i) {
+        for (int i = 0; i < length; ++i) {
             double angle = computeGhostAngle(i);
-            double sin = Math.sin(angle) * GHOST_RADIUS;
-            double cos = Math.cos(angle) * GHOST_RADIUS;
-            renderGhost(stack, camera, baseColor, visibilityFactor, i, -sin, sin, -cos);
+            double sin = Math.sin(angle) * ghostRadius;
+            double cos = Math.cos(angle) * ghostRadius;
+            renderGhost(stack, camera, baseColor, visibilityFactor, i, -sin, sin, -cos, ghostWidth, alphaStep);
         }
 
-        for (int i = 0; i < GHOST_LENGTH; ++i) {
+        for (int i = 0; i < length; ++i) {
             double angle = computeGhostAngle(i);
-            double sin = Math.sin(angle) * GHOST_RADIUS;
-            double cos = Math.cos(angle) * GHOST_RADIUS;
-            renderGhost(stack, camera, baseColor, visibilityFactor, i, cos, -sin, -sin);
+            double sin = Math.sin(angle) * ghostRadius;
+            double cos = Math.cos(angle) * ghostRadius;
+            renderGhost(stack, camera, baseColor, visibilityFactor, i, cos, -sin, -sin, ghostWidth, alphaStep);
         }
 
         RenderSystem.defaultBlendFunc();
@@ -169,34 +196,34 @@ public class TargetEspRenderer {
 
     private double computeGhostAngle(int index) {
         double elapsed = System.currentTimeMillis() - START_TIME;
-        return GHOST_ANGLE_STEP * (elapsed - index * GHOST_DISTANCE) / GHOST_SPEED;
+        return ghostAngleStep * (elapsed - index * ghostSpacing) / ghostSpeed;
     }
 
     private void renderGhost(MatrixStack stack, ActiveRenderInfo camera, int baseColor, float visibilityFactor, int index,
-                              double translateX, double translateY, double translateZ) {
+                              double translateX, double translateY, double translateZ, float quadSize, float alphaStep) {
         Quaternion rotation = camera.getRotation().copy();
         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR_TEX);
 
         stack.translate(translateX, translateY, translateZ);
-        stack.translate(-GHOST_WIDTH / 2.0f, -GHOST_WIDTH / 2.0f, 0.0d);
+        stack.translate(-quadSize / 2.0f, -quadSize / 2.0f, 0.0d);
         stack.rotate(rotation);
-        stack.translate(GHOST_WIDTH / 2.0f, GHOST_WIDTH / 2.0f, 0.0d);
+        stack.translate(quadSize / 2.0f, quadSize / 2.0f, 0.0d);
 
-        int alphaValue = Math.min(255, (int) (alphaState * visibilityFactor * (index * 10.0f)));
+        int alphaValue = Math.min(255, Math.round(alphaState * visibilityFactor * alphaStep * (index + 1)));
         int tinted = ColorUtil.setAlpha(baseColor, alphaValue);
         float[] rgba = ColorUtil.toNormalized(tinted);
         Matrix4f matrix = stack.getLast().getMatrix();
 
-        buffer.pos(matrix, 0.0f, -GHOST_WIDTH, 0.0f).color(rgba[0], rgba[1], rgba[2], rgba[3]).tex(0.0f, 0.0f).endVertex();
-        buffer.pos(matrix, -GHOST_WIDTH, -GHOST_WIDTH, 0.0f).color(rgba[0], rgba[1], rgba[2], rgba[3]).tex(0.0f, 1.0f).endVertex();
-        buffer.pos(matrix, -GHOST_WIDTH, 0.0f, 0.0f).color(rgba[0], rgba[1], rgba[2], rgba[3]).tex(1.0f, 1.0f).endVertex();
+        buffer.pos(matrix, 0.0f, -quadSize, 0.0f).color(rgba[0], rgba[1], rgba[2], rgba[3]).tex(0.0f, 0.0f).endVertex();
+        buffer.pos(matrix, -quadSize, -quadSize, 0.0f).color(rgba[0], rgba[1], rgba[2], rgba[3]).tex(0.0f, 1.0f).endVertex();
+        buffer.pos(matrix, -quadSize, 0.0f, 0.0f).color(rgba[0], rgba[1], rgba[2], rgba[3]).tex(1.0f, 1.0f).endVertex();
         buffer.pos(matrix, 0.0f, 0.0f, 0.0f).color(rgba[0], rgba[1], rgba[2], rgba[3]).tex(1.0f, 0.0f).endVertex();
         tessellator.draw();
 
-        stack.translate(-GHOST_WIDTH / 2.0f, -GHOST_WIDTH / 2.0f, 0.0d);
+        stack.translate(-quadSize / 2.0f, -quadSize / 2.0f, 0.0d);
         rotation.conjugate();
         stack.rotate(rotation);
-        stack.translate(GHOST_WIDTH / 2.0f, GHOST_WIDTH / 2.0f, 0.0d);
+        stack.translate(quadSize / 2.0f, quadSize / 2.0f, 0.0d);
         stack.translate(-translateX, -translateY, -translateZ);
     }
 
@@ -214,8 +241,8 @@ public class TargetEspRenderer {
         stack.translate(x, y, z);
 
         float height = target.getHeight();
-        double elapsed = System.currentTimeMillis() % CIRCLE_DURATION;
-        double halfDuration = CIRCLE_DURATION / 2.0d;
+        double elapsed = System.currentTimeMillis() % circleDuration;
+        double halfDuration = circleDuration / 2.0d;
         boolean side = elapsed > halfDuration;
         double progress = elapsed / halfDuration;
         progress = side ? progress - 1.0d : 1.0d - progress;
@@ -236,7 +263,7 @@ public class TargetEspRenderer {
         int baseColor = resolveTargetColor(target);
         float[] rgba = ColorUtil.toNormalized(baseColor);
         float alphaFactor = MathHelper.clamp(visibility, 0.0f, 1.0f);
-        float radius = target.getWidth() * 0.8f;
+        float radius = target.getWidth() * circleRadiusMultiplier;
         Matrix4f matrix = stack.getLast().getMatrix();
 
         buffer.begin(GL11.GL_TRIANGLE_STRIP, DefaultVertexFormats.POSITION_COLOR);
@@ -275,15 +302,13 @@ public class TargetEspRenderer {
     }
 
     private int resolveTargetColor(Entity entity) {
-        int primary = TargetColorPalette.primary();
         if (entity instanceof LivingEntity) {
             LivingEntity living = (LivingEntity) entity;
-            if (living.hurtTime > 0) {
-                return ColorUtil.rgba(220, 80, 80, 255);
+            if (hurtTint && living.hurtTime > 0) {
+                float hurtProgress = MathHelper.clamp(living.hurtTime / 10.0f, 0.0f, 1.0f);
+                return ColorUtil.interpolate(hurtColor, baseColor, 1.0f - hurtProgress);
             }
-            float hurtProgress = Math.min(living.hurtTime / 2.0f, 1.0f);
-            return ColorUtil.interpolate(TargetColorPalette.secondary(), primary, hurtProgress);
         }
-        return primary;
+        return baseColor;
     }
 }

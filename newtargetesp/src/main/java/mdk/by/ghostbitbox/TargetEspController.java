@@ -35,7 +35,9 @@ public class TargetEspController {
         if (event.getPhase() != TickEvent.Phase.PRE) {
             return;
         }
-        if (!addon.configuration().isEnabled()) {
+        TargetEspConfig configuration = addon.configuration();
+        renderer.applyConfiguration(configuration);
+        if (!configuration.isEnabled()) {
             tracker.clear();
             renderer.updateState(false);
             return;
