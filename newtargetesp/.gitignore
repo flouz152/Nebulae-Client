@@ -60,4 +60,3 @@ src/test/
 **/src/main/generated/*
 .idea/intellij-javadocs-4.0.1.xml
 run/
-libs/
