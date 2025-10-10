@@ -9,7 +9,8 @@ public final class AnimationMath {
     }
 
     public static double deltaTime() {
-        int fps = Minecraft.getDebugFPS();
+        Minecraft minecraft = Minecraft.getInstance();
+        int fps = minecraft != null ? minecraft.debugFPS : 0;
         return fps > 0 ? 1.0d / fps : 1.0d;
     }
 
