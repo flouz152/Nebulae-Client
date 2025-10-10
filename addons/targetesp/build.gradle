@@ -1,0 +1,48 @@
+plugins {
+    id 'java'
+}
+
+group = 'beame.laby.targetesp'
+version = '1.0.0'
+
+def labyProcessorVersion = '3.0.0'
+
+repositories {
+    mavenCentral()
+    maven {
+        url = 'https://repo.labymod.net/repository/maven-public/'
+    }
+}
+
+dependencies {
+    compileOnly "net.labymod.addons:addon-processor:${labyProcessorVersion}"
+    annotationProcessor "net.labymod.addons:addon-processor:${labyProcessorVersion}"
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+processResources {
+    from('src/main/resources')
+
+    from('../../src/assets/minecraft/night/image/target') {
+        include 'Quad.png'
+        include 'Quad2.png'
+        into 'assets/minecraft/night/image/target'
+    }
+    from('../../src/assets/minecraft/night/image') {
+        include 'glow.png'
+        into 'assets/minecraft/night/image'
+    }
+}
+
+jar {
+    from(sourceSets.main.output)
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
