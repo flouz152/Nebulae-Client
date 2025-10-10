@@ -42,8 +42,8 @@ public class TargetEspRenderer {
     private static final int GHOST_LENGTH = 24;
     private static final float GHOST_WIDTH = 0.4f;
     private static final double GHOST_RADIUS = 0.699999988079071d;
-    private static final float GHOST_ANGLE_STEP = 0.18f;
     private static final double GHOST_DISTANCE = 12.0d;
+    private static final float GHOST_ANGLE_STEP = 0.18f;
     private static final double CIRCLE_DURATION = 2000.0d;
 
     private static final long START_TIME = System.currentTimeMillis();
@@ -67,36 +67,7 @@ public class TargetEspRenderer {
             return;
         }
 
-        Vector3d interpolated = MathUtil.interpolate(target.getPositionVec(),
-                new Vector3d(target.lastTickPosX, target.lastTickPosY, target.lastTickPosZ), partialTicks);
-        interpolated = interpolated.add(0.0d, target.getHeight() / 2.0d, 0.0d);
-        Vector2d screen = ProjectionUtil.toScreen(interpolated.x, interpolated.y, interpolated.z);
-        if (screen == null) {
-            return;
-        }
-
-        if (visibility <= 0.0f) {
-            return;
-        }
-
-        int color = resolveTargetColor(target);
-        int alphaValue = Math.min(255, Math.round((float) alpha.getOutput()));
-        if (alphaValue <= 0) {
-            return;
-        }
-
-        float size = MC.gameSettings.getPointOfView() == PointOfView.FIRST_PERSON ? 90.0f : 60.0f;
-        Vector2f pos = new Vector2f((float) screen.x, (float) screen.y);
-        float rotation = (float) (Math.sin(System.currentTimeMillis() / 1000.0d) * 120.0d);
-        ResourceLocation texture = mode == TargetEspMode.SQUARE ? QUAD : QUAD_NEW;
-        int tinted = ColorUtil.setAlpha(color, alphaValue);
-
-        stack.push();
-        stack.translate(pos.x, pos.y, 0.0f);
-        stack.rotate(Vector3f.ZP.rotationDegrees(rotation));
-        stack.translate(-pos.x, -pos.y, 0.0f);
-        HudRenderUtil.drawImage(stack, texture, pos.x - size / 2.0f, pos.y - size / 2.0f, size, size, tinted, 0.0f);
-        stack.pop();
+        draw2DSoulsMarker(stack, target, mode, visibility, partialTicks);
     }
 
     public void drawWorld(MatrixStack stack, Entity target, TargetEspMode mode, float visibility, float partialTicks) {
@@ -109,6 +80,33 @@ public class TargetEspRenderer {
         } else if (mode == TargetEspMode.CIRCLE) {
             drawCircle(stack, target, visibility, partialTicks);
         }
+    }
+
+    private void draw2DSoulsMarker(MatrixStack stack, Entity target, TargetEspMode mode, float visibility, float partialTicks) {
+        int alphaOutput = Math.min(255, (int) (alpha.getOutput() * MathHelper.clamp(visibility, 0.0f, 1.0f)));
+        if (alphaOutput <= 0) {
+            return;
+        }
+
+        Vector3d interpolated = MathUtil.interpolate(target.getPositionVec(),
+                new Vector3d(target.lastTickPosX, target.lastTickPosY, target.lastTickPosZ), partialTicks);
+        Vector2d screen = ProjectionUtil.toScreen(interpolated.x, interpolated.y + target.getHeight() / 2.0f, interpolated.z);
+        if (screen == null) {
+            return;
+        }
+
+        float size = MC.gameSettings.getPointOfView() == PointOfView.FIRST_PERSON ? 90.0f : 60.0f;
+        Vector2f pos = new Vector2f((float) screen.x, (float) screen.y);
+        float rotation = (float) (Math.sin(System.currentTimeMillis() / 1000.0d) * 120.0d);
+        ResourceLocation texture = mode == TargetEspMode.SQUARE ? QUAD : QUAD_NEW;
+        int color = ColorUtil.setAlpha(resolveTargetColor(target), alphaOutput);
+
+        stack.push();
+        stack.translate(pos.x, pos.y, 0.0f);
+        stack.rotate(Vector3f.ZP.rotationDegrees(rotation));
+        stack.translate(-pos.x, -pos.y, 0.0f);
+        HudRenderUtil.drawImage(stack, texture, pos.x - size / 2.0f, pos.y - size / 2.0f, size, size, color, 0.0f);
+        stack.pop();
     }
 
     private void drawGhosts(MatrixStack stack, Entity target, float visibility, float partialTicks) {
@@ -131,34 +129,33 @@ public class TargetEspRenderer {
 
         Vector3d interpolated = MathUtil.interpolate(target.getPositionVec(),
                 new Vector3d(target.lastTickPosX, target.lastTickPosY, target.lastTickPosZ), partialTicks);
-        interpolated = interpolated.add(0.2d, target.getHeight() / 4.0d, 0.0d);
+        interpolated = interpolated.add(0.20000000298023224d, target.getHeight() / 4.0f, 0.0d);
         stack.translate(interpolated.x, interpolated.y, interpolated.z);
 
         MC.getTextureManager().bindTexture(GLOW);
 
         int baseColor = resolveTargetColor(target);
-        float alphaFactor = Math.min(1.0f, alphaState);
-        if (alphaFactor > 0.0f) {
-            for (int i = 0; i < GHOST_LENGTH; ++i) {
-                double angle = computeGhostAngle(i);
-                double sin = Math.sin(angle) * GHOST_RADIUS;
-                double cos = Math.cos(angle) * GHOST_RADIUS;
-                renderGhost(stack, camera, baseColor, alphaFactor, i, sin, cos, -cos);
-            }
+        float visibilityFactor = MathHelper.clamp(visibility, 0.0f, 1.0f);
 
-            for (int i = 0; i < GHOST_LENGTH; ++i) {
-                double angle = computeGhostAngle(i);
-                double sin = Math.sin(angle) * GHOST_RADIUS;
-                double cos = Math.cos(angle) * GHOST_RADIUS;
-                renderGhost(stack, camera, baseColor, alphaFactor, i, -sin, sin, -cos);
-            }
+        for (int i = 0; i < GHOST_LENGTH; ++i) {
+            double angle = computeGhostAngle(i);
+            double sin = Math.sin(angle) * GHOST_RADIUS;
+            double cos = Math.cos(angle) * GHOST_RADIUS;
+            renderGhost(stack, camera, baseColor, visibilityFactor, i, sin, cos, -cos);
+        }
 
-            for (int i = 0; i < GHOST_LENGTH; ++i) {
-                double angle = computeGhostAngle(i);
-                double sin = Math.sin(angle) * GHOST_RADIUS;
-                double cos = Math.cos(angle) * GHOST_RADIUS;
-                renderGhost(stack, camera, baseColor, alphaFactor, i, cos, -sin, -sin);
-            }
+        for (int i = 0; i < GHOST_LENGTH; ++i) {
+            double angle = computeGhostAngle(i);
+            double sin = Math.sin(angle) * GHOST_RADIUS;
+            double cos = Math.cos(angle) * GHOST_RADIUS;
+            renderGhost(stack, camera, baseColor, visibilityFactor, i, -sin, sin, -cos);
+        }
+
+        for (int i = 0; i < GHOST_LENGTH; ++i) {
+            double angle = computeGhostAngle(i);
+            double sin = Math.sin(angle) * GHOST_RADIUS;
+            double cos = Math.cos(angle) * GHOST_RADIUS;
+            renderGhost(stack, camera, baseColor, visibilityFactor, i, cos, -sin, -sin);
         }
 
         RenderSystem.defaultBlendFunc();
@@ -175,33 +172,31 @@ public class TargetEspRenderer {
         return GHOST_ANGLE_STEP * (elapsed - index * GHOST_DISTANCE) / GHOST_SPEED;
     }
 
-    private void renderGhost(MatrixStack stack, ActiveRenderInfo camera, int color, float alphaFactor, int index,
+    private void renderGhost(MatrixStack stack, ActiveRenderInfo camera, int baseColor, float visibilityFactor, int index,
                               double translateX, double translateY, double translateZ) {
         Quaternion rotation = camera.getRotation().copy();
         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR_TEX);
 
         stack.translate(translateX, translateY, translateZ);
-
-        float size = GHOST_WIDTH;
-        double half = size / 2.0f;
-        stack.translate(-half, -half, 0.0d);
+        stack.translate(-GHOST_WIDTH / 2.0f, -GHOST_WIDTH / 2.0f, 0.0d);
         stack.rotate(rotation);
-        stack.translate(half, half, 0.0d);
+        stack.translate(GHOST_WIDTH / 2.0f, GHOST_WIDTH / 2.0f, 0.0d);
 
-        int alphaValue = Math.min(255, (int) (alphaFactor * index * 10.0f));
-        float[] rgba = ColorUtil.toNormalized(ColorUtil.setAlpha(color, alphaValue));
+        int alphaValue = Math.min(255, (int) (alphaState * visibilityFactor * (index * 10.0f)));
+        int tinted = ColorUtil.setAlpha(baseColor, alphaValue);
+        float[] rgba = ColorUtil.toNormalized(tinted);
         Matrix4f matrix = stack.getLast().getMatrix();
 
-        buffer.pos(matrix, 0.0f, -size, 0.0f).color(rgba[0], rgba[1], rgba[2], rgba[3]).tex(0.0f, 0.0f).endVertex();
-        buffer.pos(matrix, -size, -size, 0.0f).color(rgba[0], rgba[1], rgba[2], rgba[3]).tex(0.0f, 1.0f).endVertex();
-        buffer.pos(matrix, -size, 0.0f, 0.0f).color(rgba[0], rgba[1], rgba[2], rgba[3]).tex(1.0f, 1.0f).endVertex();
+        buffer.pos(matrix, 0.0f, -GHOST_WIDTH, 0.0f).color(rgba[0], rgba[1], rgba[2], rgba[3]).tex(0.0f, 0.0f).endVertex();
+        buffer.pos(matrix, -GHOST_WIDTH, -GHOST_WIDTH, 0.0f).color(rgba[0], rgba[1], rgba[2], rgba[3]).tex(0.0f, 1.0f).endVertex();
+        buffer.pos(matrix, -GHOST_WIDTH, 0.0f, 0.0f).color(rgba[0], rgba[1], rgba[2], rgba[3]).tex(1.0f, 1.0f).endVertex();
         buffer.pos(matrix, 0.0f, 0.0f, 0.0f).color(rgba[0], rgba[1], rgba[2], rgba[3]).tex(1.0f, 0.0f).endVertex();
         tessellator.draw();
 
-        stack.translate(-half, -half, 0.0d);
+        stack.translate(-GHOST_WIDTH / 2.0f, -GHOST_WIDTH / 2.0f, 0.0d);
         rotation.conjugate();
         stack.rotate(rotation);
-        stack.translate(half, half, 0.0d);
+        stack.translate(GHOST_WIDTH / 2.0f, GHOST_WIDTH / 2.0f, 0.0d);
         stack.translate(-translateX, -translateY, -translateZ);
     }
 
@@ -236,19 +231,21 @@ public class TargetEspRenderer {
         RenderSystem.shadeModel(GL11.GL_SMOOTH);
         RenderSystem.disableCull();
         RenderSystem.lineWidth(1.5f);
+        RenderSystem.color4f(-1.0f, -1.0f, -1.0f, -1.0f);
 
         int baseColor = resolveTargetColor(target);
         float[] rgba = ColorUtil.toNormalized(baseColor);
-
+        float alphaFactor = MathHelper.clamp(visibility, 0.0f, 1.0f);
         float radius = target.getWidth() * 0.8f;
-        buffer.begin(GL11.GL_TRIANGLE_STRIP, DefaultVertexFormats.POSITION_COLOR);
         Matrix4f matrix = stack.getLast().getMatrix();
+
+        buffer.begin(GL11.GL_TRIANGLE_STRIP, DefaultVertexFormats.POSITION_COLOR);
         for (int i = 0; i <= 360; ++i) {
             double radians = Math.toRadians(i);
             float offsetX = (float) (Math.cos(radians) * radius);
             float offsetZ = (float) (Math.sin(radians) * radius);
             buffer.pos(matrix, offsetX, (float) (height * progress), offsetZ)
-                    .color(rgba[0], rgba[1], rgba[2], rgba[3] * 0.5f).endVertex();
+                    .color(rgba[0], rgba[1], rgba[2], rgba[3] * 0.5f * alphaFactor).endVertex();
             buffer.pos(matrix, offsetX, (float) (height * progress + eased), offsetZ)
                     .color(rgba[0], rgba[1], rgba[2], 0.0f).endVertex();
         }
@@ -261,7 +258,7 @@ public class TargetEspRenderer {
             float offsetX = (float) (Math.cos(radians) * radius);
             float offsetZ = (float) (Math.sin(radians) * radius);
             buffer.pos(matrix, offsetX, (float) (height * progress), offsetZ)
-                    .color(rgba[0], rgba[1], rgba[2], rgba[3] * 0.5f).endVertex();
+                    .color(rgba[0], rgba[1], rgba[2], rgba[3] * 0.5f * alphaFactor).endVertex();
         }
         buffer.finishDrawing();
         WorldVertexBufferUploader.draw(buffer);
