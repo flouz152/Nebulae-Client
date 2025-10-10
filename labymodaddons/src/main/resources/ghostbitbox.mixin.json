@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "mdk.by.ghostbitbox.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "ghostbitbox.refmap.json",
+  "verbose": false,
+  "mixins": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
