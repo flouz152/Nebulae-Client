@@ -37,10 +37,12 @@ public class TargetEspController {
         }
         if (!addon.configuration().isEnabled()) {
             tracker.clear();
+            renderer.updateState(false);
             return;
         }
         Entity player = Minecraft.getInstance().player;
         tracker.tick(player);
+        renderer.updateState(tracker.getTarget() != null);
     }
 
     @Subscribe
@@ -68,5 +70,6 @@ public class TargetEspController {
 
     public void shutdown() {
         tracker.clear();
+        renderer.updateState(false);
     }
 }
