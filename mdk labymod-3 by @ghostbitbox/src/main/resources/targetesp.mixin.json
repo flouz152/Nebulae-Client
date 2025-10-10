@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "beame.laby.targetesp.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "targetesp.refmap.json",
+  "verbose": false,
+  "mixins": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
