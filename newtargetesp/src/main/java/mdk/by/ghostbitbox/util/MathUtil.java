@@ -14,4 +14,8 @@ public final class MathUtil {
         double z = previous.z + (current.z - previous.z) * clamped;
         return new Vector3d(x, y, z);
     }
+
+    public static Vector3d interpolate(Vector3d current, Vector3d previous, double partialTicks) {
+        return lerp(current, previous, partialTicks);
+    }
 }
