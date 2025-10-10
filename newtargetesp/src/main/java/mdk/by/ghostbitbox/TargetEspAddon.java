@@ -42,12 +42,12 @@ public class TargetEspAddon extends LabyModAddon {
 
     @Override
     protected void fillSettings(List<SettingsElement> list) {
-        DropDownMenu<TargetEspMode> menu = new DropDownMenu<>("Режим подсветки", 0, 0, 0, 0);
+        DropDownMenu<TargetEspMode> menu = new DropDownMenu<>("Highlight mode", 0, 0, 0, 0);
         menu.fill(TargetEspMode.values());
         menu.setSelected(configuration.getMode());
         menu.setEnabled(configuration.isEnabled());
 
-        DropDownElement<TargetEspMode> modeElement = new DropDownElement<>("Режим подсветки", menu);
+        DropDownElement<TargetEspMode> modeElement = new DropDownElement<>("Highlight mode", menu);
         modeElement.setChangeListener(mode -> {
             if (mode == null) {
                 return;
@@ -55,9 +55,9 @@ public class TargetEspAddon extends LabyModAddon {
             configuration.setMode(mode);
             persistConfiguration();
         });
-        modeElement.bindDescription("Выберите визуальный стиль подсветки цели.");
+        modeElement.bindDescription("Choose how the current target should be highlighted.");
         IconData enableIcon = new IconData(Material.ENDER_EYE);
-        BooleanElement enabledToggle = new BooleanElement("Включить Target ESP", enableIcon, enabled -> {
+        BooleanElement enabledToggle = new BooleanElement("Enable Target ESP", enableIcon, enabled -> {
             configuration.setEnabled(enabled);
             menu.setEnabled(enabled);
             if (!enabled) {
@@ -65,7 +65,7 @@ public class TargetEspAddon extends LabyModAddon {
             }
             persistConfiguration();
         }, configuration.isEnabled());
-        enabledToggle.bindDescription("Активирует подсветку последней атакованной цели.");
+        enabledToggle.bindDescription("Toggles highlighting for the last attacked entity.");
         list.add(enabledToggle);
         list.add(modeElement);
     }
