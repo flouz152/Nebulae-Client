@@ -1,0 +1,25 @@
+modLoader="javafml"
+loaderVersion="[36,)"
+license="All Rights Reserved"
+showAsResourcePack=false
+[[mods]]
+modId="nebulae_clickgui"
+version="1.0.0"
+displayName="Nebulae Click GUI"
+description='''
+Standalone Forge 1.16.5 port of the Nebulae click GUI.
+'''
+
+[[dependencies.nebulae_clickgui]]
+modId="forge"
+mandatory=true
+versionRange="[36,)"
+ordering="NONE"
+side="CLIENT"
+
+[[dependencies.nebulae_clickgui]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.16.5]"
+ordering="NONE"
+side="CLIENT"
