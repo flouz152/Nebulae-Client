@@ -1,0 +1,3 @@
+# Keep the folder structure while ignoring local texture assets
+*.png
+!.gitkeep

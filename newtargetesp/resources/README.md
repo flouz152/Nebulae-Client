@@ -1,12 +1,23 @@
 # Target ESP textures
 
-Store the Nebulae Target ESP textures outside of version control in this directory. Mirror the following layout:
+Store the Nebulae Target ESP textures outside of version control in this directory. When you are ready to build the addon, copy
+the PNGs into the addon resources so Minecraft can locate them. The renderer accepts either of the following classpath layouts:
 
 ```
-resources/night/image/glow.png
-resources/night/image/target/Quad.png
-resources/night/image/target/Quad2.png
-resources/night/image/target/glow.png
+src/main/resources/assets/minecraft/night/image/glow.png
+src/main/resources/assets/minecraft/night/image/target/Quad.png
+src/main/resources/assets/minecraft/night/image/target/Quad2.png
+src/main/resources/assets/minecraft/night/image/target/glow.png
 ```
 
-When packaging the addon, copy these files into `src/main/resources/night/image/` so the renderer can load them at runtime.
+or
+
+```
+src/main/resources/night/image/glow.png
+src/main/resources/night/image/target/Quad.png
+src/main/resources/night/image/target/Quad2.png
+src/main/resources/night/image/target/glow.png
+```
+
+Placing the textures under `assets/minecraft/` matches Nebulae's original packaging, but a flat `night/image/` folder is also
+supported if you are testing locally. Keep the actual PNG files out of version control; only copy them into your working tree.

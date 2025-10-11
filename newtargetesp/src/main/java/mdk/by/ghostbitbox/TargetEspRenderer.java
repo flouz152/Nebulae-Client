@@ -6,6 +6,7 @@ import mdk.by.ghostbitbox.util.ColorUtil;
 import mdk.by.ghostbitbox.util.HudRenderUtil;
 import mdk.by.ghostbitbox.util.MathUtil;
 import mdk.by.ghostbitbox.util.ProjectionUtil;
+import mdk.by.ghostbitbox.util.TargetEspTextures;
 import mdk.by.ghostbitbox.util.animation.AnimationMath;
 import mdk.by.ghostbitbox.util.animation.DecelerateAnimation;
 import mdk.by.ghostbitbox.util.animation.Direction;
@@ -32,10 +33,6 @@ import org.lwjgl.opengl.GL11;
 public class TargetEspRenderer {
 
     private static final Minecraft MC = Minecraft.getInstance();
-
-    private static final ResourceLocation GLOW = new ResourceLocation("night/image/glow.png");
-    private static final ResourceLocation QUAD = new ResourceLocation("night/image/target/Quad.png");
-    private static final ResourceLocation QUAD_NEW = new ResourceLocation("night/image/target/Quad2.png");
 
     private static final long START_TIME = System.currentTimeMillis();
 
@@ -123,7 +120,8 @@ public class TargetEspRenderer {
         float size = MC.gameSettings.getPointOfView() == PointOfView.FIRST_PERSON ? hudSizeFirstPerson : hudSizeThirdPerson;
         Vector2f pos = new Vector2f((float) screen.x, (float) screen.y);
         float rotation = (float) (Math.sin(System.currentTimeMillis() / 1000.0d) * 120.0d);
-        ResourceLocation texture = mode == TargetEspMode.SQUARE ? QUAD : QUAD_NEW;
+        ResourceLocation texture = mode == TargetEspMode.SQUARE ? TargetEspTextures.getSquareTexture()
+                : TargetEspTextures.getNewSquareTexture();
         int color = ColorUtil.setAlpha(resolveTargetColor(target), alphaOutput);
 
         stack.push();
@@ -157,7 +155,7 @@ public class TargetEspRenderer {
         interpolated = interpolated.add(0.20000000298023224d, target.getHeight() / 4.0f, 0.0d);
         stack.translate(interpolated.x, interpolated.y, interpolated.z);
 
-        MC.getTextureManager().bindTexture(GLOW);
+        MC.getTextureManager().bindTexture(TargetEspTextures.getGlowTexture());
 
         int baseColor = resolveTargetColor(target);
         float visibilityFactor = MathHelper.clamp(visibility, 0.0f, 1.0f);
