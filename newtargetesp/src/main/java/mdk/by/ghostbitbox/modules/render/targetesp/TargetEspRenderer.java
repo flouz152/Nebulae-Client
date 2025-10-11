@@ -5,6 +5,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import mdk.by.ghostbitbox.TargetEspConfig;
 import mdk.by.ghostbitbox.util.ColorUtil;
 import mdk.by.ghostbitbox.util.MathUtil;
+import mdk.by.ghostbitbox.util.HudRenderUtil;
 import mdk.by.ghostbitbox.util.ProjectionUtil;
 import mdk.by.ghostbitbox.util.TargetEspTextures;
 import mdk.by.ghostbitbox.util.animation.AnimationMath;
@@ -123,42 +124,9 @@ public class TargetEspRenderer {
         float centerY = (float) screen.y;
         float half = size / 2.0f;
         float rotation = (float) (Math.sin(System.currentTimeMillis() / 1000.0d) * 120.0d);
-
-        RenderSystem.pushMatrix();
-        RenderSystem.disableLighting();
-        RenderSystem.depthMask(false);
-        RenderSystem.enableBlend();
-        RenderSystem.shadeModel(GL11.GL_SMOOTH);
-        RenderSystem.disableCull();
-        RenderSystem.disableAlphaTest();
-        RenderSystem.blendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE, 0, 1);
-
-        RenderSystem.translatef(centerX, centerY, 0.0f);
-        RenderSystem.rotatef(rotation, 0.0f, 0.0f, 1.0f);
-        RenderSystem.translatef(-centerX, -centerY, 0.0f);
-
-        MC.getTextureManager().bindTexture(texture);
-        Matrix4f matrix = stack.getLast().getMatrix();
-        float left = centerX - half;
-        float top = centerY - half;
-        float right = centerX + half;
-        float bottom = centerY + half;
-        float[] rgba = ColorUtil.toNormalized(color);
-
-        BUFFER.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
-        BUFFER.pos(matrix, left, top, 0.0f).tex(0.0f, 0.0f).color(rgba[0], rgba[1], rgba[2], rgba[3]).endVertex();
-        BUFFER.pos(matrix, left, bottom, 0.0f).tex(0.0f, 1.0f).color(rgba[0], rgba[1], rgba[2], rgba[3]).endVertex();
-        BUFFER.pos(matrix, right, bottom, 0.0f).tex(1.0f, 1.0f).color(rgba[0], rgba[1], rgba[2], rgba[3]).endVertex();
-        BUFFER.pos(matrix, right, top, 0.0f).tex(1.0f, 0.0f).color(rgba[0], rgba[1], rgba[2], rgba[3]).endVertex();
-        BUFFER.finishDrawing();
-        WorldVertexBufferUploader.draw(BUFFER);
-
-        RenderSystem.defaultBlendFunc();
-        RenderSystem.disableBlend();
-        RenderSystem.enableCull();
-        RenderSystem.enableAlphaTest();
-        RenderSystem.depthMask(true);
-        RenderSystem.popMatrix();
+        stack.push();
+        HudRenderUtil.drawImage(stack, texture, centerX - half, centerY - half, size, size, color, rotation, true);
+        stack.pop();
     }
 
     private void drawGhosts(MatrixStack stack, Entity target, float visibility, float partialTicks) {
