@@ -50,6 +50,7 @@ public class TargetEspAddon extends LabyModAddon {
         IconData ghostIcon = new IconData(Material.GHAST_TEAR);
         IconData circleIcon = new IconData(Material.MAGMA_CREAM);
         IconData squareIcon = new IconData(Material.ITEM_FRAME);
+        IconData hudIcon = new IconData(Material.PAINTING);
 
         DropDownMenu<TargetEspMode> menu = new DropDownMenu<>("Highlight mode", 0, 0, 0, 0);
         menu.fill(TargetEspMode.values());
@@ -268,6 +269,258 @@ public class TargetEspAddon extends LabyModAddon {
             persistConfiguration();
         });
         list.add(hudSizeThird);
+
+        list.add(new HeaderElement("Target HUD"));
+
+        BooleanElement hudEnabled = new BooleanElement("Enable Target HUD", hudIcon, enabled -> {
+            configuration.setTargetHudEnabled(enabled);
+            persistConfiguration();
+        }, configuration.isTargetHudEnabled());
+        hudEnabled.bindDescription("Toggle the Nebulae-style target information panel.");
+        list.add(hudEnabled);
+
+        SliderElement hudPosX = new SliderElement("HUD horizontal position", hudIcon, Math.round(configuration.getTargetHudAnchorX() * 100.0f));
+        hudPosX.setRange(0, 100);
+        updateSliderDisplay(hudPosX, "HUD horizontal position", formatFloat(configuration.getTargetHudAnchorX()));
+        hudPosX.addCallback(value -> {
+            float anchor = value / 100.0f;
+            configuration.setTargetHudAnchorX(anchor);
+            updateSliderDisplay(hudPosX, "HUD horizontal position", formatFloat(anchor));
+            persistConfiguration();
+        });
+        list.add(hudPosX);
+
+        SliderElement hudPosY = new SliderElement("HUD vertical position", hudIcon, Math.round(configuration.getTargetHudAnchorY() * 100.0f));
+        hudPosY.setRange(0, 100);
+        updateSliderDisplay(hudPosY, "HUD vertical position", formatFloat(configuration.getTargetHudAnchorY()));
+        hudPosY.addCallback(value -> {
+            float anchor = value / 100.0f;
+            configuration.setTargetHudAnchorY(anchor);
+            updateSliderDisplay(hudPosY, "HUD vertical position", formatFloat(anchor));
+            persistConfiguration();
+        });
+        list.add(hudPosY);
+
+        SliderElement hudWidth = new SliderElement("HUD width", hudIcon, Math.round(configuration.getTargetHudWidth()));
+        hudWidth.setRange(80, 220);
+        updateSliderDisplay(hudWidth, "HUD width", formatFloat(configuration.getTargetHudWidth()));
+        hudWidth.addCallback(value -> {
+            configuration.setTargetHudWidth(value.floatValue());
+            updateSliderDisplay(hudWidth, "HUD width", formatFloat(value.floatValue()));
+            persistConfiguration();
+        });
+        list.add(hudWidth);
+
+        SliderElement hudHeight = new SliderElement("HUD height", hudIcon, Math.round(configuration.getTargetHudHeight()));
+        hudHeight.setRange(32, 140);
+        updateSliderDisplay(hudHeight, "HUD height", formatFloat(configuration.getTargetHudHeight()));
+        hudHeight.addCallback(value -> {
+            configuration.setTargetHudHeight(value.floatValue());
+            updateSliderDisplay(hudHeight, "HUD height", formatFloat(value.floatValue()));
+            persistConfiguration();
+        });
+        list.add(hudHeight);
+
+        SliderElement hudBarHeight = new SliderElement("Health bar height", hudIcon, Math.round(configuration.getTargetHudBarHeight()));
+        hudBarHeight.setRange(2, 16);
+        updateSliderDisplay(hudBarHeight, "Health bar height", formatFloat(configuration.getTargetHudBarHeight()));
+        hudBarHeight.addCallback(value -> {
+            configuration.setTargetHudBarHeight(value.floatValue());
+            updateSliderDisplay(hudBarHeight, "Health bar height", formatFloat(value.floatValue()));
+            persistConfiguration();
+        });
+        list.add(hudBarHeight);
+
+        SliderElement hudItemScale = new SliderElement("Equipment scale", hudIcon, Math.round(configuration.getTargetHudItemScale() * 100.0f));
+        hudItemScale.setRange(40, 120);
+        updateSliderDisplay(hudItemScale, "Equipment scale", formatFloat(configuration.getTargetHudItemScale()));
+        hudItemScale.addCallback(value -> {
+            float scale = value / 100.0f;
+            configuration.setTargetHudItemScale(scale);
+            updateSliderDisplay(hudItemScale, "Equipment scale", formatFloat(scale));
+            persistConfiguration();
+        });
+        list.add(hudItemScale);
+
+        BooleanElement hudShowEquipment = new BooleanElement("Show equipment", hudIcon, enabled -> {
+            configuration.setTargetHudShowEquipment(enabled);
+            persistConfiguration();
+        }, configuration.isTargetHudShowEquipment());
+        list.add(hudShowEquipment);
+
+        BooleanElement hudShowOffhand = new BooleanElement("Show offhand", hudIcon, enabled -> {
+            configuration.setTargetHudShowOffhand(enabled);
+            persistConfiguration();
+        }, configuration.isTargetHudShowOffhand());
+        list.add(hudShowOffhand);
+
+        BooleanElement hudShowHealthText = new BooleanElement("Show health numbers", hudIcon, enabled -> {
+            configuration.setTargetHudShowHealthText(enabled);
+            persistConfiguration();
+        }, configuration.isTargetHudShowHealthText());
+        list.add(hudShowHealthText);
+
+        list.add(new HeaderElement("Target HUD colors"));
+
+        SliderElement hudBackgroundRed = new SliderElement("Background red", hudIcon, configuration.getTargetHudBackgroundRed());
+        hudBackgroundRed.setRange(0, 255);
+        updateSliderDisplay(hudBackgroundRed, "Background red", configuration.getTargetHudBackgroundRed());
+        hudBackgroundRed.addCallback(value -> {
+            configuration.setTargetHudBackgroundColor(value, configuration.getTargetHudBackgroundGreen(), configuration.getTargetHudBackgroundBlue(), configuration.getTargetHudBackgroundAlpha());
+            updateSliderDisplay(hudBackgroundRed, "Background red", value);
+            persistConfiguration();
+        });
+        list.add(hudBackgroundRed);
+
+        SliderElement hudBackgroundGreen = new SliderElement("Background green", hudIcon, configuration.getTargetHudBackgroundGreen());
+        hudBackgroundGreen.setRange(0, 255);
+        updateSliderDisplay(hudBackgroundGreen, "Background green", configuration.getTargetHudBackgroundGreen());
+        hudBackgroundGreen.addCallback(value -> {
+            configuration.setTargetHudBackgroundColor(configuration.getTargetHudBackgroundRed(), value, configuration.getTargetHudBackgroundBlue(), configuration.getTargetHudBackgroundAlpha());
+            updateSliderDisplay(hudBackgroundGreen, "Background green", value);
+            persistConfiguration();
+        });
+        list.add(hudBackgroundGreen);
+
+        SliderElement hudBackgroundBlue = new SliderElement("Background blue", hudIcon, configuration.getTargetHudBackgroundBlue());
+        hudBackgroundBlue.setRange(0, 255);
+        updateSliderDisplay(hudBackgroundBlue, "Background blue", configuration.getTargetHudBackgroundBlue());
+        hudBackgroundBlue.addCallback(value -> {
+            configuration.setTargetHudBackgroundColor(configuration.getTargetHudBackgroundRed(), configuration.getTargetHudBackgroundGreen(), value, configuration.getTargetHudBackgroundAlpha());
+            updateSliderDisplay(hudBackgroundBlue, "Background blue", value);
+            persistConfiguration();
+        });
+        list.add(hudBackgroundBlue);
+
+        SliderElement hudBackgroundAlpha = new SliderElement("Background alpha", hudIcon, configuration.getTargetHudBackgroundAlpha());
+        hudBackgroundAlpha.setRange(0, 255);
+        updateSliderDisplay(hudBackgroundAlpha, "Background alpha", configuration.getTargetHudBackgroundAlpha());
+        hudBackgroundAlpha.addCallback(value -> {
+            configuration.setTargetHudBackgroundColor(configuration.getTargetHudBackgroundRed(), configuration.getTargetHudBackgroundGreen(), configuration.getTargetHudBackgroundBlue(), value);
+            updateSliderDisplay(hudBackgroundAlpha, "Background alpha", value);
+            persistConfiguration();
+        });
+        list.add(hudBackgroundAlpha);
+
+        SliderElement hudOutlineRed = new SliderElement("Outline red", hudIcon, configuration.getTargetHudOutlineRed());
+        hudOutlineRed.setRange(0, 255);
+        updateSliderDisplay(hudOutlineRed, "Outline red", configuration.getTargetHudOutlineRed());
+        hudOutlineRed.addCallback(value -> {
+            configuration.setTargetHudOutlineColor(value, configuration.getTargetHudOutlineGreen(), configuration.getTargetHudOutlineBlue(), configuration.getTargetHudOutlineAlpha());
+            updateSliderDisplay(hudOutlineRed, "Outline red", value);
+            persistConfiguration();
+        });
+        list.add(hudOutlineRed);
+
+        SliderElement hudOutlineGreen = new SliderElement("Outline green", hudIcon, configuration.getTargetHudOutlineGreen());
+        hudOutlineGreen.setRange(0, 255);
+        updateSliderDisplay(hudOutlineGreen, "Outline green", configuration.getTargetHudOutlineGreen());
+        hudOutlineGreen.addCallback(value -> {
+            configuration.setTargetHudOutlineColor(configuration.getTargetHudOutlineRed(), value, configuration.getTargetHudOutlineBlue(), configuration.getTargetHudOutlineAlpha());
+            updateSliderDisplay(hudOutlineGreen, "Outline green", value);
+            persistConfiguration();
+        });
+        list.add(hudOutlineGreen);
+
+        SliderElement hudOutlineBlue = new SliderElement("Outline blue", hudIcon, configuration.getTargetHudOutlineBlue());
+        hudOutlineBlue.setRange(0, 255);
+        updateSliderDisplay(hudOutlineBlue, "Outline blue", configuration.getTargetHudOutlineBlue());
+        hudOutlineBlue.addCallback(value -> {
+            configuration.setTargetHudOutlineColor(configuration.getTargetHudOutlineRed(), configuration.getTargetHudOutlineGreen(), value, configuration.getTargetHudOutlineAlpha());
+            updateSliderDisplay(hudOutlineBlue, "Outline blue", value);
+            persistConfiguration();
+        });
+        list.add(hudOutlineBlue);
+
+        SliderElement hudOutlineAlpha = new SliderElement("Outline alpha", hudIcon, configuration.getTargetHudOutlineAlpha());
+        hudOutlineAlpha.setRange(0, 255);
+        updateSliderDisplay(hudOutlineAlpha, "Outline alpha", configuration.getTargetHudOutlineAlpha());
+        hudOutlineAlpha.addCallback(value -> {
+            configuration.setTargetHudOutlineColor(configuration.getTargetHudOutlineRed(), configuration.getTargetHudOutlineGreen(), configuration.getTargetHudOutlineBlue(), value);
+            updateSliderDisplay(hudOutlineAlpha, "Outline alpha", value);
+            persistConfiguration();
+        });
+        list.add(hudOutlineAlpha);
+
+        SliderElement hudBarRed = new SliderElement("Bar background red", hudIcon, configuration.getTargetHudBarBackgroundRed());
+        hudBarRed.setRange(0, 255);
+        updateSliderDisplay(hudBarRed, "Bar background red", configuration.getTargetHudBarBackgroundRed());
+        hudBarRed.addCallback(value -> {
+            configuration.setTargetHudBarBackgroundColor(value, configuration.getTargetHudBarBackgroundGreen(), configuration.getTargetHudBarBackgroundBlue(), configuration.getTargetHudBarBackgroundAlpha());
+            updateSliderDisplay(hudBarRed, "Bar background red", value);
+            persistConfiguration();
+        });
+        list.add(hudBarRed);
+
+        SliderElement hudBarGreen = new SliderElement("Bar background green", hudIcon, configuration.getTargetHudBarBackgroundGreen());
+        hudBarGreen.setRange(0, 255);
+        updateSliderDisplay(hudBarGreen, "Bar background green", configuration.getTargetHudBarBackgroundGreen());
+        hudBarGreen.addCallback(value -> {
+            configuration.setTargetHudBarBackgroundColor(configuration.getTargetHudBarBackgroundRed(), value, configuration.getTargetHudBarBackgroundBlue(), configuration.getTargetHudBarBackgroundAlpha());
+            updateSliderDisplay(hudBarGreen, "Bar background green", value);
+            persistConfiguration();
+        });
+        list.add(hudBarGreen);
+
+        SliderElement hudBarBlue = new SliderElement("Bar background blue", hudIcon, configuration.getTargetHudBarBackgroundBlue());
+        hudBarBlue.setRange(0, 255);
+        updateSliderDisplay(hudBarBlue, "Bar background blue", configuration.getTargetHudBarBackgroundBlue());
+        hudBarBlue.addCallback(value -> {
+            configuration.setTargetHudBarBackgroundColor(configuration.getTargetHudBarBackgroundRed(), configuration.getTargetHudBarBackgroundGreen(), value, configuration.getTargetHudBarBackgroundAlpha());
+            updateSliderDisplay(hudBarBlue, "Bar background blue", value);
+            persistConfiguration();
+        });
+        list.add(hudBarBlue);
+
+        SliderElement hudBarAlpha = new SliderElement("Bar background alpha", hudIcon, configuration.getTargetHudBarBackgroundAlpha());
+        hudBarAlpha.setRange(0, 255);
+        updateSliderDisplay(hudBarAlpha, "Bar background alpha", configuration.getTargetHudBarBackgroundAlpha());
+        hudBarAlpha.addCallback(value -> {
+            configuration.setTargetHudBarBackgroundColor(configuration.getTargetHudBarBackgroundRed(), configuration.getTargetHudBarBackgroundGreen(), configuration.getTargetHudBarBackgroundBlue(), value);
+            updateSliderDisplay(hudBarAlpha, "Bar background alpha", value);
+            persistConfiguration();
+        });
+        list.add(hudBarAlpha);
+
+        SliderElement hudTextRed = new SliderElement("Text red", hudIcon, configuration.getTargetHudTextRed());
+        hudTextRed.setRange(0, 255);
+        updateSliderDisplay(hudTextRed, "Text red", configuration.getTargetHudTextRed());
+        hudTextRed.addCallback(value -> {
+            configuration.setTargetHudTextColor(value, configuration.getTargetHudTextGreen(), configuration.getTargetHudTextBlue(), configuration.getTargetHudTextAlpha());
+            updateSliderDisplay(hudTextRed, "Text red", value);
+            persistConfiguration();
+        });
+        list.add(hudTextRed);
+
+        SliderElement hudTextGreen = new SliderElement("Text green", hudIcon, configuration.getTargetHudTextGreen());
+        hudTextGreen.setRange(0, 255);
+        updateSliderDisplay(hudTextGreen, "Text green", configuration.getTargetHudTextGreen());
+        hudTextGreen.addCallback(value -> {
+            configuration.setTargetHudTextColor(configuration.getTargetHudTextRed(), value, configuration.getTargetHudTextBlue(), configuration.getTargetHudTextAlpha());
+            updateSliderDisplay(hudTextGreen, "Text green", value);
+            persistConfiguration();
+        });
+        list.add(hudTextGreen);
+
+        SliderElement hudTextBlue = new SliderElement("Text blue", hudIcon, configuration.getTargetHudTextBlue());
+        hudTextBlue.setRange(0, 255);
+        updateSliderDisplay(hudTextBlue, "Text blue", configuration.getTargetHudTextBlue());
+        hudTextBlue.addCallback(value -> {
+            configuration.setTargetHudTextColor(configuration.getTargetHudTextRed(), configuration.getTargetHudTextGreen(), value, configuration.getTargetHudTextAlpha());
+            updateSliderDisplay(hudTextBlue, "Text blue", value);
+            persistConfiguration();
+        });
+        list.add(hudTextBlue);
+
+        SliderElement hudTextAlpha = new SliderElement("Text alpha", hudIcon, configuration.getTargetHudTextAlpha());
+        hudTextAlpha.setRange(0, 255);
+        updateSliderDisplay(hudTextAlpha, "Text alpha", configuration.getTargetHudTextAlpha());
+        hudTextAlpha.addCallback(value -> {
+            configuration.setTargetHudTextColor(configuration.getTargetHudTextRed(), configuration.getTargetHudTextGreen(), configuration.getTargetHudTextBlue(), value);
+            updateSliderDisplay(hudTextAlpha, "Text alpha", value);
+            persistConfiguration();
+        });
+        list.add(hudTextAlpha);
     }
 
     public TargetEspConfig configuration() {

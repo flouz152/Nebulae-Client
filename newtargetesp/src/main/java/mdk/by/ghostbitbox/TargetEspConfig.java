@@ -21,6 +21,20 @@ public class TargetEspConfig {
     private static final String CIRCLE_RADIUS_KEY = "circleRadius";
     private static final String HUD_SIZE_FIRST_KEY = "hudSizeFirstPerson";
     private static final String HUD_SIZE_THIRD_KEY = "hudSizeThirdPerson";
+    private static final String TARGET_HUD_ENABLED_KEY = "targetHudEnabled";
+    private static final String TARGET_HUD_ANCHOR_X_KEY = "targetHudAnchorX";
+    private static final String TARGET_HUD_ANCHOR_Y_KEY = "targetHudAnchorY";
+    private static final String TARGET_HUD_WIDTH_KEY = "targetHudWidth";
+    private static final String TARGET_HUD_HEIGHT_KEY = "targetHudHeight";
+    private static final String TARGET_HUD_BAR_HEIGHT_KEY = "targetHudBarHeight";
+    private static final String TARGET_HUD_ITEM_SCALE_KEY = "targetHudItemScale";
+    private static final String TARGET_HUD_SHOW_EQUIPMENT_KEY = "targetHudShowEquipment";
+    private static final String TARGET_HUD_SHOW_OFFHAND_KEY = "targetHudShowOffhand";
+    private static final String TARGET_HUD_SHOW_HEALTH_TEXT_KEY = "targetHudShowHealthText";
+    private static final String TARGET_HUD_BACKGROUND_COLOR_KEY = "targetHudBackgroundColor";
+    private static final String TARGET_HUD_OUTLINE_COLOR_KEY = "targetHudOutlineColor";
+    private static final String TARGET_HUD_BAR_BACKGROUND_COLOR_KEY = "targetHudBarBackgroundColor";
+    private static final String TARGET_HUD_TEXT_COLOR_KEY = "targetHudTextColor";
 
     private boolean enabled = true;
     private TargetEspMode mode = TargetEspMode.GHOSTS;
@@ -38,6 +52,20 @@ public class TargetEspConfig {
     private float circleRadius = 0.8f;
     private float hudSizeFirstPerson = 90.0f;
     private float hudSizeThirdPerson = 60.0f;
+    private boolean targetHudEnabled = true;
+    private float targetHudAnchorX = 0.65f;
+    private float targetHudAnchorY = 0.7f;
+    private float targetHudWidth = 118.0f;
+    private float targetHudHeight = 44.0f;
+    private float targetHudBarHeight = 6.0f;
+    private float targetHudItemScale = 0.65f;
+    private boolean targetHudShowEquipment = true;
+    private boolean targetHudShowOffhand = true;
+    private boolean targetHudShowHealthText = true;
+    private int targetHudBackgroundColor = ColorUtil.rgba(14, 14, 18, 160);
+    private int targetHudOutlineColor = ColorUtil.rgba(255, 255, 255, 35);
+    private int targetHudBarBackgroundColor = ColorUtil.rgba(30, 30, 40, 180);
+    private int targetHudTextColor = ColorUtil.rgba(235, 235, 245, 255);
 
     public void load(JsonObject json) {
         if (json == null) {
@@ -111,6 +139,62 @@ public class TargetEspConfig {
         if (json.has(HUD_SIZE_THIRD_KEY) && json.get(HUD_SIZE_THIRD_KEY).isJsonPrimitive()) {
             hudSizeThirdPerson = json.get(HUD_SIZE_THIRD_KEY).getAsFloat();
         }
+
+        if (json.has(TARGET_HUD_ENABLED_KEY) && json.get(TARGET_HUD_ENABLED_KEY).isJsonPrimitive()) {
+            targetHudEnabled = json.get(TARGET_HUD_ENABLED_KEY).getAsBoolean();
+        }
+
+        if (json.has(TARGET_HUD_ANCHOR_X_KEY) && json.get(TARGET_HUD_ANCHOR_X_KEY).isJsonPrimitive()) {
+            targetHudAnchorX = json.get(TARGET_HUD_ANCHOR_X_KEY).getAsFloat();
+        }
+
+        if (json.has(TARGET_HUD_ANCHOR_Y_KEY) && json.get(TARGET_HUD_ANCHOR_Y_KEY).isJsonPrimitive()) {
+            targetHudAnchorY = json.get(TARGET_HUD_ANCHOR_Y_KEY).getAsFloat();
+        }
+
+        if (json.has(TARGET_HUD_WIDTH_KEY) && json.get(TARGET_HUD_WIDTH_KEY).isJsonPrimitive()) {
+            targetHudWidth = json.get(TARGET_HUD_WIDTH_KEY).getAsFloat();
+        }
+
+        if (json.has(TARGET_HUD_HEIGHT_KEY) && json.get(TARGET_HUD_HEIGHT_KEY).isJsonPrimitive()) {
+            targetHudHeight = json.get(TARGET_HUD_HEIGHT_KEY).getAsFloat();
+        }
+
+        if (json.has(TARGET_HUD_BAR_HEIGHT_KEY) && json.get(TARGET_HUD_BAR_HEIGHT_KEY).isJsonPrimitive()) {
+            targetHudBarHeight = json.get(TARGET_HUD_BAR_HEIGHT_KEY).getAsFloat();
+        }
+
+        if (json.has(TARGET_HUD_ITEM_SCALE_KEY) && json.get(TARGET_HUD_ITEM_SCALE_KEY).isJsonPrimitive()) {
+            targetHudItemScale = json.get(TARGET_HUD_ITEM_SCALE_KEY).getAsFloat();
+        }
+
+        if (json.has(TARGET_HUD_SHOW_EQUIPMENT_KEY) && json.get(TARGET_HUD_SHOW_EQUIPMENT_KEY).isJsonPrimitive()) {
+            targetHudShowEquipment = json.get(TARGET_HUD_SHOW_EQUIPMENT_KEY).getAsBoolean();
+        }
+
+        if (json.has(TARGET_HUD_SHOW_OFFHAND_KEY) && json.get(TARGET_HUD_SHOW_OFFHAND_KEY).isJsonPrimitive()) {
+            targetHudShowOffhand = json.get(TARGET_HUD_SHOW_OFFHAND_KEY).getAsBoolean();
+        }
+
+        if (json.has(TARGET_HUD_SHOW_HEALTH_TEXT_KEY) && json.get(TARGET_HUD_SHOW_HEALTH_TEXT_KEY).isJsonPrimitive()) {
+            targetHudShowHealthText = json.get(TARGET_HUD_SHOW_HEALTH_TEXT_KEY).getAsBoolean();
+        }
+
+        if (json.has(TARGET_HUD_BACKGROUND_COLOR_KEY) && json.get(TARGET_HUD_BACKGROUND_COLOR_KEY).isJsonPrimitive()) {
+            targetHudBackgroundColor = json.get(TARGET_HUD_BACKGROUND_COLOR_KEY).getAsInt();
+        }
+
+        if (json.has(TARGET_HUD_OUTLINE_COLOR_KEY) && json.get(TARGET_HUD_OUTLINE_COLOR_KEY).isJsonPrimitive()) {
+            targetHudOutlineColor = json.get(TARGET_HUD_OUTLINE_COLOR_KEY).getAsInt();
+        }
+
+        if (json.has(TARGET_HUD_BAR_BACKGROUND_COLOR_KEY) && json.get(TARGET_HUD_BAR_BACKGROUND_COLOR_KEY).isJsonPrimitive()) {
+            targetHudBarBackgroundColor = json.get(TARGET_HUD_BAR_BACKGROUND_COLOR_KEY).getAsInt();
+        }
+
+        if (json.has(TARGET_HUD_TEXT_COLOR_KEY) && json.get(TARGET_HUD_TEXT_COLOR_KEY).isJsonPrimitive()) {
+            targetHudTextColor = json.get(TARGET_HUD_TEXT_COLOR_KEY).getAsInt();
+        }
     }
 
     public void save(JsonObject json) {
@@ -134,6 +218,20 @@ public class TargetEspConfig {
         json.addProperty(CIRCLE_RADIUS_KEY, circleRadius);
         json.addProperty(HUD_SIZE_FIRST_KEY, hudSizeFirstPerson);
         json.addProperty(HUD_SIZE_THIRD_KEY, hudSizeThirdPerson);
+        json.addProperty(TARGET_HUD_ENABLED_KEY, targetHudEnabled);
+        json.addProperty(TARGET_HUD_ANCHOR_X_KEY, targetHudAnchorX);
+        json.addProperty(TARGET_HUD_ANCHOR_Y_KEY, targetHudAnchorY);
+        json.addProperty(TARGET_HUD_WIDTH_KEY, targetHudWidth);
+        json.addProperty(TARGET_HUD_HEIGHT_KEY, targetHudHeight);
+        json.addProperty(TARGET_HUD_BAR_HEIGHT_KEY, targetHudBarHeight);
+        json.addProperty(TARGET_HUD_ITEM_SCALE_KEY, targetHudItemScale);
+        json.addProperty(TARGET_HUD_SHOW_EQUIPMENT_KEY, targetHudShowEquipment);
+        json.addProperty(TARGET_HUD_SHOW_OFFHAND_KEY, targetHudShowOffhand);
+        json.addProperty(TARGET_HUD_SHOW_HEALTH_TEXT_KEY, targetHudShowHealthText);
+        json.addProperty(TARGET_HUD_BACKGROUND_COLOR_KEY, targetHudBackgroundColor);
+        json.addProperty(TARGET_HUD_OUTLINE_COLOR_KEY, targetHudOutlineColor);
+        json.addProperty(TARGET_HUD_BAR_BACKGROUND_COLOR_KEY, targetHudBarBackgroundColor);
+        json.addProperty(TARGET_HUD_TEXT_COLOR_KEY, targetHudTextColor);
     }
 
     public boolean isEnabled() {
@@ -288,5 +386,197 @@ public class TargetEspConfig {
 
     public void setHudSizeThirdPerson(float hudSizeThirdPerson) {
         this.hudSizeThirdPerson = hudSizeThirdPerson;
+    }
+
+    public boolean isTargetHudEnabled() {
+        return targetHudEnabled;
+    }
+
+    public void setTargetHudEnabled(boolean targetHudEnabled) {
+        this.targetHudEnabled = targetHudEnabled;
+    }
+
+    public float getTargetHudAnchorX() {
+        return targetHudAnchorX;
+    }
+
+    public void setTargetHudAnchorX(float targetHudAnchorX) {
+        this.targetHudAnchorX = targetHudAnchorX;
+    }
+
+    public float getTargetHudAnchorY() {
+        return targetHudAnchorY;
+    }
+
+    public void setTargetHudAnchorY(float targetHudAnchorY) {
+        this.targetHudAnchorY = targetHudAnchorY;
+    }
+
+    public float getTargetHudWidth() {
+        return targetHudWidth;
+    }
+
+    public void setTargetHudWidth(float targetHudWidth) {
+        this.targetHudWidth = targetHudWidth;
+    }
+
+    public float getTargetHudHeight() {
+        return targetHudHeight;
+    }
+
+    public void setTargetHudHeight(float targetHudHeight) {
+        this.targetHudHeight = targetHudHeight;
+    }
+
+    public float getTargetHudBarHeight() {
+        return targetHudBarHeight;
+    }
+
+    public void setTargetHudBarHeight(float targetHudBarHeight) {
+        this.targetHudBarHeight = targetHudBarHeight;
+    }
+
+    public float getTargetHudItemScale() {
+        return targetHudItemScale;
+    }
+
+    public void setTargetHudItemScale(float targetHudItemScale) {
+        this.targetHudItemScale = targetHudItemScale;
+    }
+
+    public boolean isTargetHudShowEquipment() {
+        return targetHudShowEquipment;
+    }
+
+    public void setTargetHudShowEquipment(boolean targetHudShowEquipment) {
+        this.targetHudShowEquipment = targetHudShowEquipment;
+    }
+
+    public boolean isTargetHudShowOffhand() {
+        return targetHudShowOffhand;
+    }
+
+    public void setTargetHudShowOffhand(boolean targetHudShowOffhand) {
+        this.targetHudShowOffhand = targetHudShowOffhand;
+    }
+
+    public boolean isTargetHudShowHealthText() {
+        return targetHudShowHealthText;
+    }
+
+    public void setTargetHudShowHealthText(boolean targetHudShowHealthText) {
+        this.targetHudShowHealthText = targetHudShowHealthText;
+    }
+
+    public int getTargetHudBackgroundColor() {
+        return targetHudBackgroundColor;
+    }
+
+    public void setTargetHudBackgroundColor(int targetHudBackgroundColor) {
+        this.targetHudBackgroundColor = targetHudBackgroundColor;
+    }
+
+    public void setTargetHudBackgroundColor(int red, int green, int blue, int alpha) {
+        this.targetHudBackgroundColor = ColorUtil.rgba(red, green, blue, alpha);
+    }
+
+    public int getTargetHudBackgroundRed() {
+        return (targetHudBackgroundColor >> 16) & 0xFF;
+    }
+
+    public int getTargetHudBackgroundGreen() {
+        return (targetHudBackgroundColor >> 8) & 0xFF;
+    }
+
+    public int getTargetHudBackgroundBlue() {
+        return targetHudBackgroundColor & 0xFF;
+    }
+
+    public int getTargetHudBackgroundAlpha() {
+        return (targetHudBackgroundColor >> 24) & 0xFF;
+    }
+
+    public int getTargetHudOutlineColor() {
+        return targetHudOutlineColor;
+    }
+
+    public void setTargetHudOutlineColor(int targetHudOutlineColor) {
+        this.targetHudOutlineColor = targetHudOutlineColor;
+    }
+
+    public void setTargetHudOutlineColor(int red, int green, int blue, int alpha) {
+        this.targetHudOutlineColor = ColorUtil.rgba(red, green, blue, alpha);
+    }
+
+    public int getTargetHudOutlineRed() {
+        return (targetHudOutlineColor >> 16) & 0xFF;
+    }
+
+    public int getTargetHudOutlineGreen() {
+        return (targetHudOutlineColor >> 8) & 0xFF;
+    }
+
+    public int getTargetHudOutlineBlue() {
+        return targetHudOutlineColor & 0xFF;
+    }
+
+    public int getTargetHudOutlineAlpha() {
+        return (targetHudOutlineColor >> 24) & 0xFF;
+    }
+
+    public int getTargetHudBarBackgroundColor() {
+        return targetHudBarBackgroundColor;
+    }
+
+    public void setTargetHudBarBackgroundColor(int targetHudBarBackgroundColor) {
+        this.targetHudBarBackgroundColor = targetHudBarBackgroundColor;
+    }
+
+    public void setTargetHudBarBackgroundColor(int red, int green, int blue, int alpha) {
+        this.targetHudBarBackgroundColor = ColorUtil.rgba(red, green, blue, alpha);
+    }
+
+    public int getTargetHudBarBackgroundRed() {
+        return (targetHudBarBackgroundColor >> 16) & 0xFF;
+    }
+
+    public int getTargetHudBarBackgroundGreen() {
+        return (targetHudBarBackgroundColor >> 8) & 0xFF;
+    }
+
+    public int getTargetHudBarBackgroundBlue() {
+        return targetHudBarBackgroundColor & 0xFF;
+    }
+
+    public int getTargetHudBarBackgroundAlpha() {
+        return (targetHudBarBackgroundColor >> 24) & 0xFF;
+    }
+
+    public int getTargetHudTextColor() {
+        return targetHudTextColor;
+    }
+
+    public void setTargetHudTextColor(int targetHudTextColor) {
+        this.targetHudTextColor = targetHudTextColor;
+    }
+
+    public void setTargetHudTextColor(int red, int green, int blue, int alpha) {
+        this.targetHudTextColor = ColorUtil.rgba(red, green, blue, alpha);
+    }
+
+    public int getTargetHudTextRed() {
+        return (targetHudTextColor >> 16) & 0xFF;
+    }
+
+    public int getTargetHudTextGreen() {
+        return (targetHudTextColor >> 8) & 0xFF;
+    }
+
+    public int getTargetHudTextBlue() {
+        return targetHudTextColor & 0xFF;
+    }
+
+    public int getTargetHudTextAlpha() {
+        return (targetHudTextColor >> 24) & 0xFF;
     }
 }

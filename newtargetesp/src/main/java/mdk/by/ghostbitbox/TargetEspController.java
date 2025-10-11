@@ -14,6 +14,7 @@ public class TargetEspController {
 
     private final TargetEspAddon addon;
     private final TargetEspRenderer renderer = new TargetEspRenderer();
+    private final TargetHudRenderer hudRenderer = new TargetHudRenderer();
     private final TargetTracker tracker = new TargetTracker();
 
     public TargetEspController(TargetEspAddon addon) {
@@ -37,6 +38,7 @@ public class TargetEspController {
         }
         TargetEspConfig configuration = addon.configuration();
         renderer.applyConfiguration(configuration);
+        hudRenderer.applyConfiguration(configuration);
         if (!configuration.isEnabled()) {
             tracker.clear();
             renderer.updateState(false);
@@ -53,10 +55,11 @@ public class TargetEspController {
             return;
         }
         Entity target = tracker.getTarget();
+        MatrixStack matrices = event.getMatrixStack();
+        hudRenderer.render(matrices, target, tracker.getVisibility(), event.getPartialTicks());
         if (target == null) {
             return;
         }
-        MatrixStack matrices = event.getMatrixStack();
         renderer.drawHud(matrices, target, addon.configuration().getMode(), tracker.getVisibility(), event.getPartialTicks());
     }
 
@@ -73,5 +76,6 @@ public class TargetEspController {
     public void shutdown() {
         tracker.clear();
         renderer.updateState(false);
+        hudRenderer.applyConfiguration(addon.configuration());
     }
 }
