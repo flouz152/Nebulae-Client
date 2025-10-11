@@ -1,6 +1,7 @@
 package mdk.by.ghostbitbox;
 
 import com.google.gson.JsonObject;
+import mdk.by.ghostbitbox.modules.render.targetesp.TargetEspMode;
 import mdk.by.ghostbitbox.util.ColorUtil;
 
 public class TargetEspConfig {

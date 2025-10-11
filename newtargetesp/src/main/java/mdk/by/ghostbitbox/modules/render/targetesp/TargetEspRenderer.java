@@ -1,7 +1,8 @@
-package mdk.by.ghostbitbox;
+package mdk.by.ghostbitbox.modules.render.targetesp;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import mdk.by.ghostbitbox.TargetEspConfig;
 import mdk.by.ghostbitbox.util.ColorUtil;
 import mdk.by.ghostbitbox.util.HudRenderUtil;
 import mdk.by.ghostbitbox.util.MathUtil;

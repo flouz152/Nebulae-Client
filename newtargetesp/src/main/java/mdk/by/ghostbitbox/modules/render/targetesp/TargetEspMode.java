@@ -1,4 +1,4 @@
-package mdk.by.ghostbitbox;
+package mdk.by.ghostbitbox.modules.render.targetesp;
 
 public enum TargetEspMode {
     GHOSTS("Ghosts"),
