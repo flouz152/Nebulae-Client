@@ -16,6 +16,7 @@ public class TargetEspConfig {
     private static final String GHOST_ANGLE_KEY = "ghostAngle";
     private static final String GHOST_RADIUS_KEY = "ghostRadius";
     private static final String GHOST_SPACING_KEY = "ghostSpacing";
+    private static final String GHOST_HEIGHT_OFFSET_KEY = "ghostHeightOffset";
     private static final String CIRCLE_DURATION_KEY = "circleDuration";
     private static final String CIRCLE_RADIUS_KEY = "circleRadius";
     private static final String HUD_SIZE_FIRST_KEY = "hudSizeFirstPerson";
@@ -32,6 +33,7 @@ public class TargetEspConfig {
     private float ghostAngle = 0.18f;
     private float ghostRadius = 0.7f;
     private float ghostSpacing = 12.0f;
+    private float ghostHeightOffset = 0.0f;
     private double circleDuration = 2000.0d;
     private float circleRadius = 0.8f;
     private float hudSizeFirstPerson = 90.0f;
@@ -90,6 +92,10 @@ public class TargetEspConfig {
             ghostSpacing = json.get(GHOST_SPACING_KEY).getAsFloat();
         }
 
+        if (json.has(GHOST_HEIGHT_OFFSET_KEY) && json.get(GHOST_HEIGHT_OFFSET_KEY).isJsonPrimitive()) {
+            ghostHeightOffset = json.get(GHOST_HEIGHT_OFFSET_KEY).getAsFloat();
+        }
+
         if (json.has(CIRCLE_DURATION_KEY) && json.get(CIRCLE_DURATION_KEY).isJsonPrimitive()) {
             circleDuration = json.get(CIRCLE_DURATION_KEY).getAsDouble();
         }
@@ -123,6 +129,7 @@ public class TargetEspConfig {
         json.addProperty(GHOST_ANGLE_KEY, ghostAngle);
         json.addProperty(GHOST_RADIUS_KEY, ghostRadius);
         json.addProperty(GHOST_SPACING_KEY, ghostSpacing);
+        json.addProperty(GHOST_HEIGHT_OFFSET_KEY, ghostHeightOffset);
         json.addProperty(CIRCLE_DURATION_KEY, circleDuration);
         json.addProperty(CIRCLE_RADIUS_KEY, circleRadius);
         json.addProperty(HUD_SIZE_FIRST_KEY, hudSizeFirstPerson);
@@ -241,6 +248,14 @@ public class TargetEspConfig {
 
     public void setGhostSpacing(float ghostSpacing) {
         this.ghostSpacing = ghostSpacing;
+    }
+
+    public float getGhostHeightOffset() {
+        return ghostHeightOffset;
+    }
+
+    public void setGhostHeightOffset(float ghostHeightOffset) {
+        this.ghostHeightOffset = ghostHeightOffset;
     }
 
     public double getCircleDuration() {

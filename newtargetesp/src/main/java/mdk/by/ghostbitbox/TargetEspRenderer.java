@@ -26,7 +26,6 @@ import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector2f;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
 import org.joml.Vector2d;
 import org.lwjgl.opengl.GL11;
 
@@ -51,6 +50,7 @@ public class TargetEspRenderer {
     private float ghostAngleStep = 0.18f;
     private float ghostRadius = 0.7f;
     private float ghostSpacing = 12.0f;
+    private float ghostHeightOffset = 0.0f;
     private double circleDuration = 2000.0d;
     private float circleRadiusMultiplier = 0.8f;
     private float hudSizeFirstPerson = 90.0f;
@@ -75,6 +75,7 @@ public class TargetEspRenderer {
         ghostAngleStep = Math.max(0.01f, config.getGhostAngle());
         ghostRadius = Math.max(0.1f, config.getGhostRadius());
         ghostSpacing = Math.max(1.0f, config.getGhostSpacing());
+        ghostHeightOffset = MathHelper.clamp(config.getGhostHeightOffset(), -3.0f, 3.0f);
         circleDuration = Math.max(100.0d, config.getCircleDuration());
         circleRadiusMultiplier = Math.max(0.1f, config.getCircleRadius());
         hudSizeFirstPerson = Math.max(10.0f, config.getHudSizeFirstPerson());
@@ -124,12 +125,9 @@ public class TargetEspRenderer {
                 : TargetEspTextures.getNewSquareTexture();
         int color = ColorUtil.setAlpha(resolveTargetColor(target), alphaOutput);
 
-        stack.push();
-        stack.translate(pos.x, pos.y, 0.0f);
-        stack.rotate(Vector3f.ZP.rotationDegrees(rotation));
-        stack.translate(-pos.x, -pos.y, 0.0f);
-        HudRenderUtil.drawImage(stack, texture, pos.x - size / 2.0f, pos.y - size / 2.0f, size, size, color, 0.0f);
-        stack.pop();
+        float left = pos.x - size / 2.0f;
+        float top = pos.y - size / 2.0f;
+        HudRenderUtil.drawImage(stack, texture, left, top, size, size, color, rotation, true);
     }
 
     private void drawGhosts(MatrixStack stack, Entity target, float visibility, float partialTicks) {
@@ -152,7 +150,8 @@ public class TargetEspRenderer {
 
         Vector3d interpolated = MathUtil.interpolate(target.getPositionVec(),
                 new Vector3d(target.lastTickPosX, target.lastTickPosY, target.lastTickPosZ), partialTicks);
-        interpolated = interpolated.add(0.20000000298023224d, target.getHeight() / 4.0f, 0.0d);
+        double verticalOffset = target.getHeight() / 4.0f + ghostHeightOffset;
+        interpolated = interpolated.add(0.20000000298023224d, verticalOffset, 0.0d);
         stack.translate(interpolated.x, interpolated.y, interpolated.z);
 
         MC.getTextureManager().bindTexture(TargetEspTextures.getGlowTexture());

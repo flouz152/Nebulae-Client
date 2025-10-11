@@ -8,6 +8,7 @@ import net.labymod.gui.elements.DropDownMenu;
 import net.labymod.settings.elements.BooleanElement;
 import net.labymod.settings.elements.ControlElement.IconData;
 import net.labymod.settings.elements.DropDownElement;
+import net.labymod.settings.elements.HeaderElement;
 import net.labymod.settings.elements.SettingsElement;
 import net.labymod.settings.elements.SliderElement;
 import net.labymod.utils.Material;
@@ -44,6 +45,12 @@ public class TargetEspAddon extends LabyModAddon {
 
     @Override
     protected void fillSettings(List<SettingsElement> list) {
+        IconData enableIcon = new IconData(Material.ENDER_EYE);
+        IconData colorIcon = new IconData(Material.GLOWSTONE_DUST);
+        IconData ghostIcon = new IconData(Material.GHAST_TEAR);
+        IconData circleIcon = new IconData(Material.MAGMA_CREAM);
+        IconData squareIcon = new IconData(Material.ITEM_FRAME);
+
         DropDownMenu<TargetEspMode> menu = new DropDownMenu<>("Highlight mode", 0, 0, 0, 0);
         menu.fill(TargetEspMode.values());
         menu.setSelected(configuration.getMode());
@@ -58,7 +65,7 @@ public class TargetEspAddon extends LabyModAddon {
             persistConfiguration();
         });
         modeElement.bindDescription("Choose how the current target should be highlighted.");
-        IconData enableIcon = new IconData(Material.ENDER_EYE);
+
         BooleanElement enabledToggle = new BooleanElement("Enable Target ESP", enableIcon, enabled -> {
             configuration.setEnabled(enabled);
             menu.setEnabled(enabled);
@@ -68,10 +75,12 @@ public class TargetEspAddon extends LabyModAddon {
             persistConfiguration();
         }, configuration.isEnabled());
         enabledToggle.bindDescription("Toggles highlighting for the last attacked entity.");
+
+        list.add(new HeaderElement("General"));
         list.add(enabledToggle);
         list.add(modeElement);
 
-        IconData colorIcon = new IconData(Material.GLOWSTONE_DUST);
+        list.add(new HeaderElement("Base color"));
         SliderElement baseRed = new SliderElement("Base color - Red", colorIcon, configuration.getBaseColorRed());
         baseRed.setRange(0, 255);
         updateSliderDisplay(baseRed, "Base color - Red", configuration.getBaseColorRed());
@@ -102,6 +111,7 @@ public class TargetEspAddon extends LabyModAddon {
         });
         list.add(baseBlue);
 
+        list.add(new HeaderElement("Hurt tint"));
         BooleanElement hurtTint = new BooleanElement("Tint when hurt", colorIcon, enabled -> {
             configuration.setHurtTintEnabled(enabled);
             persistConfiguration();
@@ -139,7 +149,7 @@ public class TargetEspAddon extends LabyModAddon {
         });
         list.add(hurtBlue);
 
-        IconData ghostIcon = new IconData(Material.GHAST_TEAR);
+        list.add(new HeaderElement("Ghosts"));
         SliderElement ghostSpeed = new SliderElement("Ghost speed", ghostIcon, Math.round(configuration.getGhostSpeed()));
         ghostSpeed.setRange(5, 100);
         updateSliderDisplay(ghostSpeed, "Ghost speed", formatFloat(configuration.getGhostSpeed()));
@@ -203,7 +213,20 @@ public class TargetEspAddon extends LabyModAddon {
         });
         list.add(ghostSpacing);
 
-        IconData circleIcon = new IconData(Material.MAGMA_CREAM);
+        float ghostOffset = configuration.getGhostHeightOffset();
+        int ghostHeightInitial = Math.round((ghostOffset + 1.5f) * 100.0f);
+        SliderElement ghostHeight = new SliderElement("Ghost height offset", ghostIcon, ghostHeightInitial);
+        ghostHeight.setRange(0, 350);
+        updateSliderDisplay(ghostHeight, "Ghost height offset", formatFloat(ghostOffset));
+        ghostHeight.addCallback(value -> {
+            float offset = value / 100.0f - 1.5f;
+            configuration.setGhostHeightOffset(offset);
+            updateSliderDisplay(ghostHeight, "Ghost height offset", formatFloat(offset));
+            persistConfiguration();
+        });
+        list.add(ghostHeight);
+
+        list.add(new HeaderElement("Circle"));
         SliderElement circleDuration = new SliderElement("Circle duration", circleIcon, (int) Math.round(configuration.getCircleDuration()));
         circleDuration.setRange(500, 10000);
         updateSliderDisplay(circleDuration, "Circle duration", (int) Math.round(configuration.getCircleDuration()));
@@ -225,7 +248,7 @@ public class TargetEspAddon extends LabyModAddon {
         });
         list.add(circleRadius);
 
-        IconData squareIcon = new IconData(Material.ITEM_FRAME);
+        list.add(new HeaderElement("Squares"));
         SliderElement hudSizeFirst = new SliderElement("Square size (first person)", squareIcon, Math.round(configuration.getHudSizeFirstPerson()));
         hudSizeFirst.setRange(40, 160);
         updateSliderDisplay(hudSizeFirst, "Square size (first person)", formatFloat(configuration.getHudSizeFirstPerson()));
