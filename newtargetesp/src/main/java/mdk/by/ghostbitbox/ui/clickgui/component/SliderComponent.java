@@ -3,9 +3,10 @@ package mdk.by.ghostbitbox.ui.clickgui.component;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.util.math.MathHelper;
+import mdk.by.ghostbitbox.util.ColorUtil;
+import mdk.by.ghostbitbox.util.HudRenderUtil;
 
 public class SliderComponent extends SettingComponent {
 
@@ -39,25 +40,29 @@ public class SliderComponent extends SettingComponent {
         if (!dragging) {
             value = getter.get();
         }
-        AbstractGui.fill(matrixStack, (int) x, (int) y, (int) (x + width), (int) (y + getHeight()), 0x331B1B26);
         FontRenderer font = font();
         if (font == null) {
             return;
         }
+        HudRenderUtil.drawRoundedRect(matrixStack, x, y, width, getHeight(), 4.0f, 0x44161A22);
         font.drawString(matrixStack, label, x + 6, y + 6, 0xFFEFEFF5);
         String text = formatter.format(value);
-        font.drawString(matrixStack, text, x + width - 6 - font.getStringWidth(text), y + 6, 0xFF9AA0A8);
+        font.drawString(matrixStack, text, x + width - 6 - font.getStringWidth(text), y + 6, 0xFFCED3DA);
 
         sliderLeft = x + 8;
         sliderWidth = width - 16;
         float sliderTop = y + getHeight() - 12;
-        float sliderBottom = sliderTop + 6;
-        AbstractGui.fill(matrixStack, (int) sliderLeft, (int) sliderTop, (int) (sliderLeft + sliderWidth), (int) sliderBottom, 0x5520202A);
+        float sliderHeight = 6.0f;
+        HudRenderUtil.drawRoundedRect(matrixStack, sliderLeft, sliderTop, sliderWidth, sliderHeight, 3.0f, 0x5520202A);
         float percentage = (value - min) / (max - min);
         float filledWidth = sliderWidth * MathHelper.clamp(percentage, 0.0f, 1.0f);
-        AbstractGui.fill(matrixStack, (int) sliderLeft, (int) sliderTop, (int) (sliderLeft + filledWidth), (int) sliderBottom, 0xFF4C84FF);
-        int knobX = (int) (sliderLeft + filledWidth - 3);
-        AbstractGui.fill(matrixStack, knobX, (int) sliderTop - 2, knobX + 6, (int) sliderBottom + 2, 0xFFCBD9FF);
+        if (filledWidth > 0.0f) {
+            HudRenderUtil.drawRoundedRect(matrixStack, sliderLeft, sliderTop, filledWidth, sliderHeight, 3.0f,
+                    ColorUtil.setAlpha(themeColor(), 200));
+        }
+        float knobX = sliderLeft + filledWidth - 4.0f;
+        float knobY = sliderTop - 2.0f;
+        HudRenderUtil.drawRoundedRect(matrixStack, knobX, knobY, 8.0f, sliderHeight + 4.0f, 4.0f, ColorUtil.setAlpha(themeColor(), 230));
     }
 
     @Override

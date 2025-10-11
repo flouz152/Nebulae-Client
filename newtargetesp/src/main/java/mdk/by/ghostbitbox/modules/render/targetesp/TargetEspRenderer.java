@@ -27,7 +27,6 @@ import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector2f;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
 import org.joml.Vector2d;
 import org.lwjgl.opengl.GL11;
 
@@ -127,16 +126,9 @@ public class TargetEspRenderer {
                 : TargetEspTextures.getNewSquareTexture();
         int color = ColorUtil.setAlpha(resolveTargetColor(target), alphaOutput);
 
-        stack.push();
-        stack.translate(pos.x, pos.y, 0.0f);
-        stack.rotate(Vector3f.ZP.rotationDegrees(rotation));
-        stack.translate(-pos.x, -pos.y, 0.0f);
-
         float left = pos.x - size / 2.0f;
         float top = pos.y - size / 2.0f;
-        HudRenderUtil.drawImage(stack, texture, left, top, size, size, color, true);
-
-        stack.pop();
+        HudRenderUtil.drawImage(stack, texture, left, top, size, size, color, rotation, true);
     }
 
     private void drawGhosts(MatrixStack stack, Entity target, float visibility, float partialTicks) {

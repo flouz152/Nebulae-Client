@@ -4,8 +4,8 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.FontRenderer;
+import mdk.by.ghostbitbox.util.HudRenderUtil;
 
 public class CycleComponent<T> extends SettingComponent {
 
@@ -27,14 +27,18 @@ public class CycleComponent<T> extends SettingComponent {
     @Override
     public void render(MatrixStack matrixStack, float x, float y, float width, int mouseX, int mouseY, float partialTicks) {
         setBounds(x, y, width, true);
-        AbstractGui.fill(matrixStack, (int) x, (int) y, (int) (x + width), (int) (y + getHeight()), 0x331B1B26);
         FontRenderer font = font();
         if (font == null) {
             return;
         }
-        font.drawString(matrixStack, label, x + 6, y + 8, 0xFFEFEFF5);
+        HudRenderUtil.drawRoundedRect(matrixStack, x, y, width, getHeight(), 4.0f, 0x44161A22);
+        font.drawString(matrixStack, label, x + 6, y + 7, 0xFFEFEFF5);
         String value = formatter.apply(getter.get());
-        font.drawString(matrixStack, value, x + width - 6 - font.getStringWidth(value), y + 8, 0xFF9AA0A8);
+        float chipWidth = font.getStringWidth(value) + 12.0f;
+        float chipX = x + width - chipWidth - 6.0f;
+        float chipY = y + (getHeight() - 14.0f) / 2.0f;
+        HudRenderUtil.drawRoundedRect(matrixStack, chipX, chipY, chipWidth, 14.0f, 6.0f, 0x33252A35);
+        font.drawString(matrixStack, value, chipX + (chipWidth - font.getStringWidth(value)) / 2.0f, y + 7, 0xFFCED3DA);
     }
 
     @Override

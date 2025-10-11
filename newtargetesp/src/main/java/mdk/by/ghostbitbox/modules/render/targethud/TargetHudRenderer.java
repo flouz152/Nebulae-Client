@@ -113,15 +113,7 @@ public class TargetHudRenderer {
         int fadedBarBackground = fadeColor(barBackgroundColor, fade);
         int fadedText = fadeColor(textColor, fade);
 
-        HudRenderUtil.fill(stack, left, top, clampedWidth, clampedHeight, fadedBackground);
-        if (((fadedOutline >> 24) & 0xFF) > 0) {
-            float outlineWidth = Math.max(1.0f, clampedWidth);
-            float outlineHeight = Math.max(1.0f, clampedHeight);
-            HudRenderUtil.fill(stack, left, top, outlineWidth, 1.0f, fadedOutline);
-            HudRenderUtil.fill(stack, left, bottom - 1.0f, outlineWidth, 1.0f, fadedOutline);
-            HudRenderUtil.fill(stack, left, top, 1.0f, outlineHeight, fadedOutline);
-            HudRenderUtil.fill(stack, right - 1.0f, top, 1.0f, outlineHeight, fadedOutline);
-        }
+        HudRenderUtil.drawBorderedRoundedRect(stack, left, top, clampedWidth, clampedHeight, 5.0f, fadedBackground, fadedOutline, 1.0f);
 
         float padding = 6.0f;
         float contentLeft = left + padding;
@@ -138,11 +130,15 @@ public class TargetHudRenderer {
         float barCurrent = MathHelper.clamp(barWidth * (healthAnimated / maxHealth), 0.0f, barWidth);
         float barDelayed = MathHelper.clamp(barWidth * (delayedHealthAnimated / maxHealth), 0.0f, barWidth);
 
-        HudRenderUtil.fill(stack, contentLeft, barTop, barWidth, barHeight, fadedBarBackground);
+        HudRenderUtil.drawRoundedRect(stack, contentLeft, barTop, barWidth, barHeight, 2.0f, fadedBarBackground);
         int accent = fadeColor(resolveTargetColor(activeTarget), fade);
         int delayed = ColorUtil.setAlpha(accent, Math.min(255, (int) (((accent >> 24) & 0xFF) * 0.65f)));
-        HudRenderUtil.fill(stack, contentLeft, barTop, barDelayed, barHeight, delayed);
-        HudRenderUtil.fill(stack, contentLeft, barTop, barCurrent, barHeight, accent);
+        HudRenderUtil.drawRoundedRect(stack, contentLeft, barTop, barDelayed, barHeight, 2.0f, delayed);
+        if (barCurrent > 0.0f) {
+            float gradientWidth = Math.max(2.0f, barCurrent);
+            int gradientEnd = ColorUtil.setAlpha(ColorUtil.darker(accent, 0.35f), (accent >> 24) & 0xFF);
+            HudRenderUtil.drawHorizontalGradient(stack, contentLeft, barTop, gradientWidth, barHeight, accent, gradientEnd);
+        }
 
         float nameX = contentLeft;
         float nameY = top + Math.max(4.0f, (headerHeight - MC.fontRenderer.FONT_HEIGHT) / 2.0f);

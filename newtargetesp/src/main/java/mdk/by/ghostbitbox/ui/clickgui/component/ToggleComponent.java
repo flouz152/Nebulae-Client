@@ -3,8 +3,9 @@ package mdk.by.ghostbitbox.ui.clickgui.component;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.FontRenderer;
+import mdk.by.ghostbitbox.util.ColorUtil;
+import mdk.by.ghostbitbox.util.HudRenderUtil;
 
 public class ToggleComponent extends SettingComponent {
 
@@ -22,16 +23,25 @@ public class ToggleComponent extends SettingComponent {
     @Override
     public void render(MatrixStack matrixStack, float x, float y, float width, int mouseX, int mouseY, float partialTicks) {
         setBounds(x, y, width, true);
-        AbstractGui.fill(matrixStack, (int) x, (int) y, (int) (x + width), (int) (y + getHeight()), 0x331B1B26);
         FontRenderer font = font();
         if (font == null) {
             return;
         }
         boolean value = getter.get();
-        font.drawString(matrixStack, label, x + 6, y + 8, 0xFFEFEFF5);
-        String status = value ? "ON" : "OFF";
-        int color = value ? 0xFF6CE3B6 : 0xFFEF7474;
-        font.drawString(matrixStack, status, x + width - 6 - font.getStringWidth(status), y + 8, color);
+        HudRenderUtil.drawRoundedRect(matrixStack, x, y, width, getHeight(), 4.0f, 0x44161A22);
+        font.drawString(matrixStack, label, x + 6, y + 7, 0xFFEFEFF5);
+
+        float toggleWidth = 26.0f;
+        float toggleHeight = 12.0f;
+        float toggleX = x + width - toggleWidth - 8.0f;
+        float toggleY = y + (getHeight() - toggleHeight) / 2.0f;
+        int trackColor = value ? ColorUtil.setAlpha(themeColor(), 160) : 0xFF2C2F3A;
+        HudRenderUtil.drawRoundedRect(matrixStack, toggleX, toggleY, toggleWidth, toggleHeight, 6.0f, trackColor);
+
+        float knobSize = toggleHeight - 2.0f;
+        float knobX = value ? toggleX + toggleWidth - knobSize - 1.0f : toggleX + 1.0f;
+        int knobColor = value ? themeColor() : 0xFF6B6E78;
+        HudRenderUtil.drawRoundedRect(matrixStack, knobX, toggleY + 1.0f, knobSize, knobSize, knobSize / 2.0f, knobColor);
     }
 
     @Override

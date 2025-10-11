@@ -12,6 +12,7 @@ public abstract class SettingComponent {
     private float width;
     private boolean visible;
     private final Runnable saveAction;
+    private static int themeColor = 0xFF6CE3B6;
 
     protected SettingComponent(float height, Runnable saveAction) {
         this.height = height;
@@ -54,6 +55,14 @@ public abstract class SettingComponent {
 
     protected float getWidth() {
         return width;
+    }
+
+    protected int themeColor() {
+        return themeColor;
+    }
+
+    public static void setThemeColor(int color) {
+        themeColor = color;
     }
 
     public void hide() {
