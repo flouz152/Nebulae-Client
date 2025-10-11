@@ -1,0 +1,3 @@
+# Ignore runtime Target ESP texture assets
+*.png
+!.gitkeep

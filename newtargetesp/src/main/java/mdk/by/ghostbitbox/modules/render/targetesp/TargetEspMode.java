@@ -1,10 +1,10 @@
-package mdk.by.ghostbitbox;
+package mdk.by.ghostbitbox.modules.render.targetesp;
 
 public enum TargetEspMode {
-    GHOSTS("Призраки"),
-    CIRCLE("Круг"),
-    SQUARE("Квадрат"),
-    NEW_SQUARE("Новый квадрат");
+    GHOSTS("Ghosts"),
+    CIRCLE("Circle"),
+    SQUARE("Square"),
+    NEW_SQUARE("New square");
 
     private final String displayName;
 
