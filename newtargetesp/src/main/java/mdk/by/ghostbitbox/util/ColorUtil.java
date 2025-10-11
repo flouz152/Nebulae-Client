@@ -47,4 +47,13 @@ public final class ColorUtil {
         int rgb = Color.HSBtoRGB(hue, saturation, brightness);
         return 0xFF000000 | (rgb & 0x00FFFFFF);
     }
+
+    public static int darker(int color, double factor) {
+        double scale = Math.max(0.0, Math.min(1.0, factor));
+        int a = (color >> 24) & 0xFF;
+        int r = (int) Math.max(0.0, ((color >> 16) & 0xFF) * (1.0 - scale));
+        int g = (int) Math.max(0.0, ((color >> 8) & 0xFF) * (1.0 - scale));
+        int b = (int) Math.max(0.0, (color & 0xFF) * (1.0 - scale));
+        return rgba(r, g, b, a);
+    }
 }
