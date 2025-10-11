@@ -1,7 +1,6 @@
 package mdk.by.ghostbitbox.ui.clickgui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
@@ -22,6 +21,7 @@ import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.StringTextComponent;
+import org.lwjgl.opengl.GL11;
 
 public class TargetClickGuiScreen extends Screen {
 
@@ -562,15 +562,18 @@ public class TargetClickGuiScreen extends Screen {
             return;
         }
         double scale = minecraft.getMainWindow().getGuiScaleFactor();
-        double scissorX = x1 * scale;
-        double scissorY = (minecraft.getMainWindow().getScaledHeight() - y2) * scale;
-        double scissorWidth = Math.max(0.0, (x2 - x1) * scale);
-        double scissorHeight = Math.max(0.0, (y2 - y1) * scale);
-        RenderSystem.enableScissorTest();
-        RenderSystem.scissor((int) scissorX, (int) scissorY, (int) scissorWidth, (int) scissorHeight);
+        int scissorX = (int) Math.floor(x1 * scale);
+        int scissorY = (int) Math.floor((minecraft.getMainWindow().getScaledHeight() - y2) * scale);
+        int scissorWidth = (int) Math.ceil(Math.max(0.0, (x2 - x1) * scale));
+        int scissorHeight = (int) Math.ceil(Math.max(0.0, (y2 - y1) * scale));
+        if (scissorWidth <= 0 || scissorHeight <= 0) {
+            return;
+        }
+        GL11.glEnable(GL11.GL_SCISSOR_TEST);
+        GL11.glScissor(scissorX, scissorY, scissorWidth, scissorHeight);
     }
 
     private void disableScissor() {
-        RenderSystem.disableScissorTest();
+        GL11.glDisable(GL11.GL_SCISSOR_TEST);
     }
 }
