@@ -4,7 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import mdk.by.ghostbitbox.TargetEspAddon;
 import mdk.by.ghostbitbox.TargetEspConfig;
 import mdk.by.ghostbitbox.modules.render.targethud.TargetHudRenderer;
-import mdk.by.ghostbitbox.ui.TargetSettingsScreen;
+import mdk.by.ghostbitbox.ui.clickgui.TargetClickGuiScreen;
 import mdk.by.ghostbitbox.util.TargetTracker;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.events.client.TickEvent;
@@ -98,10 +98,10 @@ public class TargetEspController {
         }
 
         long windowHandle = minecraft.getMainWindow().getHandle();
-        boolean pressed = InputMappings.isKeyDown(windowHandle, GLFW.GLFW_KEY_RIGHT_SHIFT);
+        boolean pressed = InputMappings.isKeyDown(windowHandle, GLFW.GLFW_KEY_INSERT);
 
         if (pressed && !settingsKeyDown && minecraft.currentScreen == null) {
-            minecraft.displayGuiScreen(new TargetSettingsScreen(addon));
+            minecraft.displayGuiScreen(new TargetClickGuiScreen(addon));
         }
 
         settingsKeyDown = pressed;
